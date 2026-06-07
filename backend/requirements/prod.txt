@@ -1,0 +1,9 @@
+-r base.txt
+
+# WSGI server
+gunicorn==23.0.0
+uvicorn[standard]==0.32.1
+
+# Security
+django-storages[s3]==1.14.4
+whitenoise==6.8.2
