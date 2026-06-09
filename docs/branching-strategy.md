@@ -2,76 +2,82 @@
 
 ## Overview
 
-DawaiBuddy uses a **trunk-based development** model with long-lived integration branches per domain.
+DawaiBuddy uses a **trunk-based** model with **two long-lived integration branches** — one per
+domain — that both merge into `main`. This keeps the branch count low while still isolating
+frontend and backend work. Every branch holds the full monorepo (`backend/` + `frontend/` + `docs/`).
 
 ## Branch Hierarchy
 
 ```
-main                    ← production-ready, protected
+main                  ← production-ready, protected
 │
-└── develop             ← integration branch (all domains merge here)
-    │
-    ├── backend/develop ← backend feature integration
-    │   └── feature/backend/xxx
-    │
-    └── frontend/develop ← frontend feature integration
-        └── feature/frontend/xxx
+├── frontend          ← frontend integration (full monorepo)
+│   └── frontend/<feature>
+│
+└── backend           ← backend integration (full monorepo)
+    └── backend/<feature>
 ```
 
 ## Branch Types
 
 | Branch Pattern | Purpose | Base From | Merges Into |
 |----------------|---------|-----------|-------------|
-| `main` | Production code | — | — |
-| `develop` | Integration | `main` | `main` (via PR) |
-| `backend/develop` | Backend integration | `develop` | `develop` |
-| `frontend/develop` | Frontend integration | `develop` | `develop` |
-| `feature/backend/*` | Backend features | `backend/develop` | `backend/develop` |
-| `feature/frontend/*` | Frontend features | `frontend/develop` | `frontend/develop` |
-| `hotfix/*` | Production fixes | `main` | `main` + `develop` |
-| `release/*` | Release preparation | `develop` | `main` + `develop` |
+| `main` | Production code (protected) | — | — |
+| `frontend` | Frontend integration | `main` | `main` (via PR) |
+| `backend` | Backend integration | `main` | `main` (via PR) |
+| `frontend/<feature>` | Individual frontend feature | `frontend` | `frontend` |
+| `backend/<feature>` | Individual backend feature | `backend` | `backend` |
+| `hotfix/<name>` | Production fix | `main` | `main` (+ `frontend`/`backend`) |
 
 ## Workflow
 
-### Starting a Backend Feature
+### Starting a feature
 
 ```bash
-git checkout backend/develop
-git pull origin backend/develop
-git checkout -b feature/backend/my-feature
+# Frontend feature
+git switch frontend && git pull
+git switch -c frontend/medicine-details
 # ... work ...
-git push -u origin feature/backend/my-feature
-# Open PR: feature/backend/my-feature → backend/develop
+git push -u origin frontend/medicine-details
+# Open PR: frontend/medicine-details → frontend
 ```
 
-### Merging to Develop
-
 ```bash
-# After PR approval on backend/develop
-git checkout develop
-git merge --no-ff backend/develop
-git push origin develop
+# Backend feature
+git switch backend && git pull
+git switch -c backend/interactions-api
+# ... work ...
+git push -u origin backend/interactions-api
+# Open PR: backend/interactions-api → backend
 ```
 
-### Hotfix Process
+### Promoting to main
 
 ```bash
-git checkout main
-git checkout -b hotfix/critical-bug-fix
+# After PR approval on the integration branch
+git switch main && git merge --no-ff frontend   # or: backend
+git push origin main
+# Keep the other integration branch in sync periodically:
+git switch backend && git merge main && git push
+```
+
+### Hotfix
+
+```bash
+git switch main && git switch -c hotfix/critical-bug
 # ... fix ...
-git checkout main && git merge --no-ff hotfix/critical-bug-fix
-git checkout develop && git merge --no-ff hotfix/critical-bug-fix
-git branch -d hotfix/critical-bug-fix
+git switch main && git merge --no-ff hotfix/critical-bug && git push origin main
+git switch frontend && git merge main && git push
+git switch backend && git merge main && git push
+git branch -d hotfix/critical-bug
 ```
 
-## Protection Rules (configure on GitHub)
+## Protection rules (configure on GitHub)
 
-- `main`: require PR, 2 reviewers, passing CI, no direct push
-- `develop`: require PR, 1 reviewer, passing CI
-- `backend/develop`: require PR, 1 reviewer, passing CI
-- `frontend/develop`: require PR, 1 reviewer, passing CI
+- `main`: require PR, ≥1 reviewer, passing CI, no direct push.
+- `frontend`, `backend`: require PR, passing CI.
 
-## Commit Convention
+## Commit convention
 
 Format: `type(scope): message`
 
@@ -88,8 +94,8 @@ Format: `type(scope): message`
 
 Examples:
 ```
+feat(frontend): DawaiBuddy design system + landing page
 feat(accounts): add email verification flow
 fix(prescriptions): resolve pagination offset bug
-setup: django backend foundation
 docs: backend architecture
 ```
