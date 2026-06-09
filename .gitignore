@@ -80,11 +80,20 @@ celerybeat.pid
 .DS_Store
 Thumbs.db
 
-# Node (for future frontend)
+# Node / frontend
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+frontend/dist/
+frontend/.vite/
+
+# Design source (large PDF kept out of the repo)
+*.pdf
+
+# Re-include frontend source dirs caught by generic Python patterns above (e.g. lib/, build/)
+!frontend/src/lib/
+!frontend/src/lib/**
 
 # Terraform / Infrastructure
 **/.terraform/

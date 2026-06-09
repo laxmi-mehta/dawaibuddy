@@ -1,0 +1,11 @@
+#!/bin/sh
+# Enforce conventional commit format
+commit_msg=$(cat "$1")
+pattern="^(feat|fix|setup|docs|refactor|test|chore|ci|style|perf|revert)(\([a-z/-]+\))?: .+"
+
+if ! echo "$commit_msg" | grep -qE "$pattern"; then
+  echo "ERROR: Commit message does not follow Conventional Commits format."
+  echo "Expected: type(scope): message"
+  echo "Example:  feat(auth): add JWT login"
+  exit 1
+fi
