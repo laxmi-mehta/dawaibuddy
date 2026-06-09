@@ -1,40 +1,24 @@
-import * as React from "react";
-import { cn } from "@/lib/utils";
+import type { HTMLAttributes } from 'react'
+import { cn } from '@/lib/utils'
 
-const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
+/** Soft clinical surface — white, hairline border, restrained shadow. */
+export function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
+  return (
     <div
-      ref={ref}
-      className={cn("rounded-lg border bg-card text-card-foreground shadow-sm", className)}
+      className={cn('rounded-lg border border-line bg-surface shadow-card', className)}
       {...props}
     />
   )
-);
-Card.displayName = "Card";
+}
 
-const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn("flex flex-col space-y-1.5 p-6", className)} {...props} />
-  )
-);
-CardHeader.displayName = "CardHeader";
+export function CardHeader({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
+  return <div className={cn('p-6 pb-0', className)} {...props} />
+}
 
-const CardTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLHeadingElement>>(
-  ({ className, ...props }, ref) => (
-    <h3
-      ref={ref}
-      className={cn("text-lg font-semibold leading-none tracking-tight", className)}
-      {...props}
-    />
-  )
-);
-CardTitle.displayName = "CardTitle";
+export function CardTitle({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) {
+  return <h3 className={cn('text-h3 font-extrabold text-ink', className)} {...props} />
+}
 
-const CardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
-  )
-);
-CardContent.displayName = "CardContent";
-
-export { Card, CardContent, CardHeader, CardTitle };
+export function CardContent({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
+  return <div className={cn('p-6', className)} {...props} />
+}

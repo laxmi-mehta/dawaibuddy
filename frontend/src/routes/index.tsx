@@ -2,8 +2,10 @@ import { Navigate, Route, Routes } from "react-router-dom";
 
 import AppLayout from "@/layouts/AppLayout";
 import AuthLayout from "@/layouts/AuthLayout";
+import { MarketingLayout } from "@/layouts/MarketingLayout";
 import { useAuth } from "@/hooks/useAuth";
 
+import { LandingPage } from "@/pages/LandingPage";
 import LoginPage from "@/pages/LoginPage";
 import RegisterPage from "@/pages/RegisterPage";
 import DashboardPage from "@/pages/DashboardPage";
@@ -26,6 +28,11 @@ function GuestRoute({ children }: { children: React.ReactNode }) {
 export default function AppRoutes() {
   return (
     <Routes>
+      {/* Public marketing routes */}
+      <Route element={<MarketingLayout />}>
+        <Route path="/" element={<LandingPage />} />
+      </Route>
+
       {/* Guest-only routes */}
       <Route
         element={
@@ -55,8 +62,7 @@ export default function AppRoutes() {
       </Route>
 
       {/* Fallback */}
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
