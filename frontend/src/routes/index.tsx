@@ -14,6 +14,7 @@ import MedicinesPage from "@/pages/MedicinesPage";
 import InteractionsPage from "@/pages/InteractionsPage";
 import RemindersPage from "@/pages/RemindersPage";
 import AssistantPage from "@/pages/AssistantPage";
+import UploadPage from "@/pages/UploadPage";
 import AppComingSoon from "@/pages/AppComingSoon";
 
 function GuestRoute({ children }: { children: React.ReactNode }) {
@@ -44,7 +45,7 @@ export default function AppRoutes() {
       {/* App routes — UI design phase: auth guard added once auth logic lands */}
       <Route element={<AppLayout />}>
         <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/upload" element={<AppComingSoon title="Upload prescription" />} />
+        <Route path="/upload" element={<UploadPage />} />
         <Route path="/reminders" element={<RemindersPage />} />
         <Route path="/interactions" element={<InteractionsPage />} />
         <Route path="/assistant" element={<AssistantPage />} />
