@@ -1,34 +1,44 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import PageHeader from "@/components/common/PageHeader";
-
-const stats = [
-  { label: "Prescriptions", value: "—" },
-  { label: "Medicines", value: "—" },
-  { label: "Active Reminders", value: "—" },
-  { label: "Interactions Found", value: "—" },
-];
+import { Link } from "react-router-dom";
+import { Plus } from "lucide-react";
+import { AppHeader } from "@/components/layout/AppHeader";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { StatCards } from "@/features/dashboard/components/StatCards";
+import { QuickUpload } from "@/features/dashboard/components/QuickUpload";
+import { RecentPrescriptions } from "@/features/dashboard/components/RecentPrescriptions";
+import { MedicineSearch } from "@/features/dashboard/components/MedicineSearch";
+import { AssistantPromo } from "@/features/dashboard/components/AssistantPromo";
+import { TodaysReminders } from "@/features/dashboard/components/TodaysReminders";
 
 export default function DashboardPage() {
   return (
-    <div>
-      <PageHeader title="Dashboard" description="Overview of your medication management" />
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {stats.map((stat) => (
-          <Card key={stat.label}>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
-                {stat.label}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-2xl font-bold">{stat.value}</p>
-            </CardContent>
-          </Card>
-        ))}
+    <>
+      <AppHeader
+        title={<>Hi Aarav 👋</>}
+        subtitle="Tuesday, 6 June 2026 · You're doing great this week"
+        searchPlaceholder="Search medicines, prescriptions…"
+        actions={
+          <Link to="/upload" className={cn(buttonVariants({ variant: "primary" }))}>
+            <Plus className="h-5 w-5" strokeWidth={2} /> Upload Rx
+          </Link>
+        }
+      />
+
+      <div className="mx-auto max-w-6xl space-y-6 p-6">
+        <StatCards />
+        <QuickUpload />
+
+        <div className="grid gap-6 lg:grid-cols-2">
+          <div className="space-y-6">
+            <RecentPrescriptions />
+            <MedicineSearch />
+          </div>
+          <div className="space-y-6">
+            <AssistantPromo />
+            <TodaysReminders />
+          </div>
+        </div>
       </div>
-      <div className="mt-8 rounded-lg border border-dashed p-12 text-center text-muted-foreground">
-        Dashboard charts and activity — coming soon
-      </div>
-    </div>
+    </>
   );
 }

@@ -14,11 +14,7 @@ import MedicinesPage from "@/pages/MedicinesPage";
 import InteractionsPage from "@/pages/InteractionsPage";
 import RemindersPage from "@/pages/RemindersPage";
 import AssistantPage from "@/pages/AssistantPage";
-
-function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated } = useAuth();
-  return isAuthenticated ? <>{children}</> : <Navigate to="/login" replace />;
-}
+import AppComingSoon from "@/pages/AppComingSoon";
 
 function GuestRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated } = useAuth();
@@ -45,20 +41,18 @@ export default function AppRoutes() {
         <Route path="/register" element={<RegisterPage />} />
       </Route>
 
-      {/* Protected routes */}
-      <Route
-        element={
-          <ProtectedRoute>
-            <AppLayout />
-          </ProtectedRoute>
-        }
-      >
+      {/* App routes — UI design phase: auth guard added once auth logic lands */}
+      <Route element={<AppLayout />}>
         <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/upload" element={<AppComingSoon title="Upload prescription" />} />
+        <Route path="/reminders" element={<RemindersPage />} />
+        <Route path="/interactions" element={<InteractionsPage />} />
+        <Route path="/assistant" element={<AssistantPage />} />
         <Route path="/prescriptions" element={<PrescriptionsPage />} />
         <Route path="/medicines" element={<MedicinesPage />} />
-        <Route path="/interactions" element={<InteractionsPage />} />
-        <Route path="/reminders" element={<RemindersPage />} />
-        <Route path="/assistant" element={<AssistantPage />} />
+        <Route path="/profile" element={<AppComingSoon title="Profile" />} />
+        <Route path="/settings" element={<AppComingSoon title="Settings" />} />
+        <Route path="/design-system" element={<AppComingSoon title="Design System" />} />
       </Route>
 
       {/* Fallback */}

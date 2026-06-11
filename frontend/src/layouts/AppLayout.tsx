@@ -1,17 +1,14 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "@/components/layout/Sidebar";
-import Header from "@/components/layout/Header";
 
+/** Authenticated app shell: sidebar + scrollable content. Each page renders its own AppHeader. */
 export default function AppLayout() {
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-svh bg-bg">
       <Sidebar />
-      <div className="flex flex-1 flex-col overflow-hidden">
-        <Header />
-        <main className="flex-1 overflow-y-auto p-6">
-          <Outlet />
-        </main>
-      </div>
+      <main className="flex-1 overflow-y-auto">
+        <Outlet />
+      </main>
     </div>
   );
 }
