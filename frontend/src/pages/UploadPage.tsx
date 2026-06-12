@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { Button } from "@/components/ui/button";
 import { UploadCard } from "@/features/prescriptions/components/UploadCard";
@@ -9,7 +10,11 @@ export default function UploadPage() {
       <AppHeader
         title="Upload prescription"
         subtitle="Scan or import your prescription to get started"
-        actions={<Button variant="ghost" size="sm">Skip to results</Button>}
+        actions={
+          <Link to="/upload/review">
+            <Button variant="ghost" size="sm">Skip to results</Button>
+          </Link>
+        }
       />
 
       <div className="mx-auto max-w-6xl p-6">

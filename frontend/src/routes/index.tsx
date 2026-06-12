@@ -15,6 +15,9 @@ import InteractionsPage from "@/pages/InteractionsPage";
 import RemindersPage from "@/pages/RemindersPage";
 import AssistantPage from "@/pages/AssistantPage";
 import UploadPage from "@/pages/UploadPage";
+import OcrReviewPage from "@/pages/OcrReviewPage";
+import ProfilePage from "@/pages/ProfilePage";
+import SettingsPage from "@/pages/SettingsPage";
 import AppComingSoon from "@/pages/AppComingSoon";
 
 function GuestRoute({ children }: { children: React.ReactNode }) {
@@ -46,14 +49,15 @@ export default function AppRoutes() {
       <Route element={<AppLayout />}>
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/upload" element={<UploadPage />} />
+        <Route path="/upload/review" element={<OcrReviewPage />} />
         <Route path="/reminders" element={<RemindersPage />} />
         <Route path="/interactions" element={<InteractionsPage />} />
         <Route path="/assistant" element={<AssistantPage />} />
         <Route path="/prescriptions" element={<PrescriptionsPage />} />
         <Route path="/medicines" element={<MedicineDetailPage />} />
         <Route path="/medicines/:id" element={<MedicineDetailPage />} />
-        <Route path="/profile" element={<AppComingSoon title="Profile" />} />
-        <Route path="/settings" element={<AppComingSoon title="Settings" />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/settings" element={<SettingsPage />} />
         <Route path="/design-system" element={<AppComingSoon title="Design System" />} />
       </Route>
 
