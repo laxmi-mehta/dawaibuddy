@@ -10,7 +10,7 @@ import LoginPage from "@/pages/LoginPage";
 import RegisterPage from "@/pages/RegisterPage";
 import DashboardPage from "@/pages/DashboardPage";
 import PrescriptionsPage from "@/pages/PrescriptionsPage";
-import MedicinesPage from "@/pages/MedicinesPage";
+import MedicineDetailPage from "@/pages/MedicineDetailPage";
 import InteractionsPage from "@/pages/InteractionsPage";
 import RemindersPage from "@/pages/RemindersPage";
 import AssistantPage from "@/pages/AssistantPage";
@@ -50,7 +50,8 @@ export default function AppRoutes() {
         <Route path="/interactions" element={<InteractionsPage />} />
         <Route path="/assistant" element={<AssistantPage />} />
         <Route path="/prescriptions" element={<PrescriptionsPage />} />
-        <Route path="/medicines" element={<MedicinesPage />} />
+        <Route path="/medicines" element={<MedicineDetailPage />} />
+        <Route path="/medicines/:id" element={<MedicineDetailPage />} />
         <Route path="/profile" element={<AppComingSoon title="Profile" />} />
         <Route path="/settings" element={<AppComingSoon title="Settings" />} />
         <Route path="/design-system" element={<AppComingSoon title="Design System" />} />
