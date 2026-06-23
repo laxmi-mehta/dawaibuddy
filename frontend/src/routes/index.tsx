@@ -18,7 +18,7 @@ import UploadPage from "@/pages/UploadPage";
 import OcrReviewPage from "@/pages/OcrReviewPage";
 import ProfilePage from "@/pages/ProfilePage";
 import SettingsPage from "@/pages/SettingsPage";
-import AppComingSoon from "@/pages/AppComingSoon";
+import DesignSystemPage from "@/pages/DesignSystemPage";
 
 function GuestRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated } = useAuth();
@@ -58,7 +58,7 @@ export default function AppRoutes() {
         <Route path="/medicines/:id" element={<MedicineDetailPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/design-system" element={<AppComingSoon title="Design System" />} />
+        <Route path="/design-system" element={<DesignSystemPage />} />
       </Route>
 
       {/* Fallback */}
