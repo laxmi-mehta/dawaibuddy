@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Bell, ScanLine, ShieldCheck, Star } from "lucide-react";
 import { Logo } from "@/components/shared/Logo";
 
@@ -29,7 +29,9 @@ export function AuthSidePanel() {
 
   return (
     <div className="relative hidden flex-col justify-between overflow-hidden bg-brand-gradient p-10 text-white lg:flex xl:p-12">
-      <Logo tone="dark" />
+      <Link to="/" aria-label="DawaiBuddy home">
+        <Logo tone="dark" />
+      </Link>
 
       <div className="max-w-md">
         <h1 className="text-4xl font-extrabold leading-tight xl:text-[2.75rem]">{headline}</h1>

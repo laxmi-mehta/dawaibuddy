@@ -64,7 +64,9 @@ export default function Sidebar() {
   return (
     <aside className="hidden w-64 shrink-0 flex-col border-r border-line bg-surface px-4 py-5 lg:flex">
       <div className="px-2">
-        <Logo />
+        <NavLink to="/dashboard" aria-label="DawaiBuddy home">
+          <Logo />
+        </NavLink>
       </div>
 
       <nav className="mt-8 flex flex-1 flex-col gap-7">
