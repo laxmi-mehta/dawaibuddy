@@ -7,6 +7,7 @@ from .serializers import ReminderSerializer
 class ReminderListCreateView(generics.ListCreateAPIView):
     serializer_class = ReminderSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filterset_fields = ["bucket", "is_taken"]
 
     def get_queryset(self):
         return Reminder.objects.filter(user=self.request.user)

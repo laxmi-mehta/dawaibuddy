@@ -9,4 +9,9 @@ urlpatterns = [
         views.ConversationDetailView.as_view(),
         name="conversation-detail",
     ),
+    path(
+        "conversations/<uuid:pk>/messages/",
+        views.MessageCreateView.as_view(),
+        name="message-create",
+    ),
 ]

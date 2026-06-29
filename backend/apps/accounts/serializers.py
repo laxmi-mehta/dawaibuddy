@@ -1,6 +1,19 @@
 from rest_framework import serializers
 
-from .models import User
+from .models import FamilyMember, Profile, User
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ["age", "blood_group", "height_cm", "weight_kg", "conditions", "allergies"]
+
+
+class FamilyMemberSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FamilyMember
+        fields = ["id", "name", "relation", "age", "created_at"]
+        read_only_fields = ["id", "created_at"]
 
 
 class UserSerializer(serializers.ModelSerializer):
