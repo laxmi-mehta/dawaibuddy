@@ -1,7 +1,15 @@
 from rest_framework import generics, permissions
 
 from .models import User
-from .serializers import UserSerializer
+from .serializers import RegisterSerializer, UserSerializer
+
+
+class RegisterView(generics.CreateAPIView):
+    """Public endpoint to create a new account."""
+
+    serializer_class = RegisterSerializer
+    permission_classes = [permissions.AllowAny]
+    queryset = User.objects.all()
 
 
 class UserMeView(generics.RetrieveUpdateAPIView):
