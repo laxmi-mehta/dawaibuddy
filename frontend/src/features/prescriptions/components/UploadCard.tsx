@@ -29,7 +29,7 @@ export function UploadCard() {
             onClick={() => setTab(id)}
             className={cn(
               "flex flex-1 items-center justify-center gap-2 rounded-md py-2.5 text-small font-semibold transition-colors",
-              tab === id ? "bg-surface text-brand shadow-soft" : "text-muted hover:text-ink",
+              tab === id ? "bg-surface text-brand shadow-soft" : "text-muted hover:text-ink"
             )}
           >
             <Icon className="h-4 w-4" strokeWidth={2} />
@@ -53,8 +53,13 @@ export function UploadCard() {
         {tab === "camera" ? (
           <>
             <p className="text-h3 font-extrabold text-ink">Use your camera</p>
-            <p className="text-body text-muted">Point at the prescription and capture a clear photo.</p>
-            <button type="button" className="mt-2 rounded-full bg-brand px-6 py-2.5 text-small font-semibold text-white hover:bg-brand-600">
+            <p className="text-body text-muted">
+              Point at the prescription and capture a clear photo.
+            </p>
+            <button
+              type="button"
+              className="mt-2 rounded-full bg-brand px-6 py-2.5 text-small font-semibold text-white hover:bg-brand-600"
+            >
               Open camera
             </button>
           </>
@@ -73,7 +78,10 @@ export function UploadCard() {
             </p>
             <div className="mt-2 flex flex-wrap justify-center gap-2">
               {FORMAT_CHIPS.map((c) => (
-                <span key={c} className="rounded-md bg-bg px-2.5 py-1 text-tiny font-semibold text-muted">
+                <span
+                  key={c}
+                  className="rounded-md bg-bg px-2.5 py-1 text-tiny font-semibold text-muted"
+                >
                   {c}
                 </span>
               ))}

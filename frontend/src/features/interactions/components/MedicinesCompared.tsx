@@ -21,7 +21,9 @@ export function MedicinesCompared() {
     <Card className="p-6">
       <div className="flex items-center justify-between">
         <h2 className="text-h3 font-extrabold text-ink">Medicines compared</h2>
-        <Badge variant="brand" size="sm">3 selected</Badge>
+        <Badge variant="brand" size="sm">
+          3 selected
+        </Badge>
       </div>
 
       <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -37,7 +39,9 @@ export function MedicinesCompared() {
             <IconBadge icon={Pill} tone={m.tone} size="lg" className="mx-auto" />
             <p className="mt-3 font-bold text-ink">{m.name}</p>
             <p className="text-small text-muted">{m.dose}</p>
-            <Badge variant="default" size="sm" className="mt-2">{m.category}</Badge>
+            <Badge variant="default" size="sm" className="mt-2">
+              {m.category}
+            </Badge>
           </div>
         ))}
 

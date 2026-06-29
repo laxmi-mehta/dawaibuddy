@@ -17,7 +17,9 @@ export function ReminderBucket({ bucket }: { bucket: Bucket }) {
             <p className="text-small text-muted">{bucket.range}</p>
           </div>
         </div>
-        <Badge variant="default" size="sm">{taken} / {bucket.doses.length}</Badge>
+        <Badge variant="default" size="sm">
+          {taken} / {bucket.doses.length}
+        </Badge>
       </div>
 
       <ul className="mt-2 divide-y divide-line">

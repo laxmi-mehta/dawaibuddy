@@ -11,13 +11,21 @@ export function MedicineHeaderCard() {
         <div className="flex-1">
           <div className="flex flex-wrap items-center gap-2">
             <h2 className="text-h2 font-extrabold text-ink">Glycomet 500 SR</h2>
-            <Badge variant="danger" size="sm">Rx only</Badge>
+            <Badge variant="danger" size="sm">
+              Rx only
+            </Badge>
           </div>
           <p className="mt-1 text-body text-muted">Metformin · 500 mg · Tablet (SR)</p>
           <div className="mt-3 flex flex-wrap gap-2">
-            <Badge variant="brand" size="sm">Anti-diabetic</Badge>
-            <Badge variant="default" size="sm"><Clock className="h-3.5 w-3.5" /> After food</Badge>
-            <Badge variant="default" size="sm"><Building2 className="h-3.5 w-3.5" /> USV Pvt Ltd</Badge>
+            <Badge variant="brand" size="sm">
+              Anti-diabetic
+            </Badge>
+            <Badge variant="default" size="sm">
+              <Clock className="h-3.5 w-3.5" /> After food
+            </Badge>
+            <Badge variant="default" size="sm">
+              <Building2 className="h-3.5 w-3.5" /> USV Pvt Ltd
+            </Badge>
           </div>
         </div>
       </div>

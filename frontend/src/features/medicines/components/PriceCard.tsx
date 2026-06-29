@@ -8,7 +8,9 @@ export function PriceCard() {
     <Card className="p-6">
       <div className="flex items-center justify-between">
         <p className="text-small text-muted">Average price</p>
-        <Badge variant="success" size="sm">In stock</Badge>
+        <Badge variant="success" size="sm">
+          In stock
+        </Badge>
       </div>
       <p className="mt-2">
         <span className="text-h1 font-extrabold text-ink">₹42</span>

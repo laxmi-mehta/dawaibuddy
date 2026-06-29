@@ -1,54 +1,54 @@
-import { Bell, Leaf, PanelLeft, ScanLine, ShieldCheck, Sparkles } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
-import { Card } from '@/components/ui/card'
-import { IconBadge } from '@/components/shared/IconBadge'
-import { SectionHeading } from './SectionHeading'
+import { Bell, Leaf, PanelLeft, ScanLine, ShieldCheck, Sparkles } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { IconBadge } from "@/components/shared/IconBadge";
+import { SectionHeading } from "./SectionHeading";
 
 interface Feature {
-  icon: LucideIcon
-  tone: 'brand' | 'accent'
-  title: string
-  body: string
+  icon: LucideIcon;
+  tone: "brand" | "accent";
+  title: string;
+  body: string;
 }
 
 const FEATURES: Feature[] = [
   {
     icon: ScanLine,
-    tone: 'brand',
-    title: 'Scan any prescription',
-    body: 'Snap a photo or upload a PDF. Our OCR reads typed and handwritten Rx and lists every medicine.',
+    tone: "brand",
+    title: "Scan any prescription",
+    body: "Snap a photo or upload a PDF. Our OCR reads typed and handwritten Rx and lists every medicine.",
   },
   {
     icon: PanelLeft,
-    tone: 'accent',
-    title: 'Plain-language info',
-    body: 'Uses, side-effects and warnings explained simply — no confusing medical jargon.',
+    tone: "accent",
+    title: "Plain-language info",
+    body: "Uses, side-effects and warnings explained simply — no confusing medical jargon.",
   },
   {
     icon: ShieldCheck,
-    tone: 'brand',
-    title: 'Interaction checker',
+    tone: "brand",
+    title: "Interaction checker",
     body: "Compare medicines side-by-side and instantly see if they're safe to take together.",
   },
   {
     icon: Bell,
-    tone: 'accent',
-    title: 'Smart reminders',
-    body: 'Never miss a dose. Schedule by morning, afternoon, evening or night with gentle nudges.',
+    tone: "accent",
+    title: "Smart reminders",
+    body: "Never miss a dose. Schedule by morning, afternoon, evening or night with gentle nudges.",
   },
   {
     icon: Leaf,
-    tone: 'accent',
-    title: 'Generic alternatives',
+    tone: "accent",
+    title: "Generic alternatives",
     body: "Discover cheaper, equally-effective generics and see exactly how much you'll save.",
   },
   {
     icon: Sparkles,
-    tone: 'brand',
-    title: 'AI medicine assistant',
-    body: 'Ask anything about your medicines and get clear, sourced answers in seconds.',
+    tone: "brand",
+    title: "AI medicine assistant",
+    body: "Ask anything about your medicines and get clear, sourced answers in seconds.",
   },
-]
+];
 
 export function Features() {
   return (
@@ -71,5 +71,5 @@ export function Features() {
         </div>
       </div>
     </section>
-  )
+  );
 }

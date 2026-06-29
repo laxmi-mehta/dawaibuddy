@@ -1,38 +1,38 @@
-import { Link } from 'react-router-dom'
-import { ArrowRight, HeartPulse, ScanLine, Upload } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
-import { buttonVariants } from '@/components/ui/button'
-import { IconBadge } from '@/components/shared/IconBadge'
-import { SectionHeading } from './SectionHeading'
-import { cn } from '@/lib/utils'
+import { Link } from "react-router-dom";
+import { ArrowRight, HeartPulse, ScanLine, Upload } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
+import { IconBadge } from "@/components/shared/IconBadge";
+import { SectionHeading } from "./SectionHeading";
+import { cn } from "@/lib/utils";
 
 interface Step {
-  num: string
-  icon: LucideIcon
-  title: string
-  body: string
+  num: string;
+  icon: LucideIcon;
+  title: string;
+  body: string;
 }
 
 const STEPS: Step[] = [
   {
-    num: '01',
+    num: "01",
     icon: Upload,
-    title: 'Upload your prescription',
-    body: 'Drag & drop, snap a photo, or import a PDF from your doctor.',
+    title: "Upload your prescription",
+    body: "Drag & drop, snap a photo, or import a PDF from your doctor.",
   },
   {
-    num: '02',
+    num: "02",
     icon: ScanLine,
-    title: 'We extract the details',
-    body: 'Medicines, dosage, frequency and duration — ready for you to review.',
+    title: "We extract the details",
+    body: "Medicines, dosage, frequency and duration — ready for you to review.",
   },
   {
-    num: '03',
+    num: "03",
     icon: HeartPulse,
-    title: 'Understand & stay on track',
-    body: 'Read plain-English explanations, check interactions and set reminders.',
+    title: "Understand & stay on track",
+    body: "Read plain-English explanations, check interactions and set reminders.",
   },
-]
+];
 
 export function HowItWorks() {
   return (
@@ -58,12 +58,12 @@ export function HowItWorks() {
         </div>
 
         <div className="mt-12 flex justify-center">
-          <Link to="/register" className={cn(buttonVariants({ variant: 'primary', size: 'lg' }))}>
+          <Link to="/register" className={cn(buttonVariants({ variant: "primary", size: "lg" }))}>
             Get started free
             <ArrowRight className="h-5 w-5" strokeWidth={2} />
           </Link>
         </div>
       </div>
     </section>
-  )
+  );
 }

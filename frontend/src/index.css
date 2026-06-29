@@ -1,5 +1,5 @@
-@import 'tailwindcss';
-@import '@fontsource-variable/plus-jakarta-sans';
+@import "tailwindcss";
+@import "@fontsource-variable/plus-jakarta-sans";
 
 /* ============================================================
    DawaiBuddy — Design tokens (Tailwind v4 CSS-first @theme)
@@ -59,8 +59,8 @@
   --color-ring: hsl(var(--ring));
 
   /* ---- Typography (Plus Jakarta Sans) ---- */
-  --font-sans: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
 
   --text-tiny: 0.8125rem;
   --text-small: 0.875rem;

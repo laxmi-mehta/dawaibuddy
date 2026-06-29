@@ -1,20 +1,20 @@
-import { Link } from 'react-router-dom'
-import { Logo } from '@/components/shared/Logo'
+import { Link } from "react-router-dom";
+import { Logo } from "@/components/shared/Logo";
 
 const COLUMNS = [
   {
-    title: 'Product',
-    links: ['Features', 'How it works', 'Reminders', 'AI Assistant'],
+    title: "Product",
+    links: ["Features", "How it works", "Reminders", "AI Assistant"],
   },
   {
-    title: 'Company',
-    links: ['About', 'Careers', 'Press', 'Contact'],
+    title: "Company",
+    links: ["About", "Careers", "Press", "Contact"],
   },
   {
-    title: 'Legal',
-    links: ['Privacy', 'Terms', 'Data security', 'Disclaimer'],
+    title: "Legal",
+    links: ["Privacy", "Terms", "Data security", "Disclaimer"],
   },
-]
+];
 
 /** Dark site footer — brand + disclaimer, three link columns, copyright row. */
 export function Footer() {
@@ -62,5 +62,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

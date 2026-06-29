@@ -27,6 +27,13 @@ export interface TokenPair {
   refresh: string;
 }
 
+export interface RegisterPayload {
+  email: string;
+  password: string;
+  first_name?: string;
+  last_name?: string;
+}
+
 export interface User {
   id: string;
   email: string;

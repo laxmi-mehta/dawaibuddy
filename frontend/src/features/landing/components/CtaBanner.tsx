@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom'
-import { ArrowRight } from 'lucide-react'
-import { buttonVariants } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 /** Closing gradient call-to-action banner. */
 export function CtaBanner() {
@@ -19,8 +19,8 @@ export function CtaBanner() {
             <Link
               to="/register"
               className={cn(
-                buttonVariants({ size: 'lg' }),
-                'bg-white text-brand hover:bg-white/90',
+                buttonVariants({ size: "lg" }),
+                "bg-white text-brand hover:bg-white/90"
               )}
             >
               Create free account
@@ -30,5 +30,5 @@ export function CtaBanner() {
         </div>
       </div>
     </section>
-  )
+  );
 }

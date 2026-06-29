@@ -21,11 +21,18 @@ function Med({ name }: { name: string }) {
 }
 
 export function InteractionPairCard({ pair }: { pair: InteractionPair }) {
-  const ConnIcon = pair.severity === "moderate" || pair.severity === "severe" ? AlertTriangle : Info;
-  const connTone = pair.severity === "moderate" || pair.severity === "severe" ? "text-warning" : "text-success";
+  const ConnIcon =
+    pair.severity === "moderate" || pair.severity === "severe" ? AlertTriangle : Info;
+  const connTone =
+    pair.severity === "moderate" || pair.severity === "severe" ? "text-warning" : "text-success";
 
   return (
-    <div className={cn("rounded-lg border border-line border-l-4 bg-surface p-5 shadow-card", SEVERITY_BORDER[pair.severity])}>
+    <div
+      className={cn(
+        "rounded-lg border border-line border-l-4 bg-surface p-5 shadow-card",
+        SEVERITY_BORDER[pair.severity]
+      )}
+    >
       <div className="flex items-center justify-between gap-4">
         <Med name={pair.left} />
         <div className="flex flex-1 items-center justify-center gap-2">

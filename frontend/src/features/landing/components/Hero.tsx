@@ -1,15 +1,15 @@
-import { Link } from 'react-router-dom'
-import { CheckCircle2, Leaf, Lock, Play, ScanLine, ShieldCheck, Upload } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
-import { buttonVariants } from '@/components/ui/button'
-import { IconBadge } from '@/components/shared/IconBadge'
-import { cn } from '@/lib/utils'
+import { Link } from "react-router-dom";
+import { CheckCircle2, Leaf, Lock, Play, ScanLine, ShieldCheck, Upload } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
+import { IconBadge } from "@/components/shared/IconBadge";
+import { cn } from "@/lib/utils";
 
 const TRUST = [
-  { icon: CheckCircle2, label: 'Free to start' },
-  { icon: Lock, label: 'Private & encrypted' },
-  { icon: ShieldCheck, label: 'Doctor-reviewed' },
-]
+  { icon: CheckCircle2, label: "Free to start" },
+  { icon: Lock, label: "Private & encrypted" },
+  { icon: ShieldCheck, label: "Doctor-reviewed" },
+];
 
 /** Landing hero — headline, dual CTAs, trust row, floating "Rx scanned" preview card. */
 export function Hero() {
@@ -24,8 +24,7 @@ export function Hero() {
           </p>
 
           <h1 className="mt-5 text-[2.75rem] font-extrabold leading-[1.05] text-ink sm:text-5xl lg:text-[3.5rem]">
-            Understand your medicines with{' '}
-            <span className="text-brand">confidence.</span>
+            Understand your medicines with <span className="text-brand">confidence.</span>
           </h1>
 
           <p className="mt-6 max-w-xl text-body-lg leading-relaxed text-muted">
@@ -34,11 +33,14 @@ export function Hero() {
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link to="/register" className={cn(buttonVariants({ variant: 'primary', size: 'lg' }))}>
+            <Link to="/register" className={cn(buttonVariants({ variant: "primary", size: "lg" }))}>
               <Upload className="h-5 w-5" strokeWidth={2} />
               Scan a prescription
             </Link>
-            <a href="#how-it-works" className={cn(buttonVariants({ variant: 'ghost', size: 'lg' }))}>
+            <a
+              href="#how-it-works"
+              className={cn(buttonVariants({ variant: "ghost", size: "lg" }))}
+            >
               <Play className="h-5 w-5" strokeWidth={2} />
               See live demo
             </a>
@@ -71,8 +73,18 @@ export function Hero() {
             </div>
 
             {[
-              { name: 'Glycomet 500 SR', meta: '500 mg · After food', tag: 'Anti-diabetic', tone: 'brand' as const },
-              { name: 'Amlong 5', meta: '5 mg · Any time', tag: 'Anti-hypertensive', tone: 'accent' as const },
+              {
+                name: "Glycomet 500 SR",
+                meta: "500 mg · After food",
+                tag: "Anti-diabetic",
+                tone: "brand" as const,
+              },
+              {
+                name: "Amlong 5",
+                meta: "5 mg · Any time",
+                tag: "Anti-hypertensive",
+                tone: "accent" as const,
+              },
             ].map((m) => (
               <div key={m.name} className="flex items-center justify-between gap-3 py-4">
                 <div className="flex items-center gap-3">
@@ -98,5 +110,5 @@ export function Hero() {
         </div>
       </div>
     </section>
-  )
+  );
 }

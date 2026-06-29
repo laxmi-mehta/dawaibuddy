@@ -14,7 +14,10 @@ export default function AuthLayout() {
           <Link to="/" aria-label="DawaiBuddy home" className="lg:invisible">
             <Logo />
           </Link>
-          <Link to="/" className="flex items-center gap-1.5 text-small font-semibold text-muted hover:text-ink">
+          <Link
+            to="/"
+            className="flex items-center gap-1.5 text-small font-semibold text-muted hover:text-ink"
+          >
             <ArrowLeft className="h-4 w-4" /> Back to home
           </Link>
         </div>

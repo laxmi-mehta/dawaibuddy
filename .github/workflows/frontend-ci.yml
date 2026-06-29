@@ -4,14 +4,15 @@ on:
   push:
     branches:
       - main
-      - "feature/frontend-*"
-      - "feature/devops-*"
+      - frontend
+      - "frontend/**"
     paths:
       - "frontend/**"
       - ".github/workflows/frontend-ci.yml"
   pull_request:
     branches:
       - main
+      - frontend
     paths:
       - "frontend/**"
 

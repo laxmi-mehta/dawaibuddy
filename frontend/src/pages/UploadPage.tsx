@@ -12,7 +12,9 @@ export default function UploadPage() {
         subtitle="Scan or import your prescription to get started"
         actions={
           <Link to="/upload/review">
-            <Button variant="ghost" size="sm">Skip to results</Button>
+            <Button variant="ghost" size="sm">
+              Skip to results
+            </Button>
           </Link>
         }
       />

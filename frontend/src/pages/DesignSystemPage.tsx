@@ -34,7 +34,15 @@ import { AdherenceCard } from "@/components/shared/AdherenceCard";
 import { SeverityPill } from "@/components/shared/SeverityPill";
 import { cn } from "@/lib/utils";
 
-function Section({ title, subtitle, children }: { title: string; subtitle?: string; children: ReactNode }) {
+function Section({
+  title,
+  subtitle,
+  children,
+}: {
+  title: string;
+  subtitle?: string;
+  children: ReactNode;
+}) {
   return (
     <Card className="p-6">
       <h2 className="text-h3 font-extrabold text-ink">{title}</h2>
@@ -44,7 +52,15 @@ function Section({ title, subtitle, children }: { title: string; subtitle?: stri
   );
 }
 
-function Swatch({ className, label, border }: { className: string; label: string; border?: boolean }) {
+function Swatch({
+  className,
+  label,
+  border,
+}: {
+  className: string;
+  label: string;
+  border?: boolean;
+}) {
   return (
     <div>
       <div className={cn("h-16 rounded-md", border && "border border-line", className)} />
@@ -58,11 +74,34 @@ function Label({ children }: { children: ReactNode }) {
 }
 
 const ICONS: LucideIcon[] = [
-  Pill, ScanLine, Upload, Camera, Bell, Calendar, Shield, Sparkles,
-  MessageCircle, Heart, Leaf, Stethoscope, User, CheckCircle2, Plus, ArrowRight,
+  Pill,
+  ScanLine,
+  Upload,
+  Camera,
+  Bell,
+  Calendar,
+  Shield,
+  Sparkles,
+  MessageCircle,
+  Heart,
+  Leaf,
+  Stethoscope,
+  User,
+  CheckCircle2,
+  Plus,
+  ArrowRight,
 ];
 
-const FLOW = ["Landing", "Sign up", "Upload Rx", "OCR review", "Medicine info", "Interactions", "Reminders", "AI Assistant"];
+const FLOW = [
+  "Landing",
+  "Sign up",
+  "Upload Rx",
+  "OCR review",
+  "Medicine info",
+  "Interactions",
+  "Reminders",
+  "AI Assistant",
+];
 
 export default function DesignSystemPage() {
   return (
@@ -73,10 +112,16 @@ export default function DesignSystemPage() {
         {/* Brand */}
         <Section title="Brand" subtitle="Logo, tagline and identity.">
           <div className="flex flex-wrap items-center gap-4">
-            <div className="rounded-lg border border-line p-4"><Logo /></div>
-            <div className="rounded-lg bg-ink p-4"><Logo tone="dark" /></div>
+            <div className="rounded-lg border border-line p-4">
+              <Logo />
+            </div>
+            <div className="rounded-lg bg-ink p-4">
+              <Logo tone="dark" />
+            </div>
           </div>
-          <p className="mt-4 text-body-lg font-bold text-brand">"Understand your medicines with confidence."</p>
+          <p className="mt-4 text-body-lg font-bold text-brand">
+            "Understand your medicines with confidence."
+          </p>
         </Section>
 
         {/* Colour palette */}
@@ -111,28 +156,45 @@ export default function DesignSystemPage() {
         </Section>
 
         {/* Typography */}
-        <Section title="Typography" subtitle="Plus Jakarta Sans · tight tracking on headings, comfortable line-height on body.">
+        <Section
+          title="Typography"
+          subtitle="Plus Jakarta Sans · tight tracking on headings, comfortable line-height on body."
+        >
           <div className="space-y-2">
             <p className="text-display font-extrabold text-ink">Display / 48</p>
             <p className="text-h1 font-extrabold text-ink">Heading 1 / 32 · 800</p>
             <p className="text-h2 font-extrabold text-ink">Heading 2 / 24 · 800</p>
             <p className="text-h3 font-extrabold text-ink">Heading 3 / 19 · 800</p>
-            <p className="text-body-lg text-ink-2">Body large / 18 — readable copy for elderly-friendly screens.</p>
-            <p className="text-body text-ink-2">Body / 16 — the default reading size across the app.</p>
-            <p className="text-small text-muted">Small / 14 — secondary information and metadata.</p>
-            <p className="text-tiny text-muted">Tiny / 13 — captions, timestamps and helper text.</p>
+            <p className="text-body-lg text-ink-2">
+              Body large / 18 — readable copy for elderly-friendly screens.
+            </p>
+            <p className="text-body text-ink-2">
+              Body / 16 — the default reading size across the app.
+            </p>
+            <p className="text-small text-muted">
+              Small / 14 — secondary information and metadata.
+            </p>
+            <p className="text-tiny text-muted">
+              Tiny / 13 — captions, timestamps and helper text.
+            </p>
           </div>
         </Section>
 
         {/* Radius, spacing, elevation */}
-        <Section title="Radius, spacing & elevation" subtitle="Soft, clinical surfaces with restrained shadows.">
+        <Section
+          title="Radius, spacing & elevation"
+          subtitle="Soft, clinical surfaces with restrained shadows."
+        >
           <div className="grid gap-8 sm:grid-cols-3">
             <div>
               <Label>Radius</Label>
               <div className="flex items-end gap-3">
-                <div className="h-14 w-14 rounded-sm bg-brand-100" /><span className="text-tiny text-muted">sm</span>
-                <div className="h-14 w-14 rounded-md bg-brand-100" /><span className="text-tiny text-muted">md</span>
-                <div className="h-14 w-14 rounded-lg bg-brand-100" /><span className="text-tiny text-muted">lg</span>
+                <div className="h-14 w-14 rounded-sm bg-brand-100" />
+                <span className="text-tiny text-muted">sm</span>
+                <div className="h-14 w-14 rounded-md bg-brand-100" />
+                <span className="text-tiny text-muted">md</span>
+                <div className="h-14 w-14 rounded-lg bg-brand-100" />
+                <span className="text-tiny text-muted">lg</span>
               </div>
             </div>
             <div>
@@ -171,8 +233,12 @@ export default function DesignSystemPage() {
             <Button size="lg">Large</Button>
             <Button size="default">Default</Button>
             <Button size="sm">Small</Button>
-            <Button size="icon"><Plus className="h-5 w-5" /></Button>
-            <Button><Upload className="h-5 w-5" /> With icon</Button>
+            <Button size="icon">
+              <Plus className="h-5 w-5" />
+            </Button>
+            <Button>
+              <Upload className="h-5 w-5" /> With icon
+            </Button>
           </div>
         </Section>
 
@@ -182,7 +248,9 @@ export default function DesignSystemPage() {
             <Badge>Default</Badge>
             <Badge variant="brand">Brand</Badge>
             <Badge variant="accent">Accent</Badge>
-            <Badge variant="success"><CheckCircle2 className="h-3.5 w-3.5" /> Success</Badge>
+            <Badge variant="success">
+              <CheckCircle2 className="h-3.5 w-3.5" /> Success
+            </Badge>
             <Badge variant="warning">Warning</Badge>
             <Badge variant="danger">Danger</Badge>
           </div>
@@ -208,7 +276,9 @@ export default function DesignSystemPage() {
           <div className="mt-5 flex flex-wrap items-center gap-6">
             <Checkbox defaultChecked label="Checkbox" />
             <Radio name="ds-radio" defaultChecked label="Radio" />
-            <div className="flex items-center gap-2"><Toggle defaultChecked /> <span className="text-small text-ink-2">Toggle</span></div>
+            <div className="flex items-center gap-2">
+              <Toggle defaultChecked /> <span className="text-small text-ink-2">Toggle</span>
+            </div>
           </div>
         </Section>
 
@@ -240,7 +310,9 @@ export default function DesignSystemPage() {
           <div className="flex flex-wrap items-center gap-2">
             {FLOW.map((step, i) => (
               <div key={step} className="flex items-center gap-2">
-                <span className="rounded-full bg-brand-50 px-3 py-1.5 text-small font-semibold text-brand-700">{step}</span>
+                <span className="rounded-full bg-brand-50 px-3 py-1.5 text-small font-semibold text-brand-700">
+                  {step}
+                </span>
                 {i < FLOW.length - 1 && <ArrowRight className="h-4 w-4 text-muted" />}
               </div>
             ))}

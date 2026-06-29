@@ -45,7 +45,7 @@ function NavGroup({ title, items }: { title: string; items: NavItem[] }) {
               className={({ isActive }) =>
                 cn(
                   "flex items-center gap-3 rounded-md px-3 py-2.5 text-small font-semibold transition-colors",
-                  isActive ? "bg-brand text-white" : "text-ink-2 hover:bg-bg",
+                  isActive ? "bg-brand text-white" : "text-ink-2 hover:bg-bg"
                 )
               }
             >

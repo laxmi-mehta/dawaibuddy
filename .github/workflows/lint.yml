@@ -4,7 +4,10 @@ on:
   push:
     branches:
       - main
-      - "feature/**"
+      - frontend
+      - backend
+      - "frontend/**"
+      - "backend/**"
   pull_request:
     branches:
       - main

@@ -6,8 +6,7 @@ export const remindersService = {
   list: (): Promise<PaginatedResponse<Reminder>> =>
     apiClient.get("/reminders/").then((r) => r.data),
 
-  get: (_id: string): Promise<Reminder> =>
-    apiClient.get(`/reminders/${_id}/`).then((r) => r.data),
+  get: (_id: string): Promise<Reminder> => apiClient.get(`/reminders/${_id}/`).then((r) => r.data),
 
   create: (_data: Partial<Reminder>): Promise<Reminder> =>
     apiClient.post("/reminders/", _data).then((r) => r.data),

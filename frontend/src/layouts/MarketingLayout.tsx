@@ -1,6 +1,6 @@
-import { Outlet } from 'react-router-dom'
-import { MarketingNav } from '@/components/layout/MarketingNav'
-import { Footer } from '@/components/layout/Footer'
+import { Outlet } from "react-router-dom";
+import { MarketingNav } from "@/components/layout/MarketingNav";
+import { Footer } from "@/components/layout/Footer";
 
 /** Shell for public marketing pages: nav + routed content + footer. */
 export function MarketingLayout() {
@@ -12,5 +12,5 @@ export function MarketingLayout() {
       </main>
       <Footer />
     </div>
-  )
+  );
 }

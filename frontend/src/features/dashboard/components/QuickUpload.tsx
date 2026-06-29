@@ -13,7 +13,8 @@ export function QuickUpload() {
         </p>
         <h2 className="mt-2 text-h2 font-extrabold text-ink">Scan a new prescription</h2>
         <p className="mt-2 max-w-md text-body text-muted">
-          Drag a photo, snap with your camera, or import a PDF. We'll extract every medicine for you.
+          Drag a photo, snap with your camera, or import a PDF. We'll extract every medicine for
+          you.
         </p>
         <div className="mt-5 flex flex-col gap-3 sm:flex-row">
           <Link to="/upload" className={cn(buttonVariants({ variant: "primary" }))}>

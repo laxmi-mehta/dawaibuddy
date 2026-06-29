@@ -11,7 +11,12 @@ interface Dose {
 }
 
 const DOSES: Dose[] = [
-  { icon: Sunrise, name: "Glycomet 500 SR", meta: "08:00 · Morning · after breakfast", taken: true },
+  {
+    icon: Sunrise,
+    name: "Glycomet 500 SR",
+    meta: "08:00 · Morning · after breakfast",
+    taken: true,
+  },
   { icon: Sunrise, name: "Pan 40", meta: "07:30 · Before breakfast", taken: true },
   { icon: Sunrise, name: "Amlong 5", meta: "09:00 · Morning", taken: false },
   { icon: Sun, name: "Cetzine 10", meta: "14:00 · Afternoon", taken: false },
@@ -25,7 +30,10 @@ export function TodaysReminders() {
     <Card className="p-6">
       <div className="flex items-center justify-between">
         <h2 className="text-h3 font-extrabold text-ink">Today's reminders</h2>
-        <button type="button" className="flex items-center gap-1.5 text-small font-semibold text-brand hover:underline">
+        <button
+          type="button"
+          className="flex items-center gap-1.5 text-small font-semibold text-brand hover:underline"
+        >
           <Calendar className="h-4 w-4" /> Calendar
         </button>
       </div>
@@ -34,7 +42,9 @@ export function TodaysReminders() {
       <div className="mt-4 rounded-md bg-bg p-4">
         <div className="flex items-center justify-between text-small">
           <span className="font-bold text-ink">Daily progress</span>
-          <span className="text-muted">{TAKEN} of {DOSES.length} taken</span>
+          <span className="text-muted">
+            {TAKEN} of {DOSES.length} taken
+          </span>
         </div>
         <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-line">
           <div className="h-full rounded-full bg-brand-gradient" style={{ width: `${PCT}%` }} />

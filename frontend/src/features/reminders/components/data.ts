@@ -23,7 +23,12 @@ export const BUCKETS: Bucket[] = [
     icon: Sunrise,
     tone: "warning",
     doses: [
-      { name: "Glycomet 500 SR", meta: "500 mg · 08:00 · Morning · after breakfast", taken: true, tone: "brand" },
+      {
+        name: "Glycomet 500 SR",
+        meta: "500 mg · 08:00 · Morning · after breakfast",
+        taken: true,
+        tone: "brand",
+      },
       { name: "Pan 40", meta: "40 mg · 07:30 · Before breakfast", taken: true, tone: "brand" },
       { name: "Amlong 5", meta: "5 mg · 09:00 · Morning", taken: false, tone: "accent" },
     ],
@@ -33,14 +38,23 @@ export const BUCKETS: Bucket[] = [
     range: "12pm – 5pm",
     icon: Sun,
     tone: "warning",
-    doses: [{ name: "Cetzine 10", meta: "10 mg · 14:00 · Afternoon", taken: false, tone: "accent" }],
+    doses: [
+      { name: "Cetzine 10", meta: "10 mg · 14:00 · Afternoon", taken: false, tone: "accent" },
+    ],
   },
   {
     label: "Evening",
     range: "5pm – 9pm",
     icon: Sunset,
     tone: "accent",
-    doses: [{ name: "Glycomet 500 SR", meta: "500 mg · 20:00 · Evening · after dinner", taken: false, tone: "brand" }],
+    doses: [
+      {
+        name: "Glycomet 500 SR",
+        meta: "500 mg · 20:00 · Evening · after dinner",
+        taken: false,
+        tone: "brand",
+      },
+    ],
   },
   {
     label: "Night",

@@ -43,13 +43,11 @@ export function AuthField({
           className={cn(
             "h-12 w-full rounded-md border border-line bg-surface pl-11 pr-11 text-body text-ink",
             "placeholder:text-muted focus-visible:border-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/30",
-            className,
+            className
           )}
           {...props}
         />
-        {rightSlot && (
-          <div className="absolute right-2 top-1/2 -translate-y-1/2">{rightSlot}</div>
-        )}
+        {rightSlot && <div className="absolute right-2 top-1/2 -translate-y-1/2">{rightSlot}</div>}
       </div>
       {hint && <p className="mt-1.5 text-tiny text-muted">{hint}</p>}
     </div>

@@ -1,20 +1,20 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Menu, X } from 'lucide-react'
-import { Logo } from '@/components/shared/Logo'
-import { buttonVariants } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Menu, X } from "lucide-react";
+import { Logo } from "@/components/shared/Logo";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
-  { label: 'Features', href: '#features' },
-  { label: 'How it works', href: '#how-it-works' },
-  { label: 'Reviews', href: '#reviews' },
-  { label: 'FAQ', href: '#faq' },
-]
+  { label: "Features", href: "#features" },
+  { label: "How it works", href: "#how-it-works" },
+  { label: "Reviews", href: "#reviews" },
+  { label: "FAQ", href: "#faq" },
+];
 
 /** Public marketing navbar — sticky, blurred, collapses to a hamburger sheet on mobile. */
 export function MarketingNav() {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-surface/80 backdrop-blur-md">
@@ -39,10 +39,10 @@ export function MarketingNav() {
 
         {/* Desktop CTAs */}
         <div className="hidden items-center gap-3 lg:flex">
-          <Link to="/login" className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}>
+          <Link to="/login" className={cn(buttonVariants({ variant: "ghost", size: "sm" }))}>
             Log in
           </Link>
-          <Link to="/register" className={cn(buttonVariants({ variant: 'primary', size: 'sm' }))}>
+          <Link to="/register" className={cn(buttonVariants({ variant: "primary", size: "sm" }))}>
             Get started
           </Link>
         </div>
@@ -79,14 +79,14 @@ export function MarketingNav() {
             <Link
               to="/login"
               onClick={() => setOpen(false)}
-              className={cn(buttonVariants({ variant: 'ghost' }), 'w-full')}
+              className={cn(buttonVariants({ variant: "ghost" }), "w-full")}
             >
               Log in
             </Link>
             <Link
               to="/register"
               onClick={() => setOpen(false)}
-              className={cn(buttonVariants({ variant: 'primary' }), 'w-full')}
+              className={cn(buttonVariants({ variant: "primary" }), "w-full")}
             >
               Get started
             </Link>
@@ -94,5 +94,5 @@ export function MarketingNav() {
         </div>
       )}
     </header>
-  )
+  );
 }

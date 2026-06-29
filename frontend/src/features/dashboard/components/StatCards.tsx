@@ -13,10 +13,28 @@ interface Stat {
 }
 
 const STATS: Stat[] = [
-  { icon: Pill, tone: "brand", badge: { label: "On track", variant: "success" }, value: "6", label: "Active medicines" },
-  { icon: CheckCircle2, tone: "accent", badge: { label: "92% adherence", variant: "success" }, value: "2/6", label: "Doses taken today" },
+  {
+    icon: Pill,
+    tone: "brand",
+    badge: { label: "On track", variant: "success" },
+    value: "6",
+    label: "Active medicines",
+  },
+  {
+    icon: CheckCircle2,
+    tone: "accent",
+    badge: { label: "92% adherence", variant: "success" },
+    value: "2/6",
+    label: "Doses taken today",
+  },
   { icon: FileText, tone: "brand", value: "3", label: "Prescriptions" },
-  { icon: Leaf, tone: "accent", badge: { label: "this month", variant: "success" }, value: "₹420", label: "Saved with generics" },
+  {
+    icon: Leaf,
+    tone: "accent",
+    badge: { label: "this month", variant: "success" },
+    value: "₹420",
+    label: "Saved with generics",
+  },
 ];
 
 export function StatCards() {

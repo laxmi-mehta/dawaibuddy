@@ -11,9 +11,24 @@ interface Rx {
 }
 
 const ITEMS: Rx[] = [
-  { doctor: "Dr. Meera Nair — Diabetology", meta: "2 Jun 2026 · 2 medicines", status: "Ready", tone: "brand" },
-  { doctor: "Dr. Rohan Kulkarni — Cardiology", meta: "24 May 2026 · 2 medicines", status: "Ready", tone: "accent" },
-  { doctor: "Dr. Sana Qureshi — General Physician", meta: "11 May 2026 · 2 medicines", status: "Processing", tone: "brand" },
+  {
+    doctor: "Dr. Meera Nair — Diabetology",
+    meta: "2 Jun 2026 · 2 medicines",
+    status: "Ready",
+    tone: "brand",
+  },
+  {
+    doctor: "Dr. Rohan Kulkarni — Cardiology",
+    meta: "24 May 2026 · 2 medicines",
+    status: "Ready",
+    tone: "accent",
+  },
+  {
+    doctor: "Dr. Sana Qureshi — General Physician",
+    meta: "11 May 2026 · 2 medicines",
+    status: "Processing",
+    tone: "brand",
+  },
 ];
 
 export function RecentPrescriptions() {
@@ -21,7 +36,10 @@ export function RecentPrescriptions() {
     <Card className="p-6">
       <div className="flex items-center justify-between">
         <h2 className="text-h3 font-extrabold text-ink">Recent prescriptions</h2>
-        <button type="button" className="flex items-center gap-1 text-small font-semibold text-brand hover:underline">
+        <button
+          type="button"
+          className="flex items-center gap-1 text-small font-semibold text-brand hover:underline"
+        >
           View all <ChevronRight className="h-4 w-4" />
         </button>
       </div>
@@ -35,7 +53,9 @@ export function RecentPrescriptions() {
               <p className="text-small text-muted">{rx.meta}</p>
             </div>
             {rx.status === "Ready" ? (
-              <Badge variant="success" size="sm">Ready</Badge>
+              <Badge variant="success" size="sm">
+                Ready
+              </Badge>
             ) : (
               <Badge variant="warning" size="sm">
                 <Clock className="h-3.5 w-3.5" /> Processing

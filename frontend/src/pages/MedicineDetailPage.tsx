@@ -23,7 +23,10 @@ export default function MedicineDetailPage() {
       />
 
       <div className="mx-auto max-w-6xl p-6">
-        <Link to="/dashboard" className="mb-5 inline-flex items-center gap-2 text-small font-semibold text-muted hover:text-ink">
+        <Link
+          to="/dashboard"
+          className="mb-5 inline-flex items-center gap-2 text-small font-semibold text-muted hover:text-ink"
+        >
           <ArrowLeft className="h-4 w-4" /> Back
         </Link>
 

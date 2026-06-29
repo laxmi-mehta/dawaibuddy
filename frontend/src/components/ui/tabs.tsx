@@ -24,7 +24,7 @@ export function Tabs({ items, defaultId }: { items: TabItem[]; defaultId?: strin
             onClick={() => setActive(id)}
             className={cn(
               "flex items-center gap-2 rounded-md px-4 py-2 text-small font-semibold transition-colors",
-              active === id ? "bg-surface text-brand shadow-soft" : "text-muted hover:text-ink",
+              active === id ? "bg-surface text-brand shadow-soft" : "text-muted hover:text-ink"
             )}
           >
             {Icon && <Icon className="h-4 w-4" strokeWidth={2} />}

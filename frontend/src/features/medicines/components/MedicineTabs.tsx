@@ -30,7 +30,13 @@ export function MedicineTabs() {
             content: (
               <>
                 <h3 className="text-h3 font-extrabold text-ink">What it's used for</h3>
-                <CheckList items={["Type 2 diabetes mellitus", "Improves insulin sensitivity", "PCOS (off-label)"]} />
+                <CheckList
+                  items={[
+                    "Type 2 diabetes mellitus",
+                    "Improves insulin sensitivity",
+                    "PCOS (off-label)",
+                  ]}
+                />
               </>
             ),
           },
@@ -41,7 +47,13 @@ export function MedicineTabs() {
             content: (
               <>
                 <h3 className="text-h3 font-extrabold text-ink">Possible side effects</h3>
-                <CheckList items={["Nausea or upset stomach", "Metallic taste", "Rarely, low vitamin B12 over time"]} />
+                <CheckList
+                  items={[
+                    "Nausea or upset stomach",
+                    "Metallic taste",
+                    "Rarely, low vitamin B12 over time",
+                  ]}
+                />
               </>
             ),
           },
@@ -52,7 +64,13 @@ export function MedicineTabs() {
             content: (
               <>
                 <h3 className="text-h3 font-extrabold text-ink">Before you take it</h3>
-                <CheckList items={["Tell your doctor about kidney issues", "Avoid excess alcohol", "Pause before contrast scans"]} />
+                <CheckList
+                  items={[
+                    "Tell your doctor about kidney issues",
+                    "Avoid excess alcohol",
+                    "Pause before contrast scans",
+                  ]}
+                />
               </>
             ),
           },
@@ -63,7 +81,13 @@ export function MedicineTabs() {
             content: (
               <>
                 <h3 className="text-h3 font-extrabold text-ink">Common interactions</h3>
-                <CheckList items={["Some diuretics may raise blood sugar", "Contrast dyes — pause use", "Alcohol increases lactic-acidosis risk"]} />
+                <CheckList
+                  items={[
+                    "Some diuretics may raise blood sugar",
+                    "Contrast dyes — pause use",
+                    "Alcohol increases lactic-acidosis risk",
+                  ]}
+                />
               </>
             ),
           },

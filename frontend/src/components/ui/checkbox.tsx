@@ -13,10 +13,7 @@ export function Checkbox({ label, className, id, ...props }: CheckboxProps) {
       <input
         id={boxId}
         type="checkbox"
-        className={cn(
-          "h-5 w-5 shrink-0 rounded-[6px] border border-line accent-brand",
-          className,
-        )}
+        className={cn("h-5 w-5 shrink-0 rounded-[6px] border border-line accent-brand", className)}
         {...props}
       />
       {label && <span className="text-small text-ink-2">{label}</span>}

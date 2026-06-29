@@ -6,7 +6,12 @@ import { Card } from "@/components/ui/card";
 import { ProgressRing } from "@/components/shared/ProgressRing";
 import { cn } from "@/lib/utils";
 import { ReminderBucket } from "@/features/reminders/components/ReminderBucket";
-import { BUCKETS, PROGRESS_PCT, TAKEN_DOSES, TOTAL_DOSES } from "@/features/reminders/components/data";
+import {
+  BUCKETS,
+  PROGRESS_PCT,
+  TAKEN_DOSES,
+  TOTAL_DOSES,
+} from "@/features/reminders/components/data";
 
 export default function RemindersPage() {
   const [view, setView] = useState<"list" | "calendar">("list");
@@ -30,22 +35,26 @@ export default function RemindersPage() {
             <ProgressRing value={PROGRESS_PCT} />
             <div>
               <p className="text-h3 font-extrabold text-ink">Today, 6 June</p>
-              <p className="text-small text-muted">{TAKEN_DOSES} of {TOTAL_DOSES} doses taken · keep it up!</p>
+              <p className="text-small text-muted">
+                {TAKEN_DOSES} of {TOTAL_DOSES} doses taken · keep it up!
+              </p>
             </div>
           </div>
 
           <div className="flex rounded-lg bg-bg p-1">
-            {([
-              { id: "list", label: "List", icon: List },
-              { id: "calendar", label: "Calendar", icon: CalendarDays },
-            ] as const).map(({ id, label, icon: Icon }) => (
+            {(
+              [
+                { id: "list", label: "List", icon: List },
+                { id: "calendar", label: "Calendar", icon: CalendarDays },
+              ] as const
+            ).map(({ id, label, icon: Icon }) => (
               <button
                 key={id}
                 type="button"
                 onClick={() => setView(id)}
                 className={cn(
                   "flex items-center gap-2 rounded-md px-4 py-2 text-small font-semibold transition-colors",
-                  view === id ? "bg-surface text-brand shadow-soft" : "text-muted hover:text-ink",
+                  view === id ? "bg-surface text-brand shadow-soft" : "text-muted hover:text-ink"
                 )}
               >
                 <Icon className="h-4 w-4" strokeWidth={2} />
@@ -65,7 +74,9 @@ export default function RemindersPage() {
           <Card className="flex flex-col items-center justify-center gap-3 p-16 text-center">
             <CalendarDays className="h-10 w-10 text-brand" strokeWidth={1.6} />
             <p className="text-h3 font-extrabold text-ink">Calendar view</p>
-            <p className="max-w-sm text-body text-muted">A monthly adherence calendar is coming soon.</p>
+            <p className="max-w-sm text-body text-muted">
+              A monthly adherence calendar is coming soon.
+            </p>
           </Card>
         )}
       </div>

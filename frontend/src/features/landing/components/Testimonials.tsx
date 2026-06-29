@@ -1,47 +1,50 @@
-import { Quote, Star } from 'lucide-react'
-import { Card } from '@/components/ui/card'
-import { SectionHeading } from './SectionHeading'
+import { Quote, Star } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { SectionHeading } from "./SectionHeading";
 
 interface Testimonial {
-  quote: string
-  initials: string
-  name: string
-  role: string
-  avatar: string
+  quote: string;
+  initials: string;
+  name: string;
+  role: string;
+  avatar: string;
 }
 
 const TESTIMONIALS: Testimonial[] = [
   {
     quote:
       "I finally understand my father's 6 medicines. The reminders mean he never misses his evening dose now.",
-    initials: 'AS',
-    name: 'Ananya Sharma',
-    role: 'Caregiver, Pune',
-    avatar: 'bg-brand-100 text-brand-700',
+    initials: "AS",
+    name: "Ananya Sharma",
+    role: "Caregiver, Pune",
+    avatar: "bg-brand-100 text-brand-700",
   },
   {
     quote:
-      'I recommend DawaiBuddy to patients who struggle with complex prescriptions. The interaction checker is genuinely useful.',
-    initials: 'VR',
-    name: 'Dr. Vikram Rao',
-    role: 'Family Physician, Hyderabad',
-    avatar: 'bg-accent-100 text-accent-600',
+      "I recommend DawaiBuddy to patients who struggle with complex prescriptions. The interaction checker is genuinely useful.",
+    initials: "VR",
+    name: "Dr. Vikram Rao",
+    role: "Family Physician, Hyderabad",
+    avatar: "bg-accent-100 text-accent-600",
   },
   {
     quote:
-      'Scanned my prescription and got plain-English explanations in seconds. The generic alternatives saved me ₹400 a month.',
-    initials: 'PM',
-    name: 'Priya Menon',
-    role: 'Marketing Lead, Bengaluru',
-    avatar: 'bg-brand-100 text-brand-700',
+      "Scanned my prescription and got plain-English explanations in seconds. The generic alternatives saved me ₹400 a month.",
+    initials: "PM",
+    name: "Priya Menon",
+    role: "Marketing Lead, Bengaluru",
+    avatar: "bg-brand-100 text-brand-700",
   },
-]
+];
 
 export function Testimonials() {
   return (
     <section id="reviews" className="bg-bg">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <SectionHeading eyebrow="Loved by families & doctors" title="People feel safer with DawaiBuddy" />
+        <SectionHeading
+          eyebrow="Loved by families & doctors"
+          title="People feel safer with DawaiBuddy"
+        />
 
         <div className="mt-12 grid gap-6 lg:grid-cols-3">
           {TESTIMONIALS.map((t) => (
@@ -69,5 +72,5 @@ export function Testimonials() {
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -25,7 +25,10 @@ export default function AssistantPage() {
                 </p>
               </div>
             </div>
-            <button type="button" className="flex items-center gap-1.5 rounded-full border border-line px-4 py-2 text-small font-semibold text-ink-2 hover:bg-bg">
+            <button
+              type="button"
+              className="flex items-center gap-1.5 rounded-full border border-line px-4 py-2 text-small font-semibold text-ink-2 hover:bg-bg"
+            >
               <RefreshCw className="h-4 w-4" /> New chat
             </button>
           </div>
@@ -44,13 +47,14 @@ export default function AssistantPage() {
               footnote="General guidance · not a substitute for your doctor"
             >
               <p>
-                Yes — taking <strong>Metformin</strong> and <strong>Pantoprazole</strong> together is
-                generally safe and very common. A small thing to keep in mind: both can slightly lower{" "}
-                <strong>vitamin B12</strong> over long-term use, so periodic B12 checks are a good idea.
+                Yes — taking <strong>Metformin</strong> and <strong>Pantoprazole</strong> together
+                is generally safe and very common. A small thing to keep in mind: both can slightly
+                lower <strong>vitamin B12</strong> over long-term use, so periodic B12 checks are a
+                good idea.
               </p>
               <p className="mt-3">
-                Take Pantoprazole 30–60 minutes <em>before</em> breakfast, and Metformin <em>after</em>{" "}
-                food to reduce stomach upset.
+                Take Pantoprazole 30–60 minutes <em>before</em> breakfast, and Metformin{" "}
+                <em>after</em> food to reduce stomach upset.
               </p>
             </ChatBubble>
           </div>

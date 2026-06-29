@@ -21,7 +21,10 @@ export function AppHeader({ title, subtitle, searchPlaceholder, actions }: AppHe
 
       {searchPlaceholder && (
         <div className="relative lg:mx-6 lg:max-w-md lg:flex-1">
-          <Search className="pointer-events-none absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-muted" strokeWidth={1.9} />
+          <Search
+            className="pointer-events-none absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-muted"
+            strokeWidth={1.9}
+          />
           <input
             type="search"
             placeholder={searchPlaceholder}

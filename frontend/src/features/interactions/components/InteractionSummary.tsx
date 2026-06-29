@@ -16,8 +16,12 @@ export function InteractionSummary() {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <Badge variant="warning" size="sm">2 moderate</Badge>
-          <Badge variant="success" size="sm">1 mild</Badge>
+          <Badge variant="warning" size="sm">
+            2 moderate
+          </Badge>
+          <Badge variant="success" size="sm">
+            1 mild
+          </Badge>
           <Button variant="ghost" size="sm">
             <Download className="h-4 w-4" strokeWidth={2} /> Report
           </Button>

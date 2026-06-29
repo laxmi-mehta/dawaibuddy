@@ -19,9 +19,7 @@ export function AuthSidePanel() {
       peace of mind.
     </>
   ) : (
-    <>
-      Understand your medicines with confidence.
-    </>
+    <>Understand your medicines with confidence.</>
   );
   const subcopy = isLogin
     ? "Pick up right where you left off — your prescriptions, reminders and assistant are ready."

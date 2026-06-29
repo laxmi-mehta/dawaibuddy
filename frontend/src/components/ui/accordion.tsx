@@ -1,33 +1,33 @@
-import { useState } from 'react'
-import { Minus, Plus } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { useState } from "react";
+import { Minus, Plus } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export interface AccordionItemData {
-  question: string
-  answer: string
+  question: string;
+  answer: string;
 }
 
 interface AccordionProps {
-  items: AccordionItemData[]
+  items: AccordionItemData[];
   /** Index open on first render (-1 for all closed). */
-  defaultOpenIndex?: number
-  className?: string
+  defaultOpenIndex?: number;
+  className?: string;
 }
 
 /** Lightweight single-open accordion — no external deps. Used by the FAQ section. */
 export function Accordion({ items, defaultOpenIndex = 0, className }: AccordionProps) {
-  const [open, setOpen] = useState(defaultOpenIndex)
+  const [open, setOpen] = useState(defaultOpenIndex);
 
   return (
-    <div className={cn('flex flex-col gap-3', className)}>
+    <div className={cn("flex flex-col gap-3", className)}>
       {items.map((item, i) => {
-        const isOpen = open === i
+        const isOpen = open === i;
         return (
           <div
             key={item.question}
             className={cn(
-              'rounded-md border bg-surface transition-colors',
-              isOpen ? 'border-brand-100' : 'border-line',
+              "rounded-md border bg-surface transition-colors",
+              isOpen ? "border-brand-100" : "border-line"
             )}
           >
             <button
@@ -45,8 +45,8 @@ export function Accordion({ items, defaultOpenIndex = 0, className }: AccordionP
               <p className="px-5 pb-5 text-body leading-relaxed text-muted">{item.answer}</p>
             )}
           </div>
-        )
+        );
       })}
     </div>
-  )
+  );
 }

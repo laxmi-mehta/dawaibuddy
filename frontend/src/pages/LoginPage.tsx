@@ -1,30 +1,68 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, type FormEvent } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { AuthField } from "@/features/auth/components/AuthField";
 import { GoogleButton, OrDivider } from "@/features/auth/components/AuthExtras";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function LoginPage() {
+  const navigate = useNavigate();
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+    try {
+      await login(email, password);
+      navigate("/dashboard", { replace: true });
+    } catch {
+      setError("Invalid email or password.");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <div>
       <h1 className="text-h1 font-extrabold text-ink">Log in</h1>
       <p className="mt-1 text-body text-muted">Enter your details to continue.</p>
 
-      <div className="mt-7 flex flex-col gap-5">
+      <form onSubmit={handleSubmit} className="mt-7 flex flex-col gap-5">
         <GoogleButton />
         <OrDivider />
 
-        <AuthField label="Email address" icon={Mail} type="email" placeholder="you@email.com" />
+        {error && (
+          <p className="rounded-md bg-danger-bg px-4 py-3 text-small font-medium text-danger">
+            {error}
+          </p>
+        )}
+
+        <AuthField
+          label="Email address"
+          icon={Mail}
+          type="email"
+          required
+          placeholder="you@email.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
         <AuthField
           label="Password"
           icon={Lock}
           type={showPassword ? "text" : "password"}
+          required
           placeholder="••••••••"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           labelAction={
             <Link to="#" className="text-small font-semibold text-brand hover:underline">
               Forgot?
@@ -44,11 +82,11 @@ export default function LoginPage() {
 
         <Checkbox name="keep-signed-in" defaultChecked label="Keep me signed in on this device" />
 
-        <Button size="lg" className="w-full">
-          Log in
-          <ArrowRight className="h-5 w-5" strokeWidth={2} />
+        <Button type="submit" size="lg" className="w-full" disabled={loading}>
+          {loading ? "Logging in…" : "Log in"}
+          {!loading && <ArrowRight className="h-5 w-5" strokeWidth={2} />}
         </Button>
-      </div>
+      </form>
 
       <p className="mt-6 text-center text-small text-muted">
         New to DawaiBuddy?{" "}
