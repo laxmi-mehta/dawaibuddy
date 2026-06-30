@@ -8,11 +8,13 @@ class ReminderSerializer(serializers.ModelSerializer):
         model = Reminder
         fields = [
             "id",
-            "user",
-            "message",
-            "scheduled_at",
-            "is_sent",
+            "medicine_name",
+            "dosage",
+            "scheduled_time",
+            "bucket",
+            "instruction",
+            "is_taken",
             "created_at",
             "updated_at",
         ]
-        read_only_fields = ["id", "user", "is_sent", "created_at", "updated_at"]
+        read_only_fields = ["id", "created_at", "updated_at"]
