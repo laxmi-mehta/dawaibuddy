@@ -19,6 +19,7 @@ class MedicineSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "generic_name",
+            "smiles",
             "manufacturer",
             "form",
             "strength",

@@ -8,6 +8,9 @@ class Medicine(BaseModel):
 
     name = models.CharField(max_length=255, unique=True)
     generic_name = models.CharField(max_length=255, blank=True, help_text="Salt / composition")
+    smiles = models.CharField(
+        max_length=512, blank=True, help_text="SMILES string (for the DDI model's fingerprints)"
+    )
     manufacturer = models.CharField(max_length=255, blank=True)
     form = models.CharField(max_length=100, blank=True, help_text="e.g. Tablet (SR)")
     strength = models.CharField(max_length=100, blank=True, help_text="e.g. 500 mg")

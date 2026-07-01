@@ -6,6 +6,7 @@ from django.core.management.base import BaseCommand
 
 from apps.interactions.models import DrugInteraction
 from apps.medicines.models import GenericAlternative, Medicine
+from apps.medicines.smiles_data import lookup_smiles
 
 MEDICINES = [
     {
@@ -51,6 +52,7 @@ class Command(BaseCommand):
         index = {}
         for data in MEDICINES:
             alternatives = data.pop("alternatives", [])
+            data.setdefault("smiles", lookup_smiles(data.get("generic_name", "")))
             med, _ = Medicine.objects.update_or_create(name=data["name"], defaults=data)
             index[med.name] = med
             for alt in alternatives:
