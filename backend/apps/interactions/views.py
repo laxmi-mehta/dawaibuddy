@@ -1,7 +1,12 @@
+from itertools import combinations
+
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apps.medicines.models import Medicine
+
+from . import ddi
 from .models import DrugInteraction
 from .serializers import DrugInteractionSerializer, InteractionCheckSerializer
 
@@ -38,4 +43,36 @@ class InteractionCheckView(APIView):
         counts: dict[str, int] = {}
         for item in data:
             counts[item["severity"]] = counts.get(item["severity"], 0) + 1
-        return Response({"count": len(data), "by_severity": counts, "interactions": data})
+
+        # Model predictions: score every pair (with SMILES) using the DDI classifier.
+        model_predictions = []
+        if ddi.model_available():
+            meds = {
+                str(m.id): m
+                for m in Medicine.objects.filter(id__in=ids).exclude(smiles="")
+            }
+            for id_a, id_b in combinations([i for i in map(str, ids) if i in meds], 2):
+                a, b = meds[id_a], meds[id_b]
+                prob = ddi.predict(a.smiles, b.smiles)
+                if prob is None:
+                    continue
+                model_predictions.append(
+                    {
+                        "medicine_a": id_a,
+                        "medicine_b": id_b,
+                        "medicine_a_name": a.name,
+                        "medicine_b_name": b.name,
+                        "probability": round(prob, 3),
+                        "severity": ddi.severity_from_prob(prob),
+                    }
+                )
+
+        return Response(
+            {
+                "count": len(data),
+                "by_severity": counts,
+                "interactions": data,
+                "model_available": ddi.model_available(),
+                "model_predictions": model_predictions,
+            }
+        )
