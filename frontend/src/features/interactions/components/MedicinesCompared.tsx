@@ -1,47 +1,28 @@
-import { Pill, Plus, X } from "lucide-react";
+import { Pill, Plus } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { IconBadge } from "@/components/shared/IconBadge";
+import type { Medicine } from "@/types";
 
-interface Med {
-  name: string;
-  dose: string;
-  category: string;
-  tone: "brand" | "accent" | "warning";
-}
+const TONES = ["brand", "accent", "warning"] as const;
 
-const MEDS: Med[] = [
-  { name: "Atorvastatin", dose: "10 mg", category: "Lipid-lowering", tone: "brand" },
-  { name: "Azithromycin", dose: "500 mg", category: "Antibiotic", tone: "warning" },
-  { name: "Amlodipine", dose: "5 mg", category: "Anti-hypertensive", tone: "accent" },
-];
-
-export function MedicinesCompared() {
+export function MedicinesCompared({ medicines }: { medicines: Medicine[] }) {
   return (
     <Card className="p-6">
       <div className="flex items-center justify-between">
         <h2 className="text-h3 font-extrabold text-ink">Medicines compared</h2>
-        <Badge variant="brand" size="sm">
-          3 selected
-        </Badge>
+        <Badge variant="brand" size="sm">{medicines.length} selected</Badge>
       </div>
 
       <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {MEDS.map((m) => (
-          <div key={m.name} className="relative rounded-lg border border-line p-4 text-center">
-            <button
-              type="button"
-              aria-label={`Remove ${m.name}`}
-              className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full text-muted hover:bg-bg hover:text-ink"
-            >
-              <X className="h-4 w-4" />
-            </button>
-            <IconBadge icon={Pill} tone={m.tone} size="lg" className="mx-auto" />
+        {medicines.map((m, i) => (
+          <div key={m.id} className="rounded-lg border border-line p-4 text-center">
+            <IconBadge icon={Pill} tone={TONES[i % TONES.length]} size="lg" className="mx-auto" />
             <p className="mt-3 font-bold text-ink">{m.name}</p>
-            <p className="text-small text-muted">{m.dose}</p>
-            <Badge variant="default" size="sm" className="mt-2">
-              {m.category}
-            </Badge>
+            <p className="text-small text-muted">{m.strength || m.generic_name}</p>
+            {m.category && (
+              <Badge variant="default" size="sm" className="mt-2">{m.category}</Badge>
+            )}
           </div>
         ))}
 

@@ -61,7 +61,9 @@ export interface Medicine {
   id: string;
   name: string;
   generic_name: string;
-  description: string;
+  strength?: string;
+  category?: string;
+  smiles?: string;
   created_at: string;
   updated_at: string;
 }
@@ -73,10 +75,30 @@ export interface DrugInteraction {
   id: string;
   medicine_a: string;
   medicine_b: string;
+  medicine_a_name?: string;
+  medicine_b_name?: string;
   severity: string;
+  title?: string;
   description: string;
   created_at: string;
   updated_at: string;
+}
+
+export interface ModelPrediction {
+  medicine_a: string;
+  medicine_b: string;
+  medicine_a_name: string;
+  medicine_b_name: string;
+  probability: number;
+  severity: string;
+}
+
+export interface InteractionCheckResponse {
+  count: number;
+  by_severity: Record<string, number>;
+  interactions: DrugInteraction[];
+  model_available: boolean;
+  model_predictions: ModelPrediction[];
 }
 
 // ---------------------------------------------------------------------------
