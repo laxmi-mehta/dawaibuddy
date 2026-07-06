@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Data + trained models are large / licensed — keep only the folders.
+data/*
+!data/.gitkeep
+models/*
+!models/.gitkeep
