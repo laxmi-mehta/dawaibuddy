@@ -17,3 +17,8 @@ class ConversationSerializer(serializers.ModelSerializer):
         model = Conversation
         fields = ["id", "title", "messages", "created_at", "updated_at"]
         read_only_fields = ["id", "created_at", "updated_at"]
+
+
+class AskResponseSerializer(serializers.Serializer):
+    conversation_id = serializers.UUIDField()
+    reply = MessageSerializer()

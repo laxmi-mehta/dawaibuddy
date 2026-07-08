@@ -71,6 +71,10 @@ celerybeat.pid
 # Docker
 .docker/
 
+# Local ML training workspace (scripts/notebooks/raw data/venv) — not app runtime code.
+# The runtime artifact the app actually loads is backend/apps/interactions/ml/ddi_model.pkl.
+/ml/
+
 # IDE
 .vscode/
 .idea/
