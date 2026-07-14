@@ -18,3 +18,12 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # Disable password complexity locally
 AUTH_PASSWORD_VALIDATORS = []
+
+# Local dev has no Redis running — use in-memory cache instead (used by DRF
+# throttling among other things). Production still uses the Redis CACHES
+# config from base.py.
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+    }
+}

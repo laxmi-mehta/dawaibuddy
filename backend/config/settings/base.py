@@ -180,6 +180,16 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 20,
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "EXCEPTION_HANDLER": "apps.common.exceptions.custom_exception_handler",
+    "DEFAULT_THROTTLE_CLASSES": (
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle",
+    ),
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "60/min",
+        "user": "300/min",
+        # Stricter scope for auth endpoints (login/register) to slow brute-force attempts.
+        "auth": "10/min",
+    },
 }
 
 # ---------------------------------------------------------------------------
@@ -209,6 +219,11 @@ CORS_ALLOWED_ORIGINS = env.list(
     default=["http://localhost:3000", "http://127.0.0.1:3000"],
 )
 CORS_ALLOW_CREDENTIALS = True
+
+# ---------------------------------------------------------------------------
+# Frontend (used to build links in emails, e.g. password reset)
+# ---------------------------------------------------------------------------
+FRONTEND_URL = env("FRONTEND_URL", default="http://localhost:3000")
 
 # ---------------------------------------------------------------------------
 # DRF Spectacular (OpenAPI)

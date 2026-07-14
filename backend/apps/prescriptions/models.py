@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 
 from apps.common.models import BaseModel
+from apps.medicines.models import Medicine
 
 
 class Prescription(BaseModel):
@@ -42,6 +43,14 @@ class PrescriptionMedicine(BaseModel):
 
     prescription = models.ForeignKey(
         Prescription, on_delete=models.CASCADE, related_name="medicines"
+    )
+    medicine = models.ForeignKey(
+        Medicine,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="prescription_entries",
+        help_text="Auto-matched against the medicine catalog by name; null if no match.",
     )
     name = models.CharField(max_length=255)
     salt = models.CharField(max_length=255, blank=True)
