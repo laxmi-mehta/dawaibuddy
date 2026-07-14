@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Camera, FileText, Upload, UploadCloud } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Card } from "@/components/ui/card";
@@ -14,9 +14,21 @@ const TABS: { id: Tab; label: string; icon: LucideIcon }[] = [
 
 const FORMAT_CHIPS = ["JPG", "PNG", "PDF", "Max 10MB"];
 
-/** Upload methods (drag-drop / camera / pdf) with a dropzone. UI only — no OCR. */
-export function UploadCard() {
+interface UploadCardProps {
+  onFileSelected: (file: File) => void;
+  disabled?: boolean;
+}
+
+/** Upload methods (drag-drop / camera / pdf) — all feed the same onFileSelected handler. */
+export function UploadCard({ onFileSelected, disabled }: UploadCardProps) {
   const [tab, setTab] = useState<Tab>("drag");
+  const [dragOver, setDragOver] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  function handleFiles(files: FileList | null) {
+    const file = files?.[0];
+    if (file) onFileSelected(file);
+  }
 
   return (
     <Card className="p-5">
@@ -38,8 +50,37 @@ export function UploadCard() {
         ))}
       </div>
 
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept={tab === "pdf" ? "application/pdf" : "image/*"}
+        capture={tab === "camera" ? "environment" : undefined}
+        className="hidden"
+        disabled={disabled}
+        onChange={(e) => handleFiles(e.target.files)}
+      />
+
       {/* Dropzone */}
-      <div className="mt-5 flex flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed border-line bg-bg/40 px-6 py-14 text-center">
+      <div
+        onDragOver={(e) => {
+          e.preventDefault();
+          setDragOver(true);
+        }}
+        onDragLeave={() => setDragOver(false)}
+        onDrop={(e) => {
+          e.preventDefault();
+          setDragOver(false);
+          handleFiles(e.dataTransfer.files);
+        }}
+        onClick={() => !disabled && fileInputRef.current?.click()}
+        role="button"
+        tabIndex={0}
+        className={cn(
+          "mt-5 flex flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed px-6 py-14 text-center transition-colors",
+          dragOver ? "border-brand bg-brand-50" : "border-line bg-bg/40",
+          disabled ? "opacity-60" : "cursor-pointer hover:bg-bg/70"
+        )}
+      >
         <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-50 text-brand">
           {tab === "camera" ? (
             <Camera className="h-7 w-7" strokeWidth={1.9} />
@@ -58,7 +99,12 @@ export function UploadCard() {
             </p>
             <button
               type="button"
-              className="mt-2 rounded-full bg-brand px-6 py-2.5 text-small font-semibold text-white hover:bg-brand-600"
+              disabled={disabled}
+              onClick={(e) => {
+                e.stopPropagation();
+                fileInputRef.current?.click();
+              }}
+              className="mt-2 rounded-full bg-brand px-6 py-2.5 text-small font-semibold text-white hover:bg-brand-600 disabled:opacity-50"
             >
               Open camera
             </button>

@@ -1,17 +1,37 @@
-import type { ReactNode } from "react";
+import type { KeyboardEvent, ReactNode } from "react";
 import { Bell, Search } from "lucide-react";
+import { useAuthStore } from "@/store/auth.store";
 
 interface AppHeaderProps {
   title: ReactNode;
   subtitle?: string;
   /** Placeholder for the centre search box; omit to hide it. */
   searchPlaceholder?: string;
+  /** Called with the query when Enter is pressed in the search box. */
+  onSearchSubmit?: (query: string) => void;
   /** Right-aligned action(s) shown before the bell/avatar. */
   actions?: ReactNode;
 }
 
 /** Top bar for app screens: title/subtitle, optional search, actions, bell, avatar. */
-export function AppHeader({ title, subtitle, searchPlaceholder, actions }: AppHeaderProps) {
+export function AppHeader({
+  title,
+  subtitle,
+  searchPlaceholder,
+  onSearchSubmit,
+  actions,
+}: AppHeaderProps) {
+  const user = useAuthStore((s) => s.user);
+  const initials = user
+    ? `${user.first_name?.[0] ?? ""}${user.last_name?.[0] ?? ""}`.toUpperCase() || "?"
+    : "?";
+
+  function handleSearchKeyDown(e: KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Enter") {
+      onSearchSubmit?.(e.currentTarget.value);
+    }
+  }
+
   return (
     <header className="flex flex-col gap-4 border-b border-line bg-surface px-6 py-4 lg:flex-row lg:items-center lg:justify-between">
       <div className="min-w-0">
@@ -28,6 +48,7 @@ export function AppHeader({ title, subtitle, searchPlaceholder, actions }: AppHe
           <input
             type="search"
             placeholder={searchPlaceholder}
+            onKeyDown={handleSearchKeyDown}
             className="h-11 w-full rounded-full border border-line bg-surface pl-11 pr-4 text-small text-ink placeholder:text-muted focus-visible:border-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/30"
           />
         </div>
@@ -38,13 +59,14 @@ export function AppHeader({ title, subtitle, searchPlaceholder, actions }: AppHe
         <button
           type="button"
           aria-label="Notifications"
-          className="relative flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink-2 hover:bg-bg"
+          disabled
+          title="Notifications coming soon"
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink-2 opacity-50"
         >
           <Bell className="h-5 w-5" strokeWidth={1.9} />
-          <span className="absolute right-3 top-3 h-2 w-2 rounded-full bg-danger" />
         </button>
         <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-100 text-small font-bold text-brand-700">
-          AK
+          {initials}
         </span>
       </div>
     </header>

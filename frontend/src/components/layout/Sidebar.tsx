@@ -1,8 +1,9 @@
 import { NavLink } from "react-router-dom";
 import {
   Calendar,
+  FileText,
   LayoutDashboard,
-  Layers,
+  Pill,
   Settings,
   Shield,
   Sparkles,
@@ -22,6 +23,8 @@ interface NavItem {
 const MENU: NavItem[] = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/upload", label: "Upload Rx", icon: Upload },
+  { to: "/prescriptions", label: "Prescriptions", icon: FileText },
+  { to: "/medicines", label: "Medicines", icon: Pill },
   { to: "/reminders", label: "Reminders", icon: Calendar },
   { to: "/interactions", label: "Interactions", icon: Shield },
   { to: "/assistant", label: "AI Assistant", icon: Sparkles },
@@ -30,7 +33,6 @@ const MENU: NavItem[] = [
 const ACCOUNT: NavItem[] = [
   { to: "/profile", label: "Profile", icon: User },
   { to: "/settings", label: "Settings", icon: Settings },
-  { to: "/design-system", label: "Design System", icon: Layers },
 ];
 
 function NavGroup({ title, items }: { title: string; items: NavItem[] }) {

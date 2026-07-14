@@ -1,27 +1,66 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { UploadCard } from "@/features/prescriptions/components/UploadCard";
 import { ScanTips } from "@/features/prescriptions/components/ScanTips";
+import { prescriptionsService } from "@/services/prescriptions.service";
+import type { PrescriptionOcrDraft } from "@/types";
+
+const EMPTY_DRAFT: PrescriptionOcrDraft = {
+  ocr_available: false,
+  raw_text: "",
+  doctor_name: "",
+  speciality: "",
+  clinic: "",
+  prescribed_on: null,
+  medicines: [],
+};
 
 export default function UploadPage() {
+  const navigate = useNavigate();
+  const [scanning, setScanning] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleFile(file: File) {
+    setScanning(true);
+    setError(null);
+    try {
+      const draft = await prescriptionsService.ocr(file);
+      navigate("/upload/review", { state: { draft, previewUrl: URL.createObjectURL(file) } });
+    } catch {
+      setError("Could not scan this file. Is the backend running?");
+    } finally {
+      setScanning(false);
+    }
+  }
+
   return (
     <>
       <AppHeader
         title="Upload prescription"
         subtitle="Scan or import your prescription to get started"
         actions={
-          <Link to="/upload/review">
-            <Button variant="ghost" size="sm">
-              Skip to results
-            </Button>
-          </Link>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => navigate("/upload/review", { state: { draft: EMPTY_DRAFT } })}
+          >
+            Enter manually instead
+          </Button>
         }
       />
 
       <div className="mx-auto max-w-6xl p-6">
+        {error && (
+          <Card className="mb-5 border-l-4 border-l-danger p-5 text-body text-danger">{error}</Card>
+        )}
+        {scanning && (
+          <Card className="mb-5 p-5 text-body text-muted">Scanning your prescription…</Card>
+        )}
         <div className="grid gap-6 lg:grid-cols-[1.6fr_1fr]">
-          <UploadCard />
+          <UploadCard onFileSelected={handleFile} disabled={scanning} />
           <ScanTips />
         </div>
       </div>

@@ -1,23 +1,25 @@
-import { AlertTriangle, CheckCircle2, Heart, Layers, ShieldQuestion } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Heart, ShieldQuestion } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Tabs } from "@/components/ui/tabs";
+import type { Medicine } from "@/types";
 
-function CheckList({ items }: { items: string[] }) {
+function CheckList({ items, emptyText }: { items: string[]; emptyText: string }) {
+  if (items.length === 0) {
+    return <p className="py-4 text-body text-muted">{emptyText}</p>;
+  }
   return (
-    <>
-      <ul className="divide-y divide-line">
-        {items.map((item) => (
-          <li key={item} className="flex items-center gap-3 py-4">
-            <CheckCircle2 className="h-5 w-5 shrink-0 text-success" strokeWidth={1.9} />
-            <span className="text-body text-ink-2">{item}</span>
-          </li>
-        ))}
-      </ul>
-    </>
+    <ul className="divide-y divide-line">
+      {items.map((item) => (
+        <li key={item} className="flex items-center gap-3 py-4">
+          <CheckCircle2 className="h-5 w-5 shrink-0 text-success" strokeWidth={1.9} />
+          <span className="text-body text-ink-2">{item}</span>
+        </li>
+      ))}
+    </ul>
   );
 }
 
-export function MedicineTabs() {
+export function MedicineTabs({ medicine }: { medicine: Medicine }) {
   return (
     <Card className="p-6">
       <Tabs
@@ -30,13 +32,7 @@ export function MedicineTabs() {
             content: (
               <>
                 <h3 className="text-h3 font-extrabold text-ink">What it's used for</h3>
-                <CheckList
-                  items={[
-                    "Type 2 diabetes mellitus",
-                    "Improves insulin sensitivity",
-                    "PCOS (off-label)",
-                  ]}
-                />
+                <CheckList items={medicine.uses} emptyText="No uses on record for this medicine." />
               </>
             ),
           },
@@ -48,11 +44,8 @@ export function MedicineTabs() {
               <>
                 <h3 className="text-h3 font-extrabold text-ink">Possible side effects</h3>
                 <CheckList
-                  items={[
-                    "Nausea or upset stomach",
-                    "Metallic taste",
-                    "Rarely, low vitamin B12 over time",
-                  ]}
+                  items={medicine.side_effects}
+                  emptyText="No side effects on record for this medicine."
                 />
               </>
             ),
@@ -65,28 +58,8 @@ export function MedicineTabs() {
               <>
                 <h3 className="text-h3 font-extrabold text-ink">Before you take it</h3>
                 <CheckList
-                  items={[
-                    "Tell your doctor about kidney issues",
-                    "Avoid excess alcohol",
-                    "Pause before contrast scans",
-                  ]}
-                />
-              </>
-            ),
-          },
-          {
-            id: "interactions",
-            label: "Interactions",
-            icon: Layers,
-            content: (
-              <>
-                <h3 className="text-h3 font-extrabold text-ink">Common interactions</h3>
-                <CheckList
-                  items={[
-                    "Some diuretics may raise blood sugar",
-                    "Contrast dyes — pause use",
-                    "Alcohol increases lactic-acidosis risk",
-                  ]}
+                  items={medicine.warnings}
+                  emptyText="No warnings on record for this medicine."
                 />
               </>
             ),

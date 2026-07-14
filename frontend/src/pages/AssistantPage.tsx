@@ -1,11 +1,63 @@
+import { useState } from "react";
 import { RefreshCw } from "lucide-react";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { Card } from "@/components/ui/card";
 import { ChatBubble } from "@/features/assistant/components/ChatBubble";
 import { SuggestedPrompts } from "@/features/assistant/components/SuggestedPrompts";
 import { ChatComposer } from "@/features/assistant/components/ChatComposer";
+import { assistantService } from "@/services/assistant.service";
+import type { Message } from "@/types";
+
+const GREETING: Message = {
+  id: "greeting",
+  role: "assistant",
+  content:
+    "Hi 👋 I'm your DawaiBuddy assistant. Ask me about a medicine, a symptom (headache, fever, cough…), or check an interaction between two medicines.",
+  created_at: new Date(0).toISOString(),
+};
 
 export default function AssistantPage() {
+  const [messages, setMessages] = useState<Message[]>([GREETING]);
+  const [conversationId, setConversationId] = useState<string | null>(null);
+  const [input, setInput] = useState("");
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function send(text: string) {
+    const trimmed = text.trim();
+    if (!trimmed || sending) return;
+
+    setInput("");
+    setSending(true);
+    setError(null);
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: `local-${prev.length}`,
+        role: "user",
+        content: trimmed,
+        created_at: new Date(0).toISOString(),
+      },
+    ]);
+
+    try {
+      const res = await assistantService.ask(trimmed, conversationId ?? undefined);
+      setConversationId(res.conversation_id);
+      setMessages((prev) => [...prev, res.reply]);
+    } catch {
+      setError("Could not reach the assistant. Is the backend running?");
+    } finally {
+      setSending(false);
+    }
+  }
+
+  function newChat() {
+    setMessages([GREETING]);
+    setConversationId(null);
+    setInput("");
+    setError(null);
+  }
+
   return (
     <>
       <AppHeader title="AI Assistant" subtitle="Ask anything about your medicines" />
@@ -27,6 +79,7 @@ export default function AssistantPage() {
             </div>
             <button
               type="button"
+              onClick={newChat}
               className="flex items-center gap-1.5 rounded-full border border-line px-4 py-2 text-small font-semibold text-ink-2 hover:bg-bg"
             >
               <RefreshCw className="h-4 w-4" /> New chat
@@ -35,35 +88,25 @@ export default function AssistantPage() {
 
           {/* Conversation */}
           <div className="flex flex-col gap-5 p-5">
-            <ChatBubble role="assistant">
-              Hi Aarav 👋 I'm your DawaiBuddy assistant. I can explain your medicines, check
-              interactions, or help with reminders. What would you like to know?
-            </ChatBubble>
-
-            <ChatBubble role="user">Can I take Metformin and Pantoprazole together?</ChatBubble>
-
-            <ChatBubble
-              role="assistant"
-              footnote="General guidance · not a substitute for your doctor"
-            >
-              <p>
-                Yes — taking <strong>Metformin</strong> and <strong>Pantoprazole</strong> together
-                is generally safe and very common. A small thing to keep in mind: both can slightly
-                lower <strong>vitamin B12</strong> over long-term use, so periodic B12 checks are a
-                good idea.
-              </p>
-              <p className="mt-3">
-                Take Pantoprazole 30–60 minutes <em>before</em> breakfast, and Metformin{" "}
-                <em>after</em> food to reduce stomach upset.
-              </p>
-            </ChatBubble>
+            {messages.map((m) => (
+              <ChatBubble key={m.id} role={m.role}>
+                {m.content}
+              </ChatBubble>
+            ))}
+            {sending && <ChatBubble role="assistant">Thinking…</ChatBubble>}
+            {error && <p className="text-small text-danger">{error}</p>}
           </div>
 
           {/* Suggested + composer */}
           <div className="border-t border-line p-5">
-            <SuggestedPrompts />
+            <SuggestedPrompts onSelect={send} />
             <div className="mt-4">
-              <ChatComposer />
+              <ChatComposer
+                value={input}
+                onChange={setInput}
+                onSend={() => send(input)}
+                sending={sending}
+              />
             </div>
             <p className="mt-3 text-center text-tiny text-muted">
               DawaiBuddy can make mistakes. Always confirm with your doctor or pharmacist.

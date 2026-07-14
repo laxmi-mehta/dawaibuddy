@@ -1,70 +1,63 @@
+import { Link } from "react-router-dom";
 import { ChevronRight, Clock, FileText } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { IconBadge } from "@/components/shared/IconBadge";
+import type { Prescription } from "@/types";
 
-interface Rx {
-  doctor: string;
-  meta: string;
-  status: "Ready" | "Processing";
-  tone: "brand" | "accent";
+function formatDate(value: string | null): string {
+  if (!value) return "Date unknown";
+  return new Date(value).toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
 }
 
-const ITEMS: Rx[] = [
-  {
-    doctor: "Dr. Meera Nair — Diabetology",
-    meta: "2 Jun 2026 · 2 medicines",
-    status: "Ready",
-    tone: "brand",
-  },
-  {
-    doctor: "Dr. Rohan Kulkarni — Cardiology",
-    meta: "24 May 2026 · 2 medicines",
-    status: "Ready",
-    tone: "accent",
-  },
-  {
-    doctor: "Dr. Sana Qureshi — General Physician",
-    meta: "11 May 2026 · 2 medicines",
-    status: "Processing",
-    tone: "brand",
-  },
-];
-
-export function RecentPrescriptions() {
+export function RecentPrescriptions({ prescriptions }: { prescriptions: Prescription[] }) {
   return (
     <Card className="p-6">
       <div className="flex items-center justify-between">
         <h2 className="text-h3 font-extrabold text-ink">Recent prescriptions</h2>
-        <button
-          type="button"
+        <Link
+          to="/prescriptions"
           className="flex items-center gap-1 text-small font-semibold text-brand hover:underline"
         >
           View all <ChevronRight className="h-4 w-4" />
-        </button>
+        </Link>
       </div>
 
-      <ul className="mt-4 divide-y divide-line">
-        {ITEMS.map((rx) => (
-          <li key={rx.doctor} className="flex items-center gap-4 py-4">
-            <IconBadge icon={FileText} tone={rx.tone} />
-            <div className="min-w-0 flex-1">
-              <p className="truncate font-bold text-ink">{rx.doctor}</p>
-              <p className="text-small text-muted">{rx.meta}</p>
-            </div>
-            {rx.status === "Ready" ? (
-              <Badge variant="success" size="sm">
-                Ready
-              </Badge>
-            ) : (
-              <Badge variant="warning" size="sm">
-                <Clock className="h-3.5 w-3.5" /> Processing
-              </Badge>
-            )}
-            <ChevronRight className="h-5 w-5 text-muted" />
-          </li>
-        ))}
-      </ul>
+      {prescriptions.length === 0 ? (
+        <p className="mt-4 text-small text-muted">No prescriptions yet — upload one to start.</p>
+      ) : (
+        <ul className="mt-4 divide-y divide-line">
+          {prescriptions.map((rx) => (
+            <li key={rx.id} className="flex items-center gap-4 py-4">
+              <IconBadge icon={FileText} tone="brand" />
+              <div className="min-w-0 flex-1">
+                <p className="truncate font-bold text-ink">
+                  {rx.doctor_name || "Unknown doctor"}
+                  {rx.speciality ? ` — ${rx.speciality}` : ""}
+                </p>
+                <p className="text-small text-muted">
+                  {formatDate(rx.prescribed_on)} · {rx.medicines.length} medicine
+                  {rx.medicines.length === 1 ? "" : "s"}
+                </p>
+              </div>
+              {rx.status === "ready" ? (
+                <Badge variant="success" size="sm">
+                  Ready
+                </Badge>
+              ) : (
+                <Badge variant="warning" size="sm">
+                  <Clock className="h-3.5 w-3.5" /> Processing
+                </Badge>
+              )}
+              <ChevronRight className="h-5 w-5 text-muted" />
+            </li>
+          ))}
+        </ul>
+      )}
     </Card>
   );
 }

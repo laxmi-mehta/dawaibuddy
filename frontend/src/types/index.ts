@@ -43,27 +43,92 @@ export interface User {
   created_at: string;
 }
 
+export interface Profile {
+  age: number | null;
+  blood_group: string;
+  height_cm: number | null;
+  weight_kg: number | null;
+  conditions: string[];
+  allergies: string[];
+}
+
+export interface FamilyMember {
+  id: string;
+  name: string;
+  relation: string;
+  age: number | null;
+  created_at: string;
+}
+
 // ---------------------------------------------------------------------------
 // Prescriptions
 // ---------------------------------------------------------------------------
+export interface PrescriptionMedicine {
+  id: string;
+  name: string;
+  salt: string;
+  dosage: string;
+  frequency: string;
+  timing: string;
+  duration: string;
+  confidence: number | null;
+}
+
+export type PrescriptionStatus = "processing" | "ready";
+export type PrescriptionSource = "scan" | "camera" | "pdf" | "manual";
+
 export interface Prescription {
   id: string;
-  user: string;
+  doctor_name: string;
+  speciality: string;
+  clinic: string;
+  prescribed_on: string | null;
+  status: PrescriptionStatus;
+  source: PrescriptionSource;
   notes: string;
+  medicines: PrescriptionMedicine[];
   created_at: string;
   updated_at: string;
+}
+
+export interface PrescriptionOcrDraft {
+  ocr_available: boolean;
+  raw_text: string;
+  doctor_name: string;
+  speciality: string;
+  clinic: string;
+  prescribed_on: string | null;
+  medicines: PrescriptionMedicine[];
 }
 
 // ---------------------------------------------------------------------------
 // Medicines
 // ---------------------------------------------------------------------------
+export interface GenericAlternative {
+  id: string;
+  name: string;
+  manufacturer: string;
+  price: string | null;
+  save_percent: number | null;
+}
+
 export interface Medicine {
   id: string;
   name: string;
   generic_name: string;
-  strength?: string;
-  category?: string;
   smiles?: string;
+  manufacturer: string;
+  form: string;
+  strength: string;
+  category: string;
+  rx_required: boolean;
+  in_stock: boolean;
+  price: string | null;
+  how_it_works: string;
+  uses: string[];
+  side_effects: string[];
+  warnings: string[];
+  alternatives?: GenericAlternative[];
   created_at: string;
   updated_at: string;
 }
@@ -104,14 +169,44 @@ export interface InteractionCheckResponse {
 // ---------------------------------------------------------------------------
 // Reminders
 // ---------------------------------------------------------------------------
+export type ReminderBucketValue = "morning" | "afternoon" | "evening" | "night";
+
 export interface Reminder {
   id: string;
-  user: string;
-  message: string;
-  scheduled_at: string;
-  is_sent: boolean;
+  medicine_name: string;
+  dosage: string;
+  scheduled_time: string;
+  bucket: ReminderBucketValue;
+  instruction: string;
+  is_taken: boolean;
+  taken_at: string | null;
   created_at: string;
   updated_at: string;
+}
+
+export interface ReminderTodayBucket {
+  bucket: ReminderBucketValue;
+  label: string;
+  taken: number;
+  total: number;
+  reminders: Reminder[];
+}
+
+export interface ReminderTodayResponse {
+  progress: { taken: number; total: number; percent: number };
+  buckets: ReminderTodayBucket[];
+}
+
+// ---------------------------------------------------------------------------
+// Dashboard
+// ---------------------------------------------------------------------------
+export interface DashboardStats {
+  active_medicines: number;
+  doses_taken_today: number;
+  doses_total_today: number;
+  adherence_percent: number;
+  prescriptions_count: number;
+  recent_prescriptions: Prescription[];
 }
 
 // ---------------------------------------------------------------------------
