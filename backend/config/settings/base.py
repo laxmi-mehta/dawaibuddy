@@ -65,6 +65,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -122,7 +123,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # ---------------------------------------------------------------------------
 # Internationalization
 # ---------------------------------------------------------------------------
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "en"
+LANGUAGES = [
+    ("en", "English"),
+    ("hi", "Hindi"),
+    ("mr", "Marathi"),
+]
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True

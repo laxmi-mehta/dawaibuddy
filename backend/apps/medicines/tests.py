@@ -53,8 +53,9 @@ class MedicineAPITests(APITestCase):
     def test_categories_are_distinct(self):
         response = self.client.get(reverse("v1:medicine-categories"))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn("Anti-diabetic", response.data)
-        self.assertIn("Acid reducer", response.data)
+        values = [c["value"] for c in response.data]
+        self.assertIn("Anti-diabetic", values)
+        self.assertIn("Acid reducer", values)
 
     def test_popular_returns_medicines(self):
         response = self.client.get(reverse("v1:medicine-popular"))

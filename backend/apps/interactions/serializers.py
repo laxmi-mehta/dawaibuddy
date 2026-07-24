@@ -1,11 +1,15 @@
 from rest_framework import serializers
 
+from apps.common.i18n import get_request_language, localized_field
+
 from .models import DrugInteraction
 
 
 class DrugInteractionSerializer(serializers.ModelSerializer):
     medicine_a_name = serializers.CharField(source="medicine_a.name", read_only=True)
     medicine_b_name = serializers.CharField(source="medicine_b.name", read_only=True)
+    title = serializers.SerializerMethodField()
+    description = serializers.SerializerMethodField()
 
     class Meta:
         model = DrugInteraction
@@ -22,6 +26,12 @@ class DrugInteractionSerializer(serializers.ModelSerializer):
             "updated_at",
         ]
         read_only_fields = ["id", "created_at", "updated_at"]
+
+    def get_title(self, obj: DrugInteraction) -> str:
+        return localized_field(obj, "title", get_request_language(self.context))
+
+    def get_description(self, obj: DrugInteraction) -> str:
+        return localized_field(obj, "description", get_request_language(self.context))
 
 
 class InteractionCheckSerializer(serializers.Serializer):

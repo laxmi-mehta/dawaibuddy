@@ -39,7 +39,7 @@ class InteractionCheckView(APIView):
             .filter(medicine_a__in=ids)
             .filter(medicine_b__in=ids)
         )
-        data = DrugInteractionSerializer(interactions, many=True).data
+        data = DrugInteractionSerializer(interactions, many=True, context={"request": request}).data
         counts: dict[str, int] = {}
         for item in data:
             counts[item["severity"]] = counts.get(item["severity"], 0) + 1

@@ -25,6 +25,13 @@ class DrugInteraction(BaseModel):
     title = models.CharField(max_length=255, blank=True)
     description = models.TextField(blank=True)
 
+    # Hindi / Marathi translations. Blank means "no translation yet" — the API
+    # falls back to the English value.
+    title_hi = models.CharField(max_length=255, blank=True)
+    title_mr = models.CharField(max_length=255, blank=True)
+    description_hi = models.TextField(blank=True)
+    description_mr = models.TextField(blank=True)
+
     class Meta:
         unique_together = [["medicine_a", "medicine_b"]]
         ordering = ["-created_at"]

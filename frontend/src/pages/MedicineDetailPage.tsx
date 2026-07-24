@@ -11,7 +11,7 @@ import { MedicineHeaderCard } from "@/features/medicines/components/MedicineHead
 import { MedicineTabs } from "@/features/medicines/components/MedicineTabs";
 import { PriceCard } from "@/features/medicines/components/PriceCard";
 import { GenericAlternatives } from "@/features/medicines/components/GenericAlternatives";
-import { medicinesService } from "@/services/medicines.service";
+import { medicinesService, type MedicineCategory } from "@/services/medicines.service";
 import type { Medicine } from "@/types";
 
 function MedicinesListView() {
@@ -21,7 +21,7 @@ function MedicinesListView() {
   const initialSearch = (location.state as { search?: string } | null)?.search ?? "";
   const [query, setQuery] = useState(initialSearch);
   const [category, setCategory] = useState<string | null>(null);
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<MedicineCategory[]>([]);
   const [medicines, setMedicines] = useState<Medicine[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -72,8 +72,8 @@ function MedicinesListView() {
                 {t("medicines.all")}
               </Chip>
               {categories.map((c) => (
-                <Chip key={c} active={category === c} onClick={() => setCategory(c)}>
-                  {c}
+                <Chip key={c.value} active={category === c.value} onClick={() => setCategory(c.value)}>
+                  {c.label}
                 </Chip>
               ))}
             </div>

@@ -22,6 +22,14 @@ MEDICINES = [
         "uses": ["Type 2 diabetes mellitus", "Improves insulin sensitivity", "PCOS (off-label)"],
         "side_effects": ["Nausea or upset stomach", "Metallic taste", "Low vitamin B12 over long-term use"],
         "warnings": ["Tell your doctor about kidney issues", "Avoid excess alcohol", "Pause before contrast scans"],
+        "how_it_works_hi": "लीवर में ग्लूकोज़ उत्पादन को कम करता है और आपके शरीर को इंसुलिन के प्रति बेहतर प्रतिक्रिया देने में मदद करता है।",
+        "uses_hi": ["टाइप 2 मधुमेह", "इंसुलिन संवेदनशीलता में सुधार", "PCOS (ऑफ-लेबल)"],
+        "side_effects_hi": ["मतली या पेट खराब होना", "मुंह में धातु जैसा स्वाद", "लंबे समय तक उपयोग से विटामिन B12 की कमी"],
+        "warnings_hi": ["अपने डॉक्टर को किडनी की समस्याओं के बारे में बताएं", "अधिक शराब से बचें", "कॉन्ट्रास्ट स्कैन से पहले रोकें"],
+        "how_it_works_mr": "यकृतातील ग्लुकोज उत्पादन कमी करते आणि तुमच्या शरीराला इन्सुलिनला अधिक प्रभावीपणे प्रतिसाद देण्यास मदत करते.",
+        "uses_mr": ["टाइप 2 मधुमेह", "इन्सुलिन संवेदनशीलता सुधारते", "PCOS (ऑफ-लेबल)"],
+        "side_effects_mr": ["मळमळ किंवा पोट बिघडणे", "तोंडाला धातूसारखी चव", "दीर्घकाळ वापराने व्हिटॅमिन B12 ची कमतरता"],
+        "warnings_mr": ["तुमच्या डॉक्टरांना किडनीच्या समस्यांबद्दल सांगा", "जास्त दारू टाळा", "कॉन्ट्रास्ट स्कॅनपूर्वी थांबा"],
         "alternatives": [
             {"name": "Metformin (generic)", "manufacturer": "Generic", "price": "12.00", "save_percent": 71},
             {"name": "Okamet 500", "manufacturer": "Cipla", "price": "38.00", "save_percent": 10},
@@ -51,22 +59,78 @@ MEDICINES = [
 ]
 
 INTERACTIONS = [
-    ("Atorva 10", "Azithral 500", "moderate", "Possible muscle-related effects",
-     "Azithromycin may raise the risk of statin-related muscle pain (myopathy). Watch for unexplained muscle aches and tell your doctor."),
-    ("Atorva 10", "Amlong 5", "mild", "Minor — monitor",
-     "Amlodipine can slightly increase atorvastatin levels. Usually fine at standard doses; report muscle pain."),
-    ("Azithral 500", "Amlong 5", "moderate", "Heart-rhythm caution",
-     "Combination may affect heart rhythm (QT) in susceptible people. Mention any palpitations or dizziness."),
-    ("Ecosprin 75", "Warf 5", "severe", "High bleeding risk",
-     "Aspirin with warfarin greatly increases bleeding risk. Use only under close medical supervision."),
-    ("Warf 5", "Voveran 50", "severe", "Bleeding risk",
-     "NSAIDs like diclofenac raise the risk of bleeding when combined with warfarin."),
-    ("Ecosprin 75", "Brufen 400", "moderate", "Reduced antiplatelet effect",
-     "Ibuprofen can blunt aspirin's heart-protective effect. Separate the doses or ask your doctor."),
-    ("Deplatt 75", "Omez", "moderate", "Reduced clopidogrel effect",
-     "Omeprazole may lower how well clopidogrel works. A different acid reducer may be preferred."),
-    ("Lasix 40", "Voveran 50", "moderate", "Reduced diuretic effect",
-     "NSAIDs can weaken furosemide and affect kidney function. Monitor if used together."),
+    {
+        "a": "Atorva 10", "b": "Azithral 500", "severity": "moderate",
+        "title": "Possible muscle-related effects",
+        "description": "Azithromycin may raise the risk of statin-related muscle pain (myopathy). Watch for unexplained muscle aches and tell your doctor.",
+        "title_hi": "संभावित मांसपेशी-संबंधी प्रभाव",
+        "description_hi": "एज़िथ्रोमाइसिन स्टैटिन-संबंधी मांसपेशी दर्द (मायोपैथी) के जोखिम को बढ़ा सकता है। अस्पष्टीकृत मांसपेशी दर्द पर ध्यान दें और अपने डॉक्टर को बताएं।",
+        "title_mr": "संभाव्य स्नायू-संबंधित परिणाम",
+        "description_mr": "अझिथ्रोमायसिन स्टॅटिन-संबंधित स्नायू दुखण्याचा (मायोपॅथी) धोका वाढवू शकते. अस्पष्ट स्नायू दुखण्याकडे लक्ष द्या आणि तुमच्या डॉक्टरांना सांगा.",
+    },
+    {
+        "a": "Atorva 10", "b": "Amlong 5", "severity": "mild",
+        "title": "Minor — monitor",
+        "description": "Amlodipine can slightly increase atorvastatin levels. Usually fine at standard doses; report muscle pain.",
+        "title_hi": "मामूली — निगरानी करें",
+        "description_hi": "एम्लोडिपिन एटोरवास्टेटिन के स्तर को थोड़ा बढ़ा सकता है। सामान्य खुराक पर आमतौर पर ठीक है; मांसपेशी दर्द की सूचना दें।",
+        "title_mr": "किरकोळ — लक्ष ठेवा",
+        "description_mr": "अ‍ॅम्लोडिपिन अ‍ॅटोरवास्टॅटिनची पातळी थोडी वाढवू शकते. मानक डोसमध्ये सहसा ठीक असते; स्नायू दुखण्याची तक्रार करा.",
+    },
+    {
+        "a": "Azithral 500", "b": "Amlong 5", "severity": "moderate",
+        "title": "Heart-rhythm caution",
+        "description": "Combination may affect heart rhythm (QT) in susceptible people. Mention any palpitations or dizziness.",
+        "title_hi": "हृदय-लय सावधानी",
+        "description_hi": "यह संयोजन संवेदनशील लोगों में हृदय की लय (QT) को प्रभावित कर सकता है। किसी भी धड़कन या चक्कर आने का उल्लेख करें।",
+        "title_mr": "हृदय-तालाची काळजी",
+        "description_mr": "हे संयोजन संवेदनशील लोकांमध्ये हृदयाच्या तालावर (QT) परिणाम करू शकते. कोणतीही धडधड किंवा चक्कर आल्यास नमूद करा.",
+    },
+    {
+        "a": "Ecosprin 75", "b": "Warf 5", "severity": "severe",
+        "title": "High bleeding risk",
+        "description": "Aspirin with warfarin greatly increases bleeding risk. Use only under close medical supervision.",
+        "title_hi": "उच्च रक्तस्राव जोखिम",
+        "description_hi": "एस्पिरिन के साथ वारफारिन रक्तस्राव के जोखिम को बहुत बढ़ा देता है। केवल करीबी चिकित्सा निगरानी में उपयोग करें।",
+        "title_mr": "उच्च रक्तस्रावाचा धोका",
+        "description_mr": "अ‍ॅस्पिरिनसोबत वॉरफेरिन रक्तस्रावाचा धोका मोठ्या प्रमाणात वाढवते. फक्त जवळच्या वैद्यकीय देखरेखीखाली वापरा.",
+    },
+    {
+        "a": "Warf 5", "b": "Voveran 50", "severity": "severe",
+        "title": "Bleeding risk",
+        "description": "NSAIDs like diclofenac raise the risk of bleeding when combined with warfarin.",
+        "title_hi": "रक्तस्राव जोखिम",
+        "description_hi": "डाइक्लोफेनाक जैसे NSAIDs वारफारिन के साथ मिलाने पर रक्तस्राव के जोखिम को बढ़ाते हैं।",
+        "title_mr": "रक्तस्रावाचा धोका",
+        "description_mr": "डायक्लोफेनाकसारखे NSAIDs वॉरफेरिनसोबत एकत्र केल्यास रक्तस्रावाचा धोका वाढवतात.",
+    },
+    {
+        "a": "Ecosprin 75", "b": "Brufen 400", "severity": "moderate",
+        "title": "Reduced antiplatelet effect",
+        "description": "Ibuprofen can blunt aspirin's heart-protective effect. Separate the doses or ask your doctor.",
+        "title_hi": "कम एंटीप्लेटलेट प्रभाव",
+        "description_hi": "इबुप्रोफेन एस्पिरिन के हृदय-सुरक्षात्मक प्रभाव को कम कर सकता है। खुराकों को अलग करें या अपने डॉक्टर से पूछें।",
+        "title_mr": "कमी अँटीप्लेटलेट परिणाम",
+        "description_mr": "आयबुप्रोफेन अ‍ॅस्पिरिनचा हृदय-संरक्षणात्मक परिणाम कमी करू शकते. डोस वेगळे करा किंवा तुमच्या डॉक्टरांना विचारा.",
+    },
+    {
+        "a": "Deplatt 75", "b": "Omez", "severity": "moderate",
+        "title": "Reduced clopidogrel effect",
+        "description": "Omeprazole may lower how well clopidogrel works. A different acid reducer may be preferred.",
+        "title_hi": "कम क्लोपिडोग्रेल प्रभाव",
+        "description_hi": "ओमेप्राज़ोल क्लोपिडोग्रेल के काम करने के तरीके को कम कर सकता है। एक अलग एसिड कम करने वाली दवा बेहतर हो सकती है।",
+        "title_mr": "कमी क्लोपिडोग्रेल परिणाम",
+        "description_mr": "ओमेप्राझोल क्लोपिडोग्रेल किती चांगले काम करते हे कमी करू शकते. वेगळी आम्ल कमी करणारी औषध पसंत केली जाऊ शकते.",
+    },
+    {
+        "a": "Lasix 40", "b": "Voveran 50", "severity": "moderate",
+        "title": "Reduced diuretic effect",
+        "description": "NSAIDs can weaken furosemide and affect kidney function. Monitor if used together.",
+        "title_hi": "कम मूत्रवर्धक प्रभाव",
+        "description_hi": "NSAIDs फ्यूरोसेमाइड को कमज़ोर कर सकते हैं और किडनी के कार्य को प्रभावित कर सकते हैं। साथ उपयोग करने पर निगरानी रखें।",
+        "title_mr": "कमी लघवीचे प्रमाण वाढवणारा परिणाम",
+        "description_mr": "NSAIDs फ्युरोसेमाइड कमकुवत करू शकतात आणि किडनीच्या कार्यावर परिणाम करू शकतात. एकत्र वापरल्यास लक्ष ठेवा.",
+    },
 ]
 
 
@@ -85,13 +149,21 @@ class Command(BaseCommand):
                     medicine=med, name=alt["name"], defaults=alt
                 )
 
-        for a_name, b_name, severity, title, desc in INTERACTIONS:
-            a, b = index.get(a_name), index.get(b_name)
+        for item in INTERACTIONS:
+            a, b = index.get(item["a"]), index.get(item["b"])
             if a and b:
                 DrugInteraction.objects.update_or_create(
                     medicine_a=a,
                     medicine_b=b,
-                    defaults={"severity": severity, "title": title, "description": desc},
+                    defaults={
+                        "severity": item["severity"],
+                        "title": item["title"],
+                        "description": item["description"],
+                        "title_hi": item["title_hi"],
+                        "description_hi": item["description_hi"],
+                        "title_mr": item["title_mr"],
+                        "description_mr": item["description_mr"],
+                    },
                 )
 
         self.stdout.write(

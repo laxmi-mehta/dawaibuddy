@@ -2,8 +2,11 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apps.common.i18n import get_request_language
+
 from .models import Medicine
 from .serializers import MedicineSerializer
+from .translations import translate_category
 
 
 class MedicineListView(generics.ListAPIView):
@@ -22,7 +25,11 @@ class MedicineDetailView(generics.RetrieveAPIView):
 
 
 class MedicineCategoriesView(APIView):
-    """Distinct, non-empty medicine categories (for filter chips)."""
+    """Distinct, non-empty medicine categories (for filter chips).
+
+    Returns ``{value, label}`` pairs — ``value`` is the raw English category
+    stored on Medicine (used for filtering), ``label`` is translated for display.
+    """
 
     permission_classes = [permissions.IsAuthenticated]
 
@@ -33,7 +40,13 @@ class MedicineCategoriesView(APIView):
             .distinct()
             .order_by("category")
         )
-        return Response(list(categories))
+        language = get_request_language({"request": request})
+        return Response(
+            [
+                {"value": category, "label": translate_category(category, language)}
+                for category in categories
+            ]
+        )
 
 
 class PopularMedicinesView(generics.ListAPIView):

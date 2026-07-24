@@ -74,7 +74,9 @@ class AskView(APIView):
 
         Message.objects.create(conversation=conversation, role="user", content=text)
         reply = Message.objects.create(
-            conversation=conversation, role="assistant", content=engine.answer(text)
+            conversation=conversation,
+            role="assistant",
+            content=engine.answer(text, language=request.LANGUAGE_CODE),
         )
 
         return Response(

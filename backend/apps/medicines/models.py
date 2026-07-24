@@ -23,6 +23,17 @@ class Medicine(BaseModel):
     side_effects = models.JSONField(default=list, blank=True)
     warnings = models.JSONField(default=list, blank=True)
 
+    # Hindi / Marathi translations of the free-text fields above. Blank means
+    # "no translation yet" — the API falls back to the English value.
+    how_it_works_hi = models.TextField(blank=True)
+    how_it_works_mr = models.TextField(blank=True)
+    uses_hi = models.JSONField(default=list, blank=True)
+    uses_mr = models.JSONField(default=list, blank=True)
+    side_effects_hi = models.JSONField(default=list, blank=True)
+    side_effects_mr = models.JSONField(default=list, blank=True)
+    warnings_hi = models.JSONField(default=list, blank=True)
+    warnings_mr = models.JSONField(default=list, blank=True)
+
     class Meta:
         ordering = ["name"]
 

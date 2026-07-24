@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { useAuthStore } from "@/store/auth.store";
+import i18n from "@/i18n";
 
 const apiClient = axios.create({
   baseURL: "/api/v1",
@@ -10,12 +11,14 @@ const apiClient = axios.create({
   timeout: 15000,
 });
 
-// Attach JWT access token (from the auth store) to every request
+// Attach JWT access token (from the auth store) and the active UI language
+// (so the backend can return translated medicine/interaction/assistant content).
 apiClient.interceptors.request.use((config) => {
   const token = useAuthStore.getState().accessToken;
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+  config.headers["Accept-Language"] = i18n.language;
   return config;
 });
 
