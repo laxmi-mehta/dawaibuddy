@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Pill, Search, ShieldCheck } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -14,6 +15,7 @@ import { medicinesService } from "@/services/medicines.service";
 import type { Medicine } from "@/types";
 
 function MedicinesListView() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const initialSearch = (location.state as { search?: string } | null)?.search ?? "";
@@ -40,15 +42,15 @@ function MedicinesListView() {
           setMedicines(page.results ?? []);
           setError(null);
         })
-        .catch(() => setError("Could not load medicines. Is the backend running?"))
+        .catch(() => setError(t("medicines.loadError")))
         .finally(() => setLoading(false));
     }, 250);
     return () => clearTimeout(handle);
-  }, [query, category]);
+  }, [query, category, t]);
 
   return (
     <>
-      <AppHeader title="Medicines" subtitle="Search the full catalogue" />
+      <AppHeader title={t("medicines.title")} subtitle={t("medicines.subtitle")} />
       <div className="mx-auto max-w-6xl space-y-5 p-6">
         <Card className="p-5">
           <div className="relative">
@@ -60,14 +62,14 @@ function MedicinesListView() {
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search e.g. Glycomet, Amlong, Pan-40…"
+              placeholder={t("dashboard.searchMedicinesPlaceholder")}
               className="h-12 w-full rounded-full border border-line bg-surface pl-12 pr-4 text-body text-ink placeholder:text-muted focus-visible:border-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/30"
             />
           </div>
           {categories.length > 0 && (
             <div className="mt-4 flex flex-wrap gap-2">
               <Chip active={category === null} onClick={() => setCategory(null)}>
-                All
+                {t("medicines.all")}
               </Chip>
               {categories.map((c) => (
                 <Chip key={c} active={category === c} onClick={() => setCategory(c)}>
@@ -83,9 +85,9 @@ function MedicinesListView() {
         )}
 
         {loading ? (
-          <p className="text-body text-muted">Loading medicines…</p>
+          <p className="text-body text-muted">{t("medicines.loading")}</p>
         ) : medicines.length === 0 ? (
-          <Card className="p-10 text-center text-body text-muted">No medicines match.</Card>
+          <Card className="p-10 text-center text-body text-muted">{t("medicines.noMatches")}</Card>
         ) : (
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {medicines.map((m) => (
@@ -112,6 +114,7 @@ function MedicinesListView() {
 }
 
 function MedicineDetail({ id }: { id: string }) {
+  const { t } = useTranslation();
   const [medicine, setMedicine] = useState<Medicine | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -121,21 +124,21 @@ function MedicineDetail({ id }: { id: string }) {
     medicinesService
       .get(id)
       .then(setMedicine)
-      .catch(() => setError("Could not load this medicine. Is the backend running?"))
+      .catch(() => setError(t("medicines.loadDetailError")))
       .finally(() => setLoading(false));
-  }, [id]);
+  }, [id, t]);
 
   return (
     <>
       <AppHeader
-        title="Medicine details"
+        title={t("medicines.detailTitle")}
         subtitle={
           medicine ? `${medicine.generic_name || medicine.name} · ${medicine.category}` : ""
         }
         actions={
           <Link to="/interactions">
             <Button variant="ghost" size="sm">
-              <ShieldCheck className="h-4 w-4" strokeWidth={2} /> Check interactions
+              <ShieldCheck className="h-4 w-4" strokeWidth={2} /> {t("medicines.checkInteractions")}
             </Button>
           </Link>
         }
@@ -146,7 +149,7 @@ function MedicineDetail({ id }: { id: string }) {
           to="/medicines"
           className="mb-5 inline-flex items-center gap-2 text-small font-semibold text-muted hover:text-ink"
         >
-          <ArrowLeft className="h-4 w-4" /> Back to medicines
+          <ArrowLeft className="h-4 w-4" /> {t("medicines.backToMedicines")}
         </Link>
 
         {error && (
@@ -154,7 +157,7 @@ function MedicineDetail({ id }: { id: string }) {
         )}
 
         {loading ? (
-          <p className="text-body text-muted">Loading medicine…</p>
+          <p className="text-body text-muted">{t("medicines.loadingMedicine")}</p>
         ) : medicine ? (
           <div className="grid gap-6 lg:grid-cols-[1.5fr_1fr]">
             <div className="space-y-6">

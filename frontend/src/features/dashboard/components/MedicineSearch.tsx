@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Card } from "@/components/ui/card";
 import { Chip } from "@/components/ui/badge";
 
 const POPULAR = ["Metformin", "Amlodipine", "Pantoprazole", "Cetirizine"];
 
 export function MedicineSearch() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
 
@@ -16,7 +18,7 @@ export function MedicineSearch() {
 
   return (
     <Card className="p-6">
-      <h2 className="text-h3 font-extrabold text-ink">Search medicines</h2>
+      <h2 className="text-h3 font-extrabold text-ink">{t("dashboard.searchMedicines")}</h2>
 
       <form
         className="relative mt-4"
@@ -33,7 +35,7 @@ export function MedicineSearch() {
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search e.g. Glycomet, Amlong, Pan-40…"
+          placeholder={t("dashboard.searchMedicinesPlaceholder")}
           className="h-12 w-full rounded-full border border-line bg-surface pl-12 pr-4 text-body text-ink placeholder:text-muted focus-visible:border-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/30"
         />
       </form>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ChevronDown, ChevronRight, Clock, FileText, Pencil, Plus } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -9,18 +10,21 @@ import { IconBadge } from "@/components/shared/IconBadge";
 import { EditPrescriptionForm } from "@/features/prescriptions/components/EditPrescriptionForm";
 import { cn } from "@/lib/utils";
 import { prescriptionsService } from "@/services/prescriptions.service";
+import { localeForLanguage } from "@/i18n/dateLocale";
 import type { Prescription } from "@/types";
 
-function formatDate(value: string | null): string {
-  if (!value) return "Date unknown";
-  return new Date(value).toLocaleDateString("en-IN", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
-}
-
 export default function PrescriptionsPage() {
+  const { t, i18n } = useTranslation();
+
+  function formatDate(value: string | null): string {
+    if (!value) return t("dashboard.dateUnknown");
+    return new Date(value).toLocaleDateString(localeForLanguage(i18n.language), {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+  }
+
   const [prescriptions, setPrescriptions] = useState<Prescription[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -40,21 +44,22 @@ export default function PrescriptionsPage() {
         setPrescriptions(page.results ?? []);
         setError(null);
       } catch {
-        setError("Could not load prescriptions. Is the backend running?");
+        setError(t("prescriptions.loadError"));
       } finally {
         setLoading(false);
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
       <AppHeader
-        title="Prescriptions"
-        subtitle="Everything you've scanned or added, in one place"
+        title={t("prescriptions.title")}
+        subtitle={t("prescriptions.subtitle")}
         actions={
           <Link to="/upload" className={cn(buttonVariants({ variant: "primary", size: "sm" }))}>
-            <Plus className="h-4 w-4" /> Add prescription
+            <Plus className="h-4 w-4" /> {t("prescriptions.addPrescription")}
           </Link>
         }
       />
@@ -65,16 +70,14 @@ export default function PrescriptionsPage() {
         )}
 
         {loading ? (
-          <p className="text-body text-muted">Loading prescriptions…</p>
+          <p className="text-body text-muted">{t("prescriptions.loading")}</p>
         ) : prescriptions.length === 0 ? (
           <Card className="flex flex-col items-center gap-3 p-16 text-center">
             <FileText className="h-10 w-10 text-brand" strokeWidth={1.6} />
-            <p className="text-h3 font-extrabold text-ink">No prescriptions yet</p>
-            <p className="max-w-sm text-body text-muted">
-              Upload a scan and we'll pull out the medicines for you.
-            </p>
+            <p className="text-h3 font-extrabold text-ink">{t("prescriptions.emptyTitle")}</p>
+            <p className="max-w-sm text-body text-muted">{t("prescriptions.emptyBody")}</p>
             <Link to="/upload" className={cn(buttonVariants({ variant: "primary" }), "mt-2")}>
-              <Plus className="h-4 w-4" /> Add prescription
+              <Plus className="h-4 w-4" /> {t("prescriptions.addPrescription")}
             </Link>
           </Card>
         ) : (
@@ -91,21 +94,21 @@ export default function PrescriptionsPage() {
                     <IconBadge icon={FileText} tone="brand" />
                     <div className="min-w-0 flex-1">
                       <p className="truncate font-bold text-ink">
-                        {rx.doctor_name || "Unknown doctor"}
+                        {rx.doctor_name || t("dashboard.unknownDoctor")}
                         {rx.speciality ? ` — ${rx.speciality}` : ""}
                       </p>
                       <p className="text-small text-muted">
-                        {formatDate(rx.prescribed_on)} · {rx.medicines.length} medicine
-                        {rx.medicines.length === 1 ? "" : "s"}
+                        {formatDate(rx.prescribed_on)} ·{" "}
+                        {t("dashboard.medicineCount", { count: rx.medicines.length })}
                       </p>
                     </div>
                     {rx.status === "ready" ? (
                       <Badge variant="success" size="sm">
-                        Ready
+                        {t("dashboard.ready")}
                       </Badge>
                     ) : (
                       <Badge variant="warning" size="sm">
-                        <Clock className="h-3.5 w-3.5" /> Processing
+                        <Clock className="h-3.5 w-3.5" /> {t("dashboard.processing")}
                       </Badge>
                     )}
                     {expanded ? (
@@ -132,11 +135,11 @@ export default function PrescriptionsPage() {
                               <span />
                             )}
                             <Button variant="ghost" size="sm" onClick={() => setEditingId(rx.id)}>
-                              <Pencil className="h-4 w-4" /> Edit
+                              <Pencil className="h-4 w-4" /> {t("common.edit")}
                             </Button>
                           </div>
                           {rx.medicines.length === 0 ? (
-                            <p className="text-small text-muted">No medicines recorded.</p>
+                            <p className="text-small text-muted">{t("prescriptions.noMedicinesRecorded")}</p>
                           ) : (
                             <ul className="divide-y divide-line">
                               {rx.medicines.map((m) => (

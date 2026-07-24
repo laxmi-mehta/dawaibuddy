@@ -1,16 +1,11 @@
 import { useRef, useState } from "react";
 import { Camera, FileText, Upload, UploadCloud } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 type Tab = "drag" | "camera" | "pdf";
-
-const TABS: { id: Tab; label: string; icon: LucideIcon }[] = [
-  { id: "drag", label: "Drag & drop", icon: Upload },
-  { id: "camera", label: "Camera", icon: Camera },
-  { id: "pdf", label: "PDF", icon: FileText },
-];
 
 const FORMAT_CHIPS = ["JPG", "PNG", "PDF", "Max 10MB"];
 
@@ -21,6 +16,12 @@ interface UploadCardProps {
 
 /** Upload methods (drag-drop / camera / pdf) — all feed the same onFileSelected handler. */
 export function UploadCard({ onFileSelected, disabled }: UploadCardProps) {
+  const { t } = useTranslation();
+  const TABS: { id: Tab; label: string; icon: LucideIcon }[] = [
+    { id: "drag", label: t("upload.dragDrop"), icon: Upload },
+    { id: "camera", label: t("upload.camera"), icon: Camera },
+    { id: "pdf", label: t("upload.pdf"), icon: FileText },
+  ];
   const [tab, setTab] = useState<Tab>("drag");
   const [dragOver, setDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -93,10 +94,8 @@ export function UploadCard({ onFileSelected, disabled }: UploadCardProps) {
 
         {tab === "camera" ? (
           <>
-            <p className="text-h3 font-extrabold text-ink">Use your camera</p>
-            <p className="text-body text-muted">
-              Point at the prescription and capture a clear photo.
-            </p>
+            <p className="text-h3 font-extrabold text-ink">{t("upload.useCamera")}</p>
+            <p className="text-body text-muted">{t("upload.useCameraDesc")}</p>
             <button
               type="button"
               disabled={disabled}
@@ -106,21 +105,25 @@ export function UploadCard({ onFileSelected, disabled }: UploadCardProps) {
               }}
               className="mt-2 rounded-full bg-brand px-6 py-2.5 text-small font-semibold text-white hover:bg-brand-600 disabled:opacity-50"
             >
-              Open camera
+              {t("upload.openCamera")}
             </button>
           </>
         ) : tab === "pdf" ? (
           <>
-            <p className="text-h3 font-extrabold text-ink">Import a PDF</p>
+            <p className="text-h3 font-extrabold text-ink">{t("upload.importPdf")}</p>
             <p className="text-body text-muted">
-              or <span className="font-bold text-brand">browse files</span> from your device
+              {t("common.orLowercase")}{" "}
+              <span className="font-bold text-brand">{t("upload.browseFiles")}</span>{" "}
+              {t("upload.browseFilesSuffix")}
             </p>
           </>
         ) : (
           <>
-            <p className="text-h3 font-extrabold text-ink">Drag &amp; drop your prescription</p>
+            <p className="text-h3 font-extrabold text-ink">{t("upload.dragDropTitle")}</p>
             <p className="text-body text-muted">
-              or <span className="font-bold text-brand">browse files</span> from your device
+              {t("common.orLowercase")}{" "}
+              <span className="font-bold text-brand">{t("upload.browseFiles")}</span>{" "}
+              {t("upload.browseFilesSuffix")}
             </p>
             <div className="mt-2 flex flex-wrap justify-center gap-2">
               {FORMAT_CHIPS.map((c) => (

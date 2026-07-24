@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   CalendarDays,
   CheckCircle2,
@@ -69,6 +70,7 @@ function ExtractedMedicineCard({
   onChange: (patch: Partial<PrescriptionMedicine>) => void;
   onRemove: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <Card className="p-5">
       <div className="flex items-start justify-between gap-3">
@@ -78,13 +80,13 @@ function ExtractedMedicineCard({
             <input
               value={med.name}
               onChange={(e) => onChange({ name: e.target.value })}
-              placeholder="Medicine name"
+              placeholder={t("prescriptions.medicineNamePlaceholder")}
               className="w-full border-b border-transparent bg-transparent font-extrabold text-ink focus-visible:border-brand focus-visible:outline-none"
             />
             <input
               value={med.salt}
               onChange={(e) => onChange({ salt: e.target.value })}
-              placeholder="Salt / category"
+              placeholder={t("ocr.salt")}
               className="mt-0.5 w-full border-b border-transparent bg-transparent text-small text-muted focus-visible:border-brand focus-visible:outline-none"
             />
             {med.confidence != null && (
@@ -93,7 +95,8 @@ function ExtractedMedicineCard({
                 size="sm"
                 className="mt-1"
               >
-                <CheckCircle2 className="h-3.5 w-3.5" /> {med.confidence}% confident
+                <CheckCircle2 className="h-3.5 w-3.5" />{" "}
+                {t("ocr.confidentPercent", { percent: med.confidence })}
               </Badge>
             )}
           </div>
@@ -103,32 +106,32 @@ function ExtractedMedicineCard({
           onClick={onRemove}
           className="flex items-center gap-1 text-small font-semibold text-danger hover:underline"
         >
-          <Trash2 className="h-4 w-4" /> Remove
+          <Trash2 className="h-4 w-4" /> {t("common.remove")}
         </button>
       </div>
 
       <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
         <Field
           icon={Pill}
-          label="Dosage"
+          label={t("ocr.dosageField")}
           value={med.dosage}
           onChange={(v) => onChange({ dosage: v })}
         />
         <Field
           icon={Clock}
-          label="Frequency"
+          label={t("ocr.frequencyField")}
           value={med.frequency}
           onChange={(v) => onChange({ frequency: v })}
         />
         <Field
           icon={Sun}
-          label="When"
+          label={t("ocr.whenField")}
           value={med.timing}
           onChange={(v) => onChange({ timing: v })}
         />
         <Field
           icon={CalendarDays}
-          label="Duration"
+          label={t("ocr.durationField")}
           value={med.duration}
           onChange={(v) => onChange({ duration: v })}
         />
@@ -138,6 +141,7 @@ function ExtractedMedicineCard({
 }
 
 export default function OcrReviewPage() {
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const state = location.state as { draft?: PrescriptionOcrDraft; previewUrl?: string } | null;
@@ -155,14 +159,14 @@ export default function OcrReviewPage() {
   if (!state?.draft) {
     return (
       <>
-        <AppHeader title="Review extracted details" />
+        <AppHeader title={t("ocr.reviewTitle")} />
         <div className="mx-auto max-w-2xl p-6">
           <Card className="flex flex-col items-center gap-3 p-16 text-center">
             <ImageIcon className="h-10 w-10 text-muted" strokeWidth={1.6} />
-            <p className="text-h3 font-extrabold text-ink">No scan to review</p>
-            <p className="text-body text-muted">Upload a prescription first.</p>
+            <p className="text-h3 font-extrabold text-ink">{t("ocr.noScanTitle")}</p>
+            <p className="text-body text-muted">{t("ocr.noScanBody")}</p>
             <Link to="/upload" className="mt-2">
-              <Button size="sm">Go to upload</Button>
+              <Button size="sm">{t("ocr.goToUpload")}</Button>
             </Link>
           </Card>
         </div>
@@ -212,7 +216,7 @@ export default function OcrReviewPage() {
       });
       navigate("/prescriptions");
     } catch {
-      setError("Could not save this prescription. Try again.");
+      setError(t("ocr.saveError"));
     } finally {
       setSaving(false);
     }
@@ -221,11 +225,11 @@ export default function OcrReviewPage() {
   return (
     <>
       <AppHeader
-        title="Review extracted details"
-        subtitle="Check what we read — edit anything that looks off"
+        title={t("ocr.reviewTitle")}
+        subtitle={t("ocr.reviewSubtitle")}
         actions={
           <Button size="sm" onClick={handleSave} disabled={saving}>
-            <CheckCircle2 className="h-4 w-4" /> {saving ? "Saving…" : "Confirm & save"}
+            <CheckCircle2 className="h-4 w-4" /> {saving ? t("common.saving") : t("ocr.confirmSave")}
           </Button>
         }
       />
@@ -242,21 +246,18 @@ export default function OcrReviewPage() {
               <div className="flex items-start gap-3 rounded-lg bg-accent-50 p-5">
                 <Sparkles className="mt-0.5 h-5 w-5 shrink-0 text-accent-600" strokeWidth={1.9} />
                 <div>
-                  <p className="font-bold text-ink">We found {medicines.length} medicine(s)</p>
-                  <p className="text-small text-muted">
-                    Review the dosage, frequency and duration below. Edit any field to correct it
-                    before saving.
+                  <p className="font-bold text-ink">
+                    {t("ocr.foundMedicines", { count: medicines.length })}
                   </p>
+                  <p className="text-small text-muted">{t("ocr.reviewHint")}</p>
                 </div>
               </div>
             ) : (
               <div className="flex items-start gap-3 rounded-lg bg-warning-bg p-5">
                 <Sparkles className="mt-0.5 h-5 w-5 shrink-0 text-warning" strokeWidth={1.9} />
                 <div>
-                  <p className="font-bold text-ink">OCR isn't available on this server</p>
-                  <p className="text-small text-muted">
-                    Add the medicines from this prescription manually below.
-                  </p>
+                  <p className="font-bold text-ink">{t("ocr.ocrUnavailableTitle")}</p>
+                  <p className="text-small text-muted">{t("ocr.ocrUnavailableBody")}</p>
                 </div>
               </div>
             )}
@@ -275,17 +276,14 @@ export default function OcrReviewPage() {
               onClick={addMedicine}
               className="flex w-full items-center justify-center gap-2 rounded-lg border-2 border-dashed border-line py-4 font-semibold text-brand hover:bg-brand-50"
             >
-              <Plus className="h-5 w-5" /> Add a medicine manually
+              <Plus className="h-5 w-5" /> {t("ocr.addMedicineManually")}
             </button>
 
             <div className="flex items-start gap-3 rounded-lg bg-brand-50 p-5">
               <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-brand" strokeWidth={1.9} />
               <div>
-                <p className="font-bold text-ink">Ready to save?</p>
-                <p className="text-small text-muted">
-                  We'll add this to your history and set daily reminders for any medicine with a
-                  recognized dose schedule (e.g. 1-0-1).
-                </p>
+                <p className="font-bold text-ink">{t("ocr.readyToSaveTitle")}</p>
+                <p className="text-small text-muted">{t("ocr.readyToSaveBody")}</p>
               </div>
             </div>
           </div>
@@ -294,10 +292,10 @@ export default function OcrReviewPage() {
           <div className="space-y-6">
             <Card className="p-6">
               <div className="flex items-center justify-between">
-                <h3 className="text-h3 font-extrabold text-ink">Original scan</h3>
+                <h3 className="text-h3 font-extrabold text-ink">{t("ocr.originalScan")}</h3>
                 {state.previewUrl && (
                   <Badge variant="success" size="sm">
-                    <CheckCircle2 className="h-3.5 w-3.5" /> Processed
+                    <CheckCircle2 className="h-3.5 w-3.5" /> {t("ocr.processed")}
                   </Badge>
                 )}
               </div>
@@ -310,7 +308,7 @@ export default function OcrReviewPage() {
               ) : (
                 <div className="mt-4 flex h-56 flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-line bg-bg/40 text-muted">
                   <ImageIcon className="h-8 w-8" strokeWidth={1.6} />
-                  <p className="text-small">No scan (manual entry)</p>
+                  <p className="text-small">{t("ocr.noScanManual")}</p>
                 </div>
               )}
               <div className="mt-4 grid grid-cols-2 gap-3">
@@ -320,31 +318,31 @@ export default function OcrReviewPage() {
                   disabled={!state.previewUrl}
                   onClick={() => state.previewUrl && window.open(state.previewUrl, "_blank")}
                 >
-                  <ZoomIn className="h-4 w-4" /> Zoom
+                  <ZoomIn className="h-4 w-4" /> {t("ocr.zoom")}
                 </Button>
                 <Button variant="ghost" size="sm" onClick={() => navigate("/upload")}>
-                  <RotateCw className="h-4 w-4" /> Re-scan
+                  <RotateCw className="h-4 w-4" /> {t("ocr.rescan")}
                 </Button>
               </div>
             </Card>
 
             <Card className="p-6">
-              <h3 className="text-h3 font-extrabold text-ink">Prescription details</h3>
+              <h3 className="text-h3 font-extrabold text-ink">{t("ocr.prescriptionDetails")}</h3>
               <div className="mt-4 space-y-3">
                 <Input
                   value={doctorName}
                   onChange={(e) => setDoctorName(e.target.value)}
-                  placeholder="Doctor"
+                  placeholder={t("prescriptions.doctorPlaceholder")}
                 />
                 <Input
                   value={speciality}
                   onChange={(e) => setSpeciality(e.target.value)}
-                  placeholder="Speciality"
+                  placeholder={t("prescriptions.specialityPlaceholder")}
                 />
                 <Input
                   value={clinic}
                   onChange={(e) => setClinic(e.target.value)}
-                  placeholder="Clinic"
+                  placeholder={t("prescriptions.clinicPlaceholder")}
                 />
                 <Input
                   type="date"

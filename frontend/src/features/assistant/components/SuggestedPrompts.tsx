@@ -1,14 +1,16 @@
-const PROMPTS = [
-  "What are the side effects of Atorva 10?",
-  "Can I take Pan 40 with Glycomet 500 SR?",
-  "I have a headache, what should I do?",
-  "Tips for better sleep?",
-];
+import { useTranslation } from "react-i18next";
 
 export function SuggestedPrompts({ onSelect }: { onSelect: (prompt: string) => void }) {
+  const { t } = useTranslation();
+  const prompts = [
+    t("assistant.prompt1"),
+    t("assistant.prompt2"),
+    t("assistant.prompt3"),
+    t("assistant.prompt4"),
+  ];
   return (
     <div className="flex flex-wrap gap-2">
-      {PROMPTS.map((p) => (
+      {prompts.map((p) => (
         <button
           key={p}
           type="button"

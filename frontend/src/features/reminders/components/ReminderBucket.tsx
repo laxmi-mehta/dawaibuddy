@@ -1,5 +1,6 @@
 import { CheckCircle2, Moon, Pill, Sun, Sunrise, Sunset } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { IconBadge } from "@/components/shared/IconBadge";
@@ -26,6 +27,7 @@ interface ReminderBucketProps {
 }
 
 export function ReminderBucket({ bucket, onTake, takingId }: ReminderBucketProps) {
+  const { t } = useTranslation();
   return (
     <Card className="p-5">
       <div className="flex items-center justify-between">
@@ -54,7 +56,7 @@ export function ReminderBucket({ bucket, onTake, takingId }: ReminderBucketProps
             </div>
             {r.is_taken ? (
               <span className="flex items-center gap-1.5 rounded-full bg-brand-50 px-4 py-1.5 text-small font-semibold text-brand">
-                <CheckCircle2 className="h-4 w-4" /> Taken
+                <CheckCircle2 className="h-4 w-4" /> {t("reminders.taken")}
               </span>
             ) : (
               <button
@@ -63,7 +65,7 @@ export function ReminderBucket({ bucket, onTake, takingId }: ReminderBucketProps
                 onClick={() => onTake(r.id)}
                 className="rounded-full bg-brand px-5 py-1.5 text-small font-semibold text-white transition-colors hover:bg-brand-600 disabled:opacity-50"
               >
-                {takingId === r.id ? "Marking…" : "Mark taken"}
+                {takingId === r.id ? t("reminders.marking") : t("reminders.markTaken")}
               </button>
             )}
           </li>

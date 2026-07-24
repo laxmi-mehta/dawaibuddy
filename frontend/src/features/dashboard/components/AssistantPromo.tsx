@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, MessageCircle, Sparkles } from "lucide-react";
-
-const SUGGESTIONS = [
-  "What are the side effects of Atorvastatin?",
-  "Can I take Amlodipine with grapefruit?",
-];
+import { useTranslation } from "react-i18next";
 
 /** Dark AI-assistant promo card on the dashboard. */
 export function AssistantPromo() {
+  const { t } = useTranslation();
+  const suggestions = [t("dashboard.assistantSuggestion1"), t("dashboard.assistantSuggestion2")];
+
   return (
     <div className="rounded-xl bg-ink p-6 text-white">
       <div className="flex items-center gap-3">
@@ -15,17 +14,15 @@ export function AssistantPromo() {
           <Sparkles className="h-5 w-5" strokeWidth={1.9} />
         </span>
         <div>
-          <p className="font-bold">AI Assistant</p>
-          <p className="text-small text-white/60">Always here to help</p>
+          <p className="font-bold">{t("dashboard.assistantTitle")}</p>
+          <p className="text-small text-white/60">{t("dashboard.assistantSubtitle")}</p>
         </div>
       </div>
 
-      <p className="mt-4 text-body text-white/80">
-        Ask anything about your medicines — interactions, side-effects, timings — in plain language.
-      </p>
+      <p className="mt-4 text-body text-white/80">{t("dashboard.assistantDescription")}</p>
 
       <div className="mt-4 flex flex-col gap-3">
-        {SUGGESTIONS.map((q) => (
+        {suggestions.map((q) => (
           <Link
             key={q}
             to="/assistant"
@@ -41,7 +38,7 @@ export function AssistantPromo() {
         to="/assistant"
         className="mt-4 flex h-12 w-full items-center justify-center gap-2 rounded-full bg-accent font-semibold text-ink transition-colors hover:bg-accent-600 hover:text-white"
       >
-        Open assistant <MessageCircle className="h-5 w-5" strokeWidth={2} />
+        {t("dashboard.openAssistant")} <MessageCircle className="h-5 w-5" strokeWidth={2} />
       </Link>
     </div>
   );

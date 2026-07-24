@@ -1,18 +1,21 @@
 import { Link } from "react-router-dom";
 import { CheckCircle2, Leaf, Lock, Play, ScanLine, ShieldCheck, Upload } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { IconBadge } from "@/components/shared/IconBadge";
 import { cn } from "@/lib/utils";
 
-const TRUST = [
-  { icon: CheckCircle2, label: "Free to start" },
-  { icon: Lock, label: "Private & encrypted" },
-  { icon: ShieldCheck, label: "Doctor-reviewed" },
-];
-
 /** Landing hero — headline, dual CTAs, trust row, floating "Rx scanned" preview card. */
 export function Hero() {
+  const { t } = useTranslation();
+
+  const TRUST = [
+    { icon: CheckCircle2, label: t("landing.hero.trust1") },
+    { icon: Lock, label: t("landing.hero.trust2") },
+    { icon: ShieldCheck, label: t("landing.hero.trust3") },
+  ];
+
   return (
     <section className="bg-hero">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:gap-8 lg:py-24">
@@ -20,29 +23,29 @@ export function Hero() {
         <div>
           <p className="flex items-center gap-2 text-small font-bold text-accent-600">
             <ShieldCheck className="h-4 w-4" strokeWidth={2} />
-            Built for India · Trusted by 50,000+ families
+            {t("landing.hero.trustLine")}
           </p>
 
           <h1 className="mt-5 text-[2.75rem] font-extrabold leading-[1.05] text-ink sm:text-5xl lg:text-[3.5rem]">
-            Understand your medicines with <span className="text-brand">confidence.</span>
+            {t("landing.hero.headline1")}{" "}
+            <span className="text-brand">{t("landing.hero.headlineHighlight")}</span>
           </h1>
 
           <p className="mt-6 max-w-xl text-body-lg leading-relaxed text-muted">
-            Scan any prescription and instantly know what each medicine does, how to take it, and
-            whether it's safe — all in plain language.
+            {t("landing.hero.subtitle")}
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link to="/register" className={cn(buttonVariants({ variant: "primary", size: "lg" }))}>
               <Upload className="h-5 w-5" strokeWidth={2} />
-              Scan a prescription
+              {t("landing.hero.scanCta")}
             </Link>
             <a
               href="#how-it-works"
               className={cn(buttonVariants({ variant: "ghost", size: "lg" }))}
             >
               <Play className="h-5 w-5" strokeWidth={2} />
-              See live demo
+              {t("landing.hero.demoCta")}
             </a>
           </div>
 
@@ -63,26 +66,28 @@ export function Hero() {
               <div className="flex items-center gap-3">
                 <IconBadge icon={ScanLine} tone="brand" />
                 <div>
-                  <p className="font-bold text-ink">Rx scanned</p>
-                  <p className="text-small text-muted">2 medicines found</p>
+                  <p className="font-bold text-ink">{t("landing.hero.rxScanned")}</p>
+                  <p className="text-small text-muted">
+                    {t("landing.hero.medicinesFound", { count: 2 })}
+                  </p>
                 </div>
               </div>
               <Badge variant="success">
-                <CheckCircle2 className="h-3.5 w-3.5" /> Done
+                <CheckCircle2 className="h-3.5 w-3.5" /> {t("landing.hero.done")}
               </Badge>
             </div>
 
             {[
               {
                 name: "Glycomet 500 SR",
-                meta: "500 mg · After food",
-                tag: "Anti-diabetic",
+                meta: t("landing.hero.med1Meta"),
+                tag: t("landing.hero.med1Tag"),
                 tone: "brand" as const,
               },
               {
                 name: "Amlong 5",
-                meta: "5 mg · Any time",
-                tag: "Anti-hypertensive",
+                meta: t("landing.hero.med2Meta"),
+                tag: t("landing.hero.med2Tag"),
                 tone: "accent" as const,
               },
             ].map((m) => (
@@ -103,8 +108,8 @@ export function Hero() {
           <div className="absolute -left-3 -top-4 flex items-center gap-2 rounded-md bg-surface p-3 shadow-float sm:-left-6">
             <IconBadge icon={Leaf} tone="accent" size="sm" />
             <div>
-              <p className="text-small font-bold text-ink">₹420/mo saved</p>
-              <p className="text-tiny text-muted">with generics</p>
+              <p className="text-small font-bold text-ink">{t("landing.hero.savingsAmount")}</p>
+              <p className="text-tiny text-muted">{t("landing.hero.savingsWith")}</p>
             </div>
           </div>
         </div>

@@ -1,33 +1,33 @@
 import { Link, useLocation } from "react-router-dom";
 import { Bell, ScanLine, ShieldCheck, Star } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Logo } from "@/components/shared/Logo";
-
-const PROPS = [
-  { icon: ScanLine, label: "Scan any prescription in seconds" },
-  { icon: ShieldCheck, label: "Check interactions before you take" },
-  { icon: Bell, label: "Never miss a dose again" },
-];
 
 /** Gradient brand panel shown beside the auth forms. Headline adapts to login vs register. */
 export function AuthSidePanel() {
+  const { t } = useTranslation();
   const isLogin = useLocation().pathname.includes("login");
+
+  const PROPS = [
+    { icon: ScanLine, label: t("auth.sidePanel.prop1") },
+    { icon: ShieldCheck, label: t("auth.sidePanel.prop2") },
+    { icon: Bell, label: t("auth.sidePanel.prop3") },
+  ];
 
   const headline = isLogin ? (
     <>
-      Welcome back to
+      {t("auth.sidePanel.loginHeadline1")}
       <br />
-      peace of mind.
+      {t("auth.sidePanel.loginHeadline2")}
     </>
   ) : (
-    <>Understand your medicines with confidence.</>
+    <>{t("auth.sidePanel.registerHeadline")}</>
   );
-  const subcopy = isLogin
-    ? "Pick up right where you left off — your prescriptions, reminders and assistant are ready."
-    : "Join 50,000+ Indians who scan, understand and stay on track with every medicine.";
+  const subcopy = isLogin ? t("auth.sidePanel.loginSubcopy") : t("auth.sidePanel.registerSubcopy");
 
   return (
     <div className="relative hidden flex-col justify-between overflow-hidden bg-brand-gradient p-10 text-white lg:flex xl:p-12">
-      <Link to="/" aria-label="DawaiBuddy home">
+      <Link to="/" aria-label={t("common.homeAriaLabel")}>
         <Logo tone="dark" />
       </Link>
 
@@ -53,7 +53,7 @@ export function AuthSidePanel() {
             <Star key={i} className="h-4 w-4" fill="currentColor" strokeWidth={0} />
           ))}
         </span>
-        4.8/5 · 12,000+ reviews
+        {t("auth.sidePanel.reviews")}
       </div>
     </div>
   );

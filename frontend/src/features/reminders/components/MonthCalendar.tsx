@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
-
-const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+import { localeForLanguage } from "@/i18n/dateLocale";
 
 interface MonthCalendarProps {
   /** Today's adherence percent (0-100), from live reminder data. */
@@ -21,6 +21,11 @@ function isSameDay(a: Date, b: Date): boolean {
  * store historical daily completion yet), so every other day is shown as an
  * honest empty cell rather than a fabricated number. */
 export function MonthCalendar({ todayPercent }: MonthCalendarProps) {
+  const { t, i18n } = useTranslation();
+  const locale = localeForLanguage(i18n.language);
+  const weekdays = Array.from({ length: 7 }, (_, i) =>
+    new Date(2023, 0, i + 1).toLocaleDateString(locale, { weekday: "short" })
+  );
   const today = new Date();
   const [cursor, setCursor] = useState(() => new Date(today.getFullYear(), today.getMonth(), 1));
 
@@ -46,26 +51,26 @@ export function MonthCalendar({ todayPercent }: MonthCalendarProps) {
           type="button"
           onClick={() => shiftMonth(-1)}
           className="flex h-8 w-8 items-center justify-center rounded-full text-muted hover:bg-bg"
-          aria-label="Previous month"
+          aria-label={t("reminders.previousMonth")}
         >
           <ChevronLeft className="h-4 w-4" />
         </button>
         <p className="font-bold text-ink">
-          {cursor.toLocaleDateString("en-IN", { month: "long", year: "numeric" })}
+          {cursor.toLocaleDateString(locale, { month: "long", year: "numeric" })}
         </p>
         <button
           type="button"
           onClick={() => shiftMonth(1)}
           className="flex h-8 w-8 items-center justify-center rounded-full text-muted hover:bg-bg"
-          aria-label="Next month"
+          aria-label={t("reminders.nextMonth")}
         >
           <ChevronRight className="h-4 w-4" />
         </button>
       </div>
 
       <div className="grid grid-cols-7 gap-1 text-center">
-        {WEEKDAYS.map((d) => (
-          <p key={d} className="py-1 text-tiny font-bold uppercase tracking-wide text-muted">
+        {weekdays.map((d, i) => (
+          <p key={i} className="py-1 text-tiny font-bold uppercase tracking-wide text-muted">
             {d}
           </p>
         ))}
@@ -80,7 +85,11 @@ export function MonthCalendar({ todayPercent }: MonthCalendarProps) {
                 "flex aspect-square flex-col items-center justify-center rounded-md text-small",
                 isToday ? "bg-brand text-white font-bold" : "bg-bg text-ink-2"
               )}
-              title={isToday ? `Today · ${todayPercent}% adherence` : "No adherence data recorded"}
+              title={
+                isToday
+                  ? t("reminders.todayAdherence", { percent: todayPercent })
+                  : t("reminders.noAdherenceData")
+              }
             >
               <span>{day}</span>
               {isToday && <span className="text-tiny">{todayPercent}%</span>}
@@ -89,9 +98,7 @@ export function MonthCalendar({ todayPercent }: MonthCalendarProps) {
         })}
       </div>
 
-      <p className="mt-4 text-tiny text-muted">
-        Adherence history isn't tracked day-by-day yet — only today's progress is shown.
-      </p>
+      <p className="mt-4 text-tiny text-muted">{t("reminders.calendarNote")}</p>
     </div>
   );
 }

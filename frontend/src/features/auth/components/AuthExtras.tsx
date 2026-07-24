@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 /** Multicolour Google "G" mark. */
 function GoogleIcon() {
   return (
@@ -23,22 +25,24 @@ function GoogleIcon() {
 }
 
 export function GoogleButton() {
+  const { t } = useTranslation();
   return (
     <button
       type="button"
       className="flex h-12 w-full items-center justify-center gap-3 rounded-full border border-line bg-surface font-semibold text-ink transition-colors hover:bg-bg"
     >
       <GoogleIcon />
-      Continue with Google
+      {t("auth.google")}
     </button>
   );
 }
 
 export function OrDivider() {
+  const { t } = useTranslation();
   return (
     <div className="flex items-center gap-4">
       <span className="h-px flex-1 bg-line" />
-      <span className="text-tiny font-semibold text-muted">OR</span>
+      <span className="text-tiny font-semibold text-muted">{t("auth.or")}</span>
       <span className="h-px flex-1 bg-line" />
     </div>
   );

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import type { Profile } from "@/types";
@@ -10,6 +11,7 @@ interface EditProfileFormProps {
 }
 
 export function EditProfileForm({ profile, onSubmit, onCancel }: EditProfileFormProps) {
+  const { t } = useTranslation();
   const [age, setAge] = useState(profile.age?.toString() ?? "");
   const [bloodGroup, setBloodGroup] = useState(profile.blood_group);
   const [heightCm, setHeightCm] = useState(profile.height_cm?.toString() ?? "");
@@ -46,44 +48,52 @@ export function EditProfileForm({ profile, onSubmit, onCancel }: EditProfileForm
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label className="mb-1.5 block text-small font-semibold text-ink">Age</label>
+          <label className="mb-1.5 block text-small font-semibold text-ink">
+            {t("profile.age")}
+          </label>
           <Input type="number" value={age} onChange={(e) => setAge(e.target.value)} />
         </div>
         <div>
-          <label className="mb-1.5 block text-small font-semibold text-ink">Blood group</label>
+          <label className="mb-1.5 block text-small font-semibold text-ink">
+            {t("profile.bloodGroup")}
+          </label>
           <Input
             value={bloodGroup}
             onChange={(e) => setBloodGroup(e.target.value)}
-            placeholder="O+"
+            placeholder={t("profile.bloodGroupPlaceholder")}
           />
         </div>
         <div>
-          <label className="mb-1.5 block text-small font-semibold text-ink">Height (cm)</label>
+          <label className="mb-1.5 block text-small font-semibold text-ink">
+            {t("profile.heightCmLabel")}
+          </label>
           <Input type="number" value={heightCm} onChange={(e) => setHeightCm(e.target.value)} />
         </div>
         <div>
-          <label className="mb-1.5 block text-small font-semibold text-ink">Weight (kg)</label>
+          <label className="mb-1.5 block text-small font-semibold text-ink">
+            {t("profile.weightKgLabel")}
+          </label>
           <Input type="number" value={weightKg} onChange={(e) => setWeightKg(e.target.value)} />
         </div>
         <div className="sm:col-span-2">
           <label className="mb-1.5 block text-small font-semibold text-ink">
-            Conditions (comma separated)
+            {t("profile.conditionsLabel")}
           </label>
           <Input value={conditions} onChange={(e) => setConditions(e.target.value)} />
         </div>
         <div className="sm:col-span-2">
           <label className="mb-1.5 block text-small font-semibold text-ink">
-            Allergies (comma separated)
+            {t("profile.allergiesLabel")}
           </label>
           <Input value={allergies} onChange={(e) => setAllergies(e.target.value)} />
         </div>
       </div>
       <div className="flex items-center gap-3">
         <Button type="submit" size="sm" disabled={submitting}>
-          {submitting ? "Saving…" : "Save changes"}
+          {submitting ? t("common.saving") : t("common.saveChanges")}
         </Button>
         <Button type="button" variant="ghost" size="sm" onClick={onCancel}>
-          Cancel
+          {t("common.cancel")}
         </Button>
       </div>
     </form>

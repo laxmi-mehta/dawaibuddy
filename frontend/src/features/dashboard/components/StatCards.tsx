@@ -1,5 +1,6 @@
 import { CheckCircle2, FileText, HeartPulse, Pill, TrendingUp } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { IconBadge } from "@/components/shared/IconBadge";
@@ -14,37 +15,41 @@ interface Stat {
 }
 
 export function StatCards({ stats }: { stats: DashboardStats | null }) {
+  const { t } = useTranslation();
   const items: Stat[] = [
     {
       icon: Pill,
       tone: "brand",
       value: stats ? String(stats.active_medicines) : "—",
-      label: "Active medicines",
+      label: t("dashboard.statActiveMedicines"),
     },
     {
       icon: CheckCircle2,
       tone: "accent",
       badge: stats
-        ? { label: `${stats.adherence_percent}% adherence`, variant: "success" }
+        ? {
+            label: t("dashboard.adherencePercent", { percent: stats.adherence_percent }),
+            variant: "success",
+          }
         : undefined,
       value: stats ? `${stats.doses_taken_today}/${stats.doses_total_today}` : "—",
-      label: "Doses taken today",
+      label: t("dashboard.statDosesTakenToday"),
     },
     {
       icon: FileText,
       tone: "brand",
       value: stats ? String(stats.prescriptions_count) : "—",
-      label: "Prescriptions",
+      label: t("dashboard.statPrescriptions"),
     },
     {
       icon: HeartPulse,
       tone: "accent",
       badge:
         stats && stats.adherence_percent >= 80
-          ? { label: "On track", variant: "success" }
+          ? { label: t("dashboard.onTrack"), variant: "success" }
           : undefined,
       value: stats ? `${stats.adherence_percent}%` : "—",
-      label: "Adherence",
+      label: t("dashboard.statAdherence"),
     },
   ];
 

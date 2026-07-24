@@ -1,25 +1,27 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/shared/Logo";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
-  { label: "Features", href: "#features" },
-  { label: "How it works", href: "#how-it-works" },
-  { label: "Reviews", href: "#reviews" },
-  { label: "FAQ", href: "#faq" },
+  { labelKey: "marketingNav.features", href: "#features" },
+  { labelKey: "marketingNav.howItWorks", href: "#how-it-works" },
+  { labelKey: "marketingNav.reviews", href: "#reviews" },
+  { labelKey: "marketingNav.faq", href: "#faq" },
 ];
 
 /** Public marketing navbar — sticky, blurred, collapses to a hamburger sheet on mobile. */
 export function MarketingNav() {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-surface/80 backdrop-blur-md">
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link to="/" aria-label="DawaiBuddy home">
+        <Link to="/" aria-label={t("common.homeAriaLabel")}>
           <Logo />
         </Link>
 
@@ -31,7 +33,7 @@ export function MarketingNav() {
                 href={link.href}
                 className="text-small font-semibold text-ink-2 transition-colors hover:text-brand"
               >
-                {link.label}
+                {t(link.labelKey)}
               </a>
             </li>
           ))}
@@ -40,10 +42,10 @@ export function MarketingNav() {
         {/* Desktop CTAs */}
         <div className="hidden items-center gap-3 lg:flex">
           <Link to="/login" className={cn(buttonVariants({ variant: "ghost", size: "sm" }))}>
-            Log in
+            {t("marketingNav.login")}
           </Link>
           <Link to="/register" className={cn(buttonVariants({ variant: "primary", size: "sm" }))}>
-            Get started
+            {t("marketingNav.getStarted")}
           </Link>
         </div>
 
@@ -51,7 +53,7 @@ export function MarketingNav() {
         <button
           type="button"
           className="inline-flex h-11 w-11 items-center justify-center rounded-full text-ink lg:hidden"
-          aria-label="Toggle menu"
+          aria-label={t("common.toggleMenu")}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
         >
@@ -70,7 +72,7 @@ export function MarketingNav() {
                   onClick={() => setOpen(false)}
                   className="block rounded-md px-3 py-3 text-body font-semibold text-ink-2 hover:bg-bg"
                 >
-                  {link.label}
+                  {t(link.labelKey)}
                 </a>
               </li>
             ))}
@@ -81,14 +83,14 @@ export function MarketingNav() {
               onClick={() => setOpen(false)}
               className={cn(buttonVariants({ variant: "ghost" }), "w-full")}
             >
-              Log in
+              {t("marketingNav.login")}
             </Link>
             <Link
               to="/register"
               onClick={() => setOpen(false)}
               className={cn(buttonVariants({ variant: "primary" }), "w-full")}
             >
-              Get started
+              {t("marketingNav.getStarted")}
             </Link>
           </div>
         </div>

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 
 interface LoadingSpinnerProps {
@@ -5,6 +6,7 @@ interface LoadingSpinnerProps {
 }
 
 export default function LoadingSpinner({ className }: LoadingSpinnerProps) {
+  const { t } = useTranslation();
   return (
     <div
       className={cn(
@@ -12,7 +14,7 @@ export default function LoadingSpinner({ className }: LoadingSpinnerProps) {
         className
       )}
       role="status"
-      aria-label="Loading"
+      aria-label={t("common.loading")}
     />
   );
 }

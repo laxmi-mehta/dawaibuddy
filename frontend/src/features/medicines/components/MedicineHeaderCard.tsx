@@ -1,10 +1,12 @@
 import { Building2, Info, Pill } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { IconBadge } from "@/components/shared/IconBadge";
 import type { Medicine } from "@/types";
 
 export function MedicineHeaderCard({ medicine }: { medicine: Medicine }) {
+  const { t } = useTranslation();
   return (
     <Card className="p-6">
       <div className="flex items-start gap-4">
@@ -14,7 +16,7 @@ export function MedicineHeaderCard({ medicine }: { medicine: Medicine }) {
             <h2 className="text-h2 font-extrabold text-ink">{medicine.name}</h2>
             {medicine.rx_required && (
               <Badge variant="danger" size="sm">
-                Rx only
+                {t("medicines.rxOnly")}
               </Badge>
             )}
           </div>
@@ -40,7 +42,8 @@ export function MedicineHeaderCard({ medicine }: { medicine: Medicine }) {
         <div className="mt-5 flex items-start gap-3 rounded-md bg-brand-50 p-4">
           <Info className="mt-0.5 h-5 w-5 shrink-0 text-brand" strokeWidth={1.9} />
           <p className="text-small text-ink-2">
-            <span className="font-bold text-ink">How it works:</span> {medicine.how_it_works}
+            <span className="font-bold text-ink">{t("medicines.howItWorks")}</span>{" "}
+            {medicine.how_it_works}
           </p>
         </div>
       )}

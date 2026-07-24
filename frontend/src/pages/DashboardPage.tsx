@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Plus } from "lucide-react";
 import { AppHeader } from "@/components/layout/AppHeader";
+import { localeForLanguage } from "@/i18n/dateLocale";
 import { Card } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -16,14 +18,14 @@ import { remindersService } from "@/services/reminders.service";
 import { useAuthStore } from "@/store/auth.store";
 import type { DashboardStats, Reminder } from "@/types";
 
-const TODAY_LABEL = new Date().toLocaleDateString("en-IN", {
-  weekday: "long",
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-});
-
 export default function DashboardPage() {
+  const { t, i18n } = useTranslation();
+  const todayLabel = new Date().toLocaleDateString(localeForLanguage(i18n.language), {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
   const navigate = useNavigate();
   const user = useAuthStore((s) => s.user);
   const [stats, setStats] = useState<DashboardStats | null>(null);
@@ -42,11 +44,11 @@ export default function DashboardPage() {
       setReminders(remindersPage.results ?? []);
       setError(null);
     } catch {
-      setError("Could not load dashboard. Is the backend running?");
+      setError(t("dashboard.loadError"));
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     load();
@@ -66,13 +68,15 @@ export default function DashboardPage() {
   return (
     <>
       <AppHeader
-        title={<>Hi {user?.first_name || "there"} 👋</>}
-        subtitle={`${TODAY_LABEL} · Keep up the good habits`}
-        searchPlaceholder="Search medicines, prescriptions…"
+        title={t("dashboard.greeting", {
+          name: user?.first_name || t("dashboard.greetingFallbackName"),
+        })}
+        subtitle={`${todayLabel} · ${t("dashboard.subtitleSuffix")}`}
+        searchPlaceholder={t("dashboard.searchPlaceholder")}
         onSearchSubmit={(q) => navigate("/medicines", { state: { search: q } })}
         actions={
           <Link to="/upload" className={cn(buttonVariants({ variant: "primary" }))}>
-            <Plus className="h-5 w-5" strokeWidth={2} /> Upload Rx
+            <Plus className="h-5 w-5" strokeWidth={2} /> {t("nav.uploadRx")}
           </Link>
         }
       />
@@ -93,7 +97,7 @@ export default function DashboardPage() {
           <div className="space-y-6">
             <AssistantPromo />
             {loading ? (
-              <Card className="p-6 text-body text-muted">Loading reminders…</Card>
+              <Card className="p-6 text-body text-muted">{t("reminders.loading")}</Card>
             ) : (
               <TodaysReminders reminders={reminders} onTake={handleTake} takingId={takingId} />
             )}

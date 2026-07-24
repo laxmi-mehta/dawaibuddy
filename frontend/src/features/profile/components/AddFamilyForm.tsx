@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import type { FamilyMember } from "@/types";
@@ -10,6 +11,7 @@ interface AddFamilyFormProps {
 }
 
 export function AddFamilyForm({ onSubmit, onCancel, initial }: AddFamilyFormProps) {
+  const { t } = useTranslation();
   const isEditing = Boolean(initial);
   const [name, setName] = useState(initial?.name ?? "");
   const [relation, setRelation] = useState(initial?.relation ?? "");
@@ -20,7 +22,7 @@ export function AddFamilyForm({ onSubmit, onCancel, initial }: AddFamilyFormProp
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!name.trim()) {
-      setError("Name is required.");
+      setError(t("profile.nameRequiredError"));
       return;
     }
     setSubmitting(true);
@@ -32,7 +34,7 @@ export function AddFamilyForm({ onSubmit, onCancel, initial }: AddFamilyFormProp
         age: age ? Number(age) : null,
       });
     } catch {
-      setError(`Could not ${isEditing ? "save" : "add"} family member. Try again.`);
+      setError(isEditing ? t("profile.saveFamilyError") : t("profile.addFamilyError"));
     } finally {
       setSubmitting(false);
     }
@@ -44,28 +46,28 @@ export function AddFamilyForm({ onSubmit, onCancel, initial }: AddFamilyFormProp
         <Input
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Name"
+          placeholder={t("profile.nameLabel")}
           autoFocus
         />
         <Input
           value={relation}
           onChange={(e) => setRelation(e.target.value)}
-          placeholder="Relation (e.g. Spouse)"
+          placeholder={t("profile.relationLabel")}
         />
         <Input
           type="number"
           value={age}
           onChange={(e) => setAge(e.target.value)}
-          placeholder="Age"
+          placeholder={t("profile.ageLabel")}
         />
       </div>
       {error && <p className="text-small text-danger">{error}</p>}
       <div className="flex items-center gap-3">
         <Button type="submit" size="sm" disabled={submitting}>
-          {submitting ? "Saving…" : isEditing ? "Save" : "Add"}
+          {submitting ? t("common.saving") : isEditing ? t("common.save") : t("common.add")}
         </Button>
         <Button type="button" variant="ghost" size="sm" onClick={onCancel}>
-          Cancel
+          {t("common.cancel")}
         </Button>
       </div>
     </form>

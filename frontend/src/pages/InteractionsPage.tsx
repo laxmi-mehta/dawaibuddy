@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Search, Sparkles } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -12,6 +13,7 @@ import { interactionsService } from "@/services/interactions.service";
 import type { InteractionCheckResponse, Medicine } from "@/types";
 
 export default function InteractionsPage() {
+  const { t } = useTranslation();
   const [medicines, setMedicines] = useState<Medicine[]>([]);
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [result, setResult] = useState<InteractionCheckResponse | null>(null);
@@ -30,11 +32,12 @@ export default function InteractionsPage() {
         setSelected(ids);
         if (ids.size >= 2) setResult(await interactionsService.check([...ids]));
       } catch {
-        setError("Could not load interactions. Is the backend running?");
+        setError(t("interactions.loadError"));
       } finally {
         setLoading(false);
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function toggle(id: string) {
@@ -53,7 +56,7 @@ export default function InteractionsPage() {
     try {
       setResult(await interactionsService.check([...selected]));
     } catch {
-      setError("Check failed.");
+      setError(t("interactions.checkFailed"));
     } finally {
       setChecking(false);
     }
@@ -67,13 +70,10 @@ export default function InteractionsPage() {
 
   return (
     <>
-      <AppHeader
-        title="Drug interaction checker"
-        subtitle="Compare your medicines to see if they are safe together"
-      />
+      <AppHeader title={t("interactions.title")} subtitle={t("interactions.subtitle")} />
 
       <div className="mx-auto max-w-6xl space-y-6 p-6">
-        {loading && <p className="text-body text-muted">Loading medicines…</p>}
+        {loading && <p className="text-body text-muted">{t("medicines.loading")}</p>}
         {error && (
           <Card className="border-l-4 border-l-danger p-5 text-body text-danger">{error}</Card>
         )}
@@ -94,23 +94,27 @@ export default function InteractionsPage() {
 
             <Button onClick={runCheck} disabled={selected.size < 2 || checking} size="lg">
               <Search className="h-5 w-5" strokeWidth={2} />
-              {checking ? "Checking…" : `Check ${selected.size} medicines`}
+              {checking
+                ? t("interactions.checking")
+                : t("interactions.checkMedicines", { count: selected.size })}
             </Button>
 
             {result && (
               <>
                 <div>
-                  <h2 className="mb-4 text-h3 font-extrabold text-ink">Interaction details</h2>
+                  <h2 className="mb-4 text-h3 font-extrabold text-ink">
+                    {t("interactions.interactionDetails")}
+                  </h2>
                   {result.interactions.length ? (
                     <div className="space-y-4">
                       {result.interactions.map((it) => (
                         <InteractionPairCard
                           key={it.id}
                           pair={{
-                            left: it.medicine_a_name ?? "Medicine A",
-                            right: it.medicine_b_name ?? "Medicine B",
+                            left: it.medicine_a_name ?? t("interactions.medicineA"),
+                            right: it.medicine_b_name ?? t("interactions.medicineB"),
                             severity: it.severity as Severity,
-                            title: it.title || "Interaction",
+                            title: it.title || t("interactions.interactionDefaultTitle"),
                             detail: it.description,
                           }}
                         />
@@ -118,7 +122,7 @@ export default function InteractionsPage() {
                     </div>
                   ) : (
                     <Card className="p-6 text-body text-muted">
-                      No known interactions on record for this set.
+                      {t("interactions.noKnownInteractions")}
                     </Card>
                   )}
                 </div>
@@ -127,12 +131,11 @@ export default function InteractionsPage() {
                   <Card className="p-6">
                     <div className="flex items-center gap-2">
                       <Sparkles className="h-5 w-5 text-brand" strokeWidth={1.9} />
-                      <h2 className="text-h3 font-extrabold text-ink">AI model assessment</h2>
+                      <h2 className="text-h3 font-extrabold text-ink">
+                        {t("interactions.aiModelAssessment")}
+                      </h2>
                     </div>
-                    <p className="mt-1 text-small text-muted">
-                      Every selected pair scored by the DDI model (trained on DrugBank, ~0.84
-                      AUROC).
-                    </p>
+                    <p className="mt-1 text-small text-muted">{t("interactions.aiModelDesc")}</p>
                     <ul className="mt-4 divide-y divide-line">
                       {[...result.model_predictions]
                         .sort((a, b) => b.probability - a.probability)

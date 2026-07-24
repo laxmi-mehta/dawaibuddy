@@ -1,4 +1,5 @@
 import type { KeyboardEvent, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { Bell, Search } from "lucide-react";
 import { useAuthStore } from "@/store/auth.store";
 
@@ -21,6 +22,7 @@ export function AppHeader({
   onSearchSubmit,
   actions,
 }: AppHeaderProps) {
+  const { t } = useTranslation();
   const user = useAuthStore((s) => s.user);
   const initials = user
     ? `${user.first_name?.[0] ?? ""}${user.last_name?.[0] ?? ""}`.toUpperCase() || "?"
@@ -58,9 +60,9 @@ export function AppHeader({
         {actions}
         <button
           type="button"
-          aria-label="Notifications"
+          aria-label={t("common.notifications")}
           disabled
-          title="Notifications coming soon"
+          title={t("common.notificationsComingSoon")}
           className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink-2 opacity-50"
         >
           <Bell className="h-5 w-5" strokeWidth={1.9} />

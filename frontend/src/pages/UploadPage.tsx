@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -19,6 +20,7 @@ const EMPTY_DRAFT: PrescriptionOcrDraft = {
 };
 
 export default function UploadPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [scanning, setScanning] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -30,7 +32,7 @@ export default function UploadPage() {
       const draft = await prescriptionsService.ocr(file);
       navigate("/upload/review", { state: { draft, previewUrl: URL.createObjectURL(file) } });
     } catch {
-      setError("Could not scan this file. Is the backend running?");
+      setError(t("upload.scanError"));
     } finally {
       setScanning(false);
     }
@@ -39,15 +41,15 @@ export default function UploadPage() {
   return (
     <>
       <AppHeader
-        title="Upload prescription"
-        subtitle="Scan or import your prescription to get started"
+        title={t("upload.title")}
+        subtitle={t("upload.subtitle")}
         actions={
           <Button
             variant="ghost"
             size="sm"
             onClick={() => navigate("/upload/review", { state: { draft: EMPTY_DRAFT } })}
           >
-            Enter manually instead
+            {t("upload.enterManually")}
           </Button>
         }
       />
@@ -56,9 +58,7 @@ export default function UploadPage() {
         {error && (
           <Card className="mb-5 border-l-4 border-l-danger p-5 text-body text-danger">{error}</Card>
         )}
-        {scanning && (
-          <Card className="mb-5 p-5 text-body text-muted">Scanning your prescription…</Card>
-        )}
+        {scanning && <Card className="mb-5 p-5 text-body text-muted">{t("upload.scanning")}</Card>}
         <div className="grid gap-6 lg:grid-cols-[1.6fr_1fr]">
           <UploadCard onFileSelected={handleFile} disabled={scanning} />
           <ScanTips />

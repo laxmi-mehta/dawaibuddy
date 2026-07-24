@@ -10,6 +10,7 @@ import {
   User,
   type LucideIcon,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -25,6 +26,7 @@ import { useAuthStore } from "@/store/auth.store";
 import type { DashboardStats, FamilyMember, Profile, Reminder } from "@/types";
 
 export default function ProfilePage() {
+  const { t } = useTranslation();
   const setUser = useAuthStore((s) => s.setUser);
   const authUser = useAuthStore((s) => s.user);
 
@@ -54,11 +56,11 @@ export default function ProfilePage() {
       setStats(dashboard);
       setError(null);
     } catch {
-      setError("Could not load profile. Is the backend running?");
+      setError(t("profile.loadError"));
     } finally {
       setLoading(false);
     }
-  }, [setUser]);
+  }, [setUser, t]);
 
   useEffect(() => {
     load();
@@ -94,17 +96,21 @@ export default function ProfilePage() {
 
   const HEALTH: { icon: LucideIcon; label: string; value: string }[] = profile
     ? [
-        { icon: User, label: "Age", value: profile.age ? `${profile.age} years` : "—" },
-        { icon: Droplet, label: "Blood group", value: profile.blood_group || "—" },
+        {
+          icon: User,
+          label: t("profile.age"),
+          value: profile.age ? t("profile.ageYears", { age: profile.age }) : "—",
+        },
+        { icon: Droplet, label: t("profile.bloodGroup"), value: profile.blood_group || "—" },
         {
           icon: Activity,
-          label: "Height",
-          value: profile.height_cm ? `${profile.height_cm} cm` : "—",
+          label: t("profile.height"),
+          value: profile.height_cm ? t("profile.heightCm", { height: profile.height_cm }) : "—",
         },
         {
           icon: Activity,
-          label: "Weight",
-          value: profile.weight_kg ? `${profile.weight_kg} kg` : "—",
+          label: t("profile.weight"),
+          value: profile.weight_kg ? t("profile.weightKg", { weight: profile.weight_kg }) : "—",
         },
       ]
     : [];
@@ -114,8 +120,8 @@ export default function ProfilePage() {
   if (loading) {
     return (
       <>
-        <AppHeader title="My profile" subtitle="Your health information & saved medicines" />
-        <p className="p-6 text-body text-muted">Loading profile…</p>
+        <AppHeader title={t("profile.title")} subtitle={t("profile.subtitle")} />
+        <p className="p-6 text-body text-muted">{t("profile.loading")}</p>
       </>
     );
   }
@@ -123,11 +129,11 @@ export default function ProfilePage() {
   return (
     <>
       <AppHeader
-        title="My profile"
-        subtitle="Your health information & saved medicines"
+        title={t("profile.title")}
+        subtitle={t("profile.subtitle")}
         actions={
           <Button variant="ghost" size="sm" onClick={() => setEditing((v) => !v)}>
-            <Pencil className="h-4 w-4" /> {editing ? "Close" : "Edit profile"}
+            <Pencil className="h-4 w-4" /> {editing ? t("common.close") : t("profile.editProfile")}
           </Button>
         }
       />
@@ -151,14 +157,14 @@ export default function ProfilePage() {
               </div>
             </div>
             <Button size="sm" onClick={() => setEditing((v) => !v)}>
-              <Pencil className="h-4 w-4" /> Edit
+              <Pencil className="h-4 w-4" /> {t("common.edit")}
             </Button>
           </div>
         </Card>
 
         {editing && profile && (
           <Card className="p-6">
-            <h3 className="mb-4 text-h3 font-extrabold text-ink">Edit health profile</h3>
+            <h3 className="mb-4 text-h3 font-extrabold text-ink">{t("profile.editHealthProfile")}</h3>
             <EditProfileForm
               profile={profile}
               onSubmit={handleSaveProfile}
@@ -171,7 +177,7 @@ export default function ProfilePage() {
           {/* Left */}
           <div className="space-y-6">
             <Card className="p-6">
-              <h3 className="text-h3 font-extrabold text-ink">Health profile</h3>
+              <h3 className="text-h3 font-extrabold text-ink">{t("profile.healthProfile")}</h3>
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
                 {HEALTH.map((h) => (
                   <div key={h.label} className="flex items-center gap-3 rounded-md bg-bg p-4">
@@ -186,9 +192,9 @@ export default function ProfilePage() {
             </Card>
 
             <Card className="p-6">
-              <h3 className="text-h3 font-extrabold text-ink">Conditions &amp; allergies</h3>
+              <h3 className="text-h3 font-extrabold text-ink">{t("profile.conditionsAllergies")}</h3>
               <p className="mt-4 text-tiny font-bold uppercase tracking-wider text-muted">
-                Ongoing conditions
+                {t("profile.ongoingConditions")}
               </p>
               <div className="mt-2 flex flex-wrap gap-2">
                 {profile?.conditions.length ? (
@@ -198,11 +204,11 @@ export default function ProfilePage() {
                     </Badge>
                   ))
                 ) : (
-                  <p className="text-small text-muted">None recorded.</p>
+                  <p className="text-small text-muted">{t("profile.noneRecorded")}</p>
                 )}
               </div>
               <p className="mt-4 text-tiny font-bold uppercase tracking-wider text-muted">
-                Allergies
+                {t("profile.allergies")}
               </p>
               <div className="mt-2 flex flex-wrap gap-2">
                 {profile?.allergies.length ? (
@@ -212,22 +218,20 @@ export default function ProfilePage() {
                     </Badge>
                   ))
                 ) : (
-                  <p className="text-small text-muted">None recorded.</p>
+                  <p className="text-small text-muted">{t("profile.noneRecorded")}</p>
                 )}
               </div>
             </Card>
 
             <Card className="p-6">
               <div className="flex items-center justify-between">
-                <h3 className="text-h3 font-extrabold text-ink">My medicines</h3>
+                <h3 className="text-h3 font-extrabold text-ink">{t("profile.myMedicines")}</h3>
                 <Badge variant="default" size="sm">
                   {uniqueMedicines.length}
                 </Badge>
               </div>
               {uniqueMedicines.length === 0 ? (
-                <p className="mt-4 text-small text-muted">
-                  No medicines yet — add a reminder to track one.
-                </p>
+                <p className="mt-4 text-small text-muted">{t("profile.noMedicinesYet")}</p>
               ) : (
                 <ul className="mt-2 divide-y divide-line">
                   {uniqueMedicines.map((m) => (
@@ -249,10 +253,10 @@ export default function ProfilePage() {
           {/* Right */}
           <div className="space-y-6">
             <Card className="p-6">
-              <h3 className="text-h3 font-extrabold text-ink">Adherence</h3>
+              <h3 className="text-h3 font-extrabold text-ink">{t("profile.adherence")}</h3>
               <div className="mt-4">
                 <div className="flex items-center justify-between text-small">
-                  <span className="text-muted">Today</span>
+                  <span className="text-muted">{t("profile.today")}</span>
                   <span className="font-bold text-success">{stats?.adherence_percent ?? 0}%</span>
                 </div>
                 <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-line">
@@ -266,9 +270,9 @@ export default function ProfilePage() {
 
             <Card className="p-6">
               <div className="flex items-center justify-between">
-                <h3 className="text-h3 font-extrabold text-ink">Family</h3>
+                <h3 className="text-h3 font-extrabold text-ink">{t("profile.family")}</h3>
                 <Button variant="soft" size="sm" onClick={() => setAddingFamily((v) => !v)}>
-                  <Plus className="h-4 w-4" /> Add
+                  <Plus className="h-4 w-4" /> {t("common.add")}
                 </Button>
               </div>
 
@@ -282,7 +286,7 @@ export default function ProfilePage() {
               )}
 
               {family.length === 0 ? (
-                <p className="mt-4 text-small text-muted">No family members added yet.</p>
+                <p className="mt-4 text-small text-muted">{t("profile.noFamilyYet")}</p>
               ) : (
                 <ul className="mt-2 divide-y divide-line">
                   {family.map((f) =>
@@ -310,7 +314,7 @@ export default function ProfilePage() {
                           type="button"
                           onClick={() => setEditingFamilyId(f.id)}
                           className="flex h-9 w-9 items-center justify-center rounded-md text-muted hover:bg-bg hover:text-ink"
-                          aria-label={`Edit ${f.name}`}
+                          aria-label={t("profile.editAria", { name: f.name })}
                         >
                           <Pencil className="h-4 w-4" />
                         </button>
@@ -318,7 +322,7 @@ export default function ProfilePage() {
                           type="button"
                           onClick={() => handleRemoveFamily(f.id)}
                           className="flex h-9 w-9 items-center justify-center rounded-md text-muted hover:bg-danger-bg hover:text-danger"
-                          aria-label={`Remove ${f.name}`}
+                          aria-label={t("profile.removeAria", { name: f.name })}
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>

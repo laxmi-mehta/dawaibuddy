@@ -1,4 +1,5 @@
 import { Check, Pill } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { IconBadge } from "@/components/shared/IconBadge";
@@ -14,15 +15,16 @@ interface MedicinesComparedProps {
 }
 
 export function MedicinesCompared({ medicines, selected, onToggle }: MedicinesComparedProps) {
+  const { t } = useTranslation();
   return (
     <Card className="p-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-h3 font-extrabold text-ink">Medicines compared</h2>
-          <p className="text-small text-muted">Tap to select which medicines to check.</p>
+          <h2 className="text-h3 font-extrabold text-ink">{t("interactions.medicinesCompared")}</h2>
+          <p className="text-small text-muted">{t("interactions.tapToSelect")}</p>
         </div>
         <Badge variant="brand" size="sm">
-          {selected.size} selected
+          {t("interactions.selectedCount", { count: selected.size })}
         </Badge>
       </div>
 

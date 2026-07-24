@@ -1,16 +1,12 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import type { Reminder, ReminderBucketValue } from "@/types";
 
-const BUCKET_LABELS: Record<string, ReminderBucketValue> = {
-  Morning: "morning",
-  Afternoon: "afternoon",
-  Evening: "evening",
-  Night: "night",
-};
+const BUCKET_VALUES: ReminderBucketValue[] = ["morning", "afternoon", "evening", "night"];
 
 interface AddReminderFormProps {
   onSubmit: (data: Partial<Reminder>) => Promise<void>;
@@ -19,12 +15,14 @@ interface AddReminderFormProps {
 }
 
 export function AddReminderForm({ onSubmit, onCancel, initial }: AddReminderFormProps) {
+  const { t } = useTranslation();
   const [medicineName, setMedicineName] = useState(initial?.medicine_name ?? "");
   const [dosage, setDosage] = useState(initial?.dosage ?? "");
   const [scheduledTime, setScheduledTime] = useState(
     initial?.scheduled_time?.slice(0, 5) ?? "08:00"
   );
-  const [bucketLabel, setBucketLabel] = useState("Morning");
+  const bucketLabels = BUCKET_VALUES.map((v) => t(`reminders.${v}`));
+  const [bucketLabel, setBucketLabel] = useState(bucketLabels[0]);
   const [instruction, setInstruction] = useState(initial?.instruction ?? "");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -32,7 +30,7 @@ export function AddReminderForm({ onSubmit, onCancel, initial }: AddReminderForm
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!medicineName.trim()) {
-      setError("Medicine name is required.");
+      setError(t("reminders.requiredNameError"));
       return;
     }
     setSubmitting(true);
@@ -42,11 +40,11 @@ export function AddReminderForm({ onSubmit, onCancel, initial }: AddReminderForm
         medicine_name: medicineName.trim(),
         dosage: dosage.trim(),
         scheduled_time: `${scheduledTime}:00`,
-        bucket: BUCKET_LABELS[bucketLabel],
+        bucket: BUCKET_VALUES[bucketLabels.indexOf(bucketLabel)],
         instruction: instruction.trim(),
       });
     } catch {
-      setError("Could not save reminder. Try again.");
+      setError(t("reminders.saveError"));
     } finally {
       setSubmitting(false);
     }
@@ -57,24 +55,30 @@ export function AddReminderForm({ onSubmit, onCancel, initial }: AddReminderForm
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label className="mb-1.5 block text-small font-semibold text-ink">Medicine name</label>
+            <label className="mb-1.5 block text-small font-semibold text-ink">
+              {t("reminders.medicineName")}
+            </label>
             <Input
               value={medicineName}
               onChange={(e) => setMedicineName(e.target.value)}
-              placeholder="e.g. Glycomet 500 SR"
+              placeholder={t("reminders.medicineNamePlaceholder")}
               autoFocus
             />
           </div>
           <div>
-            <label className="mb-1.5 block text-small font-semibold text-ink">Dosage</label>
+            <label className="mb-1.5 block text-small font-semibold text-ink">
+              {t("reminders.dosage")}
+            </label>
             <Input
               value={dosage}
               onChange={(e) => setDosage(e.target.value)}
-              placeholder="e.g. 500 mg"
+              placeholder={t("reminders.dosagePlaceholder")}
             />
           </div>
           <div>
-            <label className="mb-1.5 block text-small font-semibold text-ink">Time</label>
+            <label className="mb-1.5 block text-small font-semibold text-ink">
+              {t("reminders.time")}
+            </label>
             <Input
               type="time"
               value={scheduledTime}
@@ -82,9 +86,11 @@ export function AddReminderForm({ onSubmit, onCancel, initial }: AddReminderForm
             />
           </div>
           <div>
-            <label className="mb-1.5 block text-small font-semibold text-ink">Time of day</label>
+            <label className="mb-1.5 block text-small font-semibold text-ink">
+              {t("reminders.timeOfDay")}
+            </label>
             <Select
-              options={Object.keys(BUCKET_LABELS)}
+              options={bucketLabels}
               value={bucketLabel}
               onChange={(e) => setBucketLabel(e.target.value)}
               className="h-12 w-full"
@@ -92,12 +98,12 @@ export function AddReminderForm({ onSubmit, onCancel, initial }: AddReminderForm
           </div>
           <div className="sm:col-span-2">
             <label className="mb-1.5 block text-small font-semibold text-ink">
-              Instruction (optional)
+              {t("reminders.instruction")}
             </label>
             <Input
               value={instruction}
               onChange={(e) => setInstruction(e.target.value)}
-              placeholder="e.g. after breakfast"
+              placeholder={t("reminders.instructionPlaceholder")}
             />
           </div>
         </div>
@@ -106,10 +112,10 @@ export function AddReminderForm({ onSubmit, onCancel, initial }: AddReminderForm
 
         <div className="flex items-center gap-3">
           <Button type="submit" size="sm" disabled={submitting}>
-            {submitting ? "Saving…" : "Save reminder"}
+            {submitting ? t("reminders.saving") : t("reminders.saveReminder")}
           </Button>
           <Button type="button" variant="ghost" size="sm" onClick={onCancel}>
-            Cancel
+            {t("common.cancel")}
           </Button>
         </div>
       </form>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { RefreshCw } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { Card } from "@/components/ui/card";
 import { ChatBubble } from "@/features/assistant/components/ChatBubble";
@@ -8,15 +9,14 @@ import { ChatComposer } from "@/features/assistant/components/ChatComposer";
 import { assistantService } from "@/services/assistant.service";
 import type { Message } from "@/types";
 
-const GREETING: Message = {
-  id: "greeting",
-  role: "assistant",
-  content:
-    "Hi 👋 I'm your DawaiBuddy assistant. Ask me about a medicine, a symptom (headache, fever, cough…), or check an interaction between two medicines.",
-  created_at: new Date(0).toISOString(),
-};
-
 export default function AssistantPage() {
+  const { t } = useTranslation();
+  const GREETING: Message = {
+    id: "greeting",
+    role: "assistant",
+    content: t("assistant.greeting"),
+    created_at: new Date(0).toISOString(),
+  };
   const [messages, setMessages] = useState<Message[]>([GREETING]);
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [input, setInput] = useState("");
@@ -45,7 +45,7 @@ export default function AssistantPage() {
       setConversationId(res.conversation_id);
       setMessages((prev) => [...prev, res.reply]);
     } catch {
-      setError("Could not reach the assistant. Is the backend running?");
+      setError(t("assistant.loadError"));
     } finally {
       setSending(false);
     }
@@ -60,7 +60,7 @@ export default function AssistantPage() {
 
   return (
     <>
-      <AppHeader title="AI Assistant" subtitle="Ask anything about your medicines" />
+      <AppHeader title={t("nav.aiAssistant")} subtitle={t("assistant.subtitle")} />
 
       <div className="mx-auto max-w-4xl p-6">
         <Card className="flex flex-col">
@@ -71,9 +71,9 @@ export default function AssistantPage() {
                 ✦
               </span>
               <div>
-                <p className="font-bold text-ink">DawaiBuddy Assistant</p>
+                <p className="font-bold text-ink">{t("assistant.assistantName")}</p>
                 <p className="flex items-center gap-1.5 text-small text-muted">
-                  <span className="h-2 w-2 rounded-full bg-success" /> Online · medicine-focused
+                  <span className="h-2 w-2 rounded-full bg-success" /> {t("assistant.onlineStatus")}
                 </p>
               </div>
             </div>
@@ -82,7 +82,7 @@ export default function AssistantPage() {
               onClick={newChat}
               className="flex items-center gap-1.5 rounded-full border border-line px-4 py-2 text-small font-semibold text-ink-2 hover:bg-bg"
             >
-              <RefreshCw className="h-4 w-4" /> New chat
+              <RefreshCw className="h-4 w-4" /> {t("assistant.newChat")}
             </button>
           </div>
 
@@ -93,7 +93,7 @@ export default function AssistantPage() {
                 {m.content}
               </ChatBubble>
             ))}
-            {sending && <ChatBubble role="assistant">Thinking…</ChatBubble>}
+            {sending && <ChatBubble role="assistant">{t("assistant.thinking")}</ChatBubble>}
             {error && <p className="text-small text-danger">{error}</p>}
           </div>
 
@@ -108,9 +108,7 @@ export default function AssistantPage() {
                 sending={sending}
               />
             </div>
-            <p className="mt-3 text-center text-tiny text-muted">
-              DawaiBuddy can make mistakes. Always confirm with your doctor or pharmacist.
-            </p>
+            <p className="mt-3 text-center text-tiny text-muted">{t("assistant.disclaimer")}</p>
           </div>
         </Card>
       </div>

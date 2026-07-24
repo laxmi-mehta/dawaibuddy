@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CalendarDays, List, Plus } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -10,11 +11,15 @@ import { ReminderBucket } from "@/features/reminders/components/ReminderBucket";
 import { AddReminderForm } from "@/features/reminders/components/AddReminderForm";
 import { MonthCalendar } from "@/features/reminders/components/MonthCalendar";
 import { remindersService } from "@/services/reminders.service";
+import { localeForLanguage } from "@/i18n/dateLocale";
 import type { Reminder, ReminderTodayResponse } from "@/types";
 
-const TODAY_LABEL = new Date().toLocaleDateString("en-IN", { day: "numeric", month: "long" });
-
 export default function RemindersPage() {
+  const { t, i18n } = useTranslation();
+  const todayLabel = new Date().toLocaleDateString(localeForLanguage(i18n.language), {
+    day: "numeric",
+    month: "long",
+  });
   const location = useLocation();
   const navigate = useNavigate();
   const prefill = (location.state as { prefillReminder?: Partial<Reminder> } | null)
@@ -39,11 +44,11 @@ export default function RemindersPage() {
       setToday(await remindersService.today());
       setError(null);
     } catch {
-      setError("Could not load reminders. Is the backend running?");
+      setError(t("reminders.loadError"));
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     load();
@@ -70,11 +75,11 @@ export default function RemindersPage() {
   return (
     <>
       <AppHeader
-        title="Reminders"
-        subtitle="Stay on track with every dose"
+        title={t("reminders.title")}
+        subtitle={t("reminders.subtitle")}
         actions={
           <Button size="sm" onClick={() => setShowAddForm((v) => !v)}>
-            <Plus className="h-4 w-4" strokeWidth={2} /> Add reminder
+            <Plus className="h-4 w-4" strokeWidth={2} /> {t("reminders.addReminder")}
           </Button>
         }
       />
@@ -97,9 +102,11 @@ export default function RemindersPage() {
           <div className="flex items-center gap-4">
             <ProgressRing value={progress.percent} />
             <div>
-              <p className="text-h3 font-extrabold text-ink">Today, {TODAY_LABEL}</p>
+              <p className="text-h3 font-extrabold text-ink">
+                {t("reminders.todayLabel", { date: todayLabel })}
+              </p>
               <p className="text-small text-muted">
-                {progress.taken} of {progress.total} doses taken · keep it up!
+                {t("reminders.dosesTaken", { taken: progress.taken, total: progress.total })}
               </p>
             </div>
           </div>
@@ -107,8 +114,8 @@ export default function RemindersPage() {
           <div className="flex rounded-lg bg-bg p-1">
             {(
               [
-                { id: "list", label: "List", icon: List },
-                { id: "calendar", label: "Calendar", icon: CalendarDays },
+                { id: "list", label: t("reminders.list"), icon: List },
+                { id: "calendar", label: t("reminders.calendarView"), icon: CalendarDays },
               ] as const
             ).map(({ id, label, icon: Icon }) => (
               <button
@@ -129,10 +136,10 @@ export default function RemindersPage() {
 
         {view === "list" ? (
           loading ? (
-            <p className="text-body text-muted">Loading reminders…</p>
+            <p className="text-body text-muted">{t("reminders.loading")}</p>
           ) : !today?.buckets.length ? (
             <Card className="p-10 text-center text-body text-muted">
-              No reminders yet — add one to get started.
+              {t("reminders.noRemindersYet")}
             </Card>
           ) : (
             <div className="space-y-5">

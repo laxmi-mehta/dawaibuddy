@@ -1,4 +1,5 @@
 import { AlertTriangle, CheckCircle2, Download } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -19,8 +20,15 @@ export function InteractionSummary({
   severe,
   medicineCount,
 }: InteractionSummaryProps) {
+  const { t } = useTranslation();
   const clean = total === 0;
-  const worst = severe ? "Severe" : moderate ? "Moderate" : mild ? "Mild" : null;
+  const worst = severe
+    ? t("interactions.severeLabel")
+    : moderate
+      ? t("interactions.moderateLabel")
+      : mild
+        ? t("interactions.mildLabel")
+        : null;
 
   return (
     <Card className={clean ? "border-l-4 border-l-success p-5" : "border-l-4 border-l-warning p-5"}>
@@ -33,31 +41,33 @@ export function InteractionSummary({
           />
           <div>
             <p className="text-h3 font-extrabold text-ink">
-              {clean ? "No known interactions" : `${worst} interactions found`}
+              {clean
+                ? t("interactions.noneFound")
+                : t("interactions.foundWithSeverity", { severity: worst })}
             </p>
             <p className="text-small text-muted">
-              Checked {total} pair{total === 1 ? "" : "s"} across {medicineCount} medicines
+              {t("interactions.checkedSummary", { count: total, medicineCount })}
             </p>
           </div>
         </div>
         <div className="flex items-center gap-2">
           {severe > 0 && (
             <Badge variant="danger" size="sm">
-              {severe} severe
+              {t("interactions.severeCount", { count: severe })}
             </Badge>
           )}
           {moderate > 0 && (
             <Badge variant="warning" size="sm">
-              {moderate} moderate
+              {t("interactions.moderateCount", { count: moderate })}
             </Badge>
           )}
           {mild > 0 && (
             <Badge variant="success" size="sm">
-              {mild} mild
+              {t("interactions.mildCount", { count: mild })}
             </Badge>
           )}
           <Button variant="ghost" size="sm">
-            <Download className="h-4 w-4" strokeWidth={2} /> Report
+            <Download className="h-4 w-4" strokeWidth={2} /> {t("interactions.report")}
           </Button>
         </div>
       </div>

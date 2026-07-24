@@ -1,4 +1,5 @@
 import { AlertTriangle, CheckCircle2, Heart, ShieldQuestion } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Card } from "@/components/ui/card";
 import { Tabs } from "@/components/ui/tabs";
 import type { Medicine } from "@/types";
@@ -20,6 +21,7 @@ function CheckList({ items, emptyText }: { items: string[]; emptyText: string })
 }
 
 export function MedicineTabs({ medicine }: { medicine: Medicine }) {
+  const { t } = useTranslation();
   return (
     <Card className="p-6">
       <Tabs
@@ -27,40 +29,38 @@ export function MedicineTabs({ medicine }: { medicine: Medicine }) {
         items={[
           {
             id: "uses",
-            label: "Uses",
+            label: t("medicines.usesTab"),
             icon: Heart,
             content: (
               <>
-                <h3 className="text-h3 font-extrabold text-ink">What it's used for</h3>
-                <CheckList items={medicine.uses} emptyText="No uses on record for this medicine." />
+                <h3 className="text-h3 font-extrabold text-ink">{t("medicines.usesHeading")}</h3>
+                <CheckList items={medicine.uses} emptyText={t("medicines.noUses")} />
               </>
             ),
           },
           {
             id: "side-effects",
-            label: "Side effects",
+            label: t("medicines.sideEffectsTab"),
             icon: AlertTriangle,
             content: (
               <>
-                <h3 className="text-h3 font-extrabold text-ink">Possible side effects</h3>
-                <CheckList
-                  items={medicine.side_effects}
-                  emptyText="No side effects on record for this medicine."
-                />
+                <h3 className="text-h3 font-extrabold text-ink">
+                  {t("medicines.sideEffectsHeading")}
+                </h3>
+                <CheckList items={medicine.side_effects} emptyText={t("medicines.noSideEffects")} />
               </>
             ),
           },
           {
             id: "warnings",
-            label: "Warnings",
+            label: t("medicines.warningsTab"),
             icon: ShieldQuestion,
             content: (
               <>
-                <h3 className="text-h3 font-extrabold text-ink">Before you take it</h3>
-                <CheckList
-                  items={medicine.warnings}
-                  emptyText="No warnings on record for this medicine."
-                />
+                <h3 className="text-h3 font-extrabold text-ink">
+                  {t("medicines.warningsHeading")}
+                </h3>
+                <CheckList items={medicine.warnings} emptyText={t("medicines.noWarnings")} />
               </>
             ),
           },

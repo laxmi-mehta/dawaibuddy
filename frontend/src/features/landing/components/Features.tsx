@@ -1,5 +1,6 @@
 import { Bell, Leaf, PanelLeft, ScanLine, ShieldCheck, Sparkles } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Card } from "@/components/ui/card";
 import { IconBadge } from "@/components/shared/IconBadge";
 import { SectionHeading } from "./SectionHeading";
@@ -11,53 +12,55 @@ interface Feature {
   body: string;
 }
 
-const FEATURES: Feature[] = [
-  {
-    icon: ScanLine,
-    tone: "brand",
-    title: "Scan any prescription",
-    body: "Snap a photo or upload a PDF. Our OCR reads typed and handwritten Rx and lists every medicine.",
-  },
-  {
-    icon: PanelLeft,
-    tone: "accent",
-    title: "Plain-language info",
-    body: "Uses, side-effects and warnings explained simply — no confusing medical jargon.",
-  },
-  {
-    icon: ShieldCheck,
-    tone: "brand",
-    title: "Interaction checker",
-    body: "Compare medicines side-by-side and instantly see if they're safe to take together.",
-  },
-  {
-    icon: Bell,
-    tone: "accent",
-    title: "Smart reminders",
-    body: "Never miss a dose. Schedule by morning, afternoon, evening or night with gentle nudges.",
-  },
-  {
-    icon: Leaf,
-    tone: "accent",
-    title: "Generic alternatives",
-    body: "Discover cheaper, equally-effective generics and see exactly how much you'll save.",
-  },
-  {
-    icon: Sparkles,
-    tone: "brand",
-    title: "AI medicine assistant",
-    body: "Ask anything about your medicines and get clear, sourced answers in seconds.",
-  },
-];
-
 export function Features() {
+  const { t } = useTranslation();
+
+  const FEATURES: Feature[] = [
+    {
+      icon: ScanLine,
+      tone: "brand",
+      title: t("landing.features.f1Title"),
+      body: t("landing.features.f1Body"),
+    },
+    {
+      icon: PanelLeft,
+      tone: "accent",
+      title: t("landing.features.f2Title"),
+      body: t("landing.features.f2Body"),
+    },
+    {
+      icon: ShieldCheck,
+      tone: "brand",
+      title: t("landing.features.f3Title"),
+      body: t("landing.features.f3Body"),
+    },
+    {
+      icon: Bell,
+      tone: "accent",
+      title: t("landing.features.f4Title"),
+      body: t("landing.features.f4Body"),
+    },
+    {
+      icon: Leaf,
+      tone: "accent",
+      title: t("landing.features.f5Title"),
+      body: t("landing.features.f5Body"),
+    },
+    {
+      icon: Sparkles,
+      tone: "brand",
+      title: t("landing.features.f6Title"),
+      body: t("landing.features.f6Body"),
+    },
+  ];
+
   return (
     <section id="features" className="bg-bg">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <SectionHeading
-          eyebrow="Everything in one app"
-          title="Your personal medicine companion"
-          subtitle="From scanning a prescription to staying on schedule — DawaiBuddy handles the whole journey."
+          eyebrow={t("landing.features.eyebrow")}
+          title={t("landing.features.title")}
+          subtitle={t("landing.features.subtitle")}
         />
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
